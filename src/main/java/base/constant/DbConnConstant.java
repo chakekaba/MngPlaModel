@@ -14,7 +14,7 @@ public class DbConnConstant {
 	public static final String PASSWORD = "mngplamodel";
 
 	/* JNDI */
-//	public static final String JNDI = "mngplamodel";
+//	public static final String JNDI = "";
 
 	/* posgresql接続用 ↑ここまで*/
 }
