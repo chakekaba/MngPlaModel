@@ -11,13 +11,13 @@ import base.model.JavaBeansModel;
 import model.DummyMdl;
 import model.ExecResult;
 
-public class SQL0001workDetail extends ExecuteSQL {
+public class TestExecuteSQL extends ExecuteSQL {
 
 	public static void main(String[] args) {
 
 		// SQL実行準備
 		DbConnection conn = new DbConnection();
-		SQL0001workDetail sql0001 = new SQL0001workDetail();
+		TestExecuteSQL sql0001 = new TestExecuteSQL();
 		DummyMdl in = new DummyMdl();
 		DummyMdl out = new DummyMdl();
 		ExecResult result = new ExecResult();
@@ -44,7 +44,7 @@ public class SQL0001workDetail extends ExecuteSQL {
 	protected void init(){
 		super.sql = "select paintcode, color from tbl0001_paint where selvisible = ?";
 
-		super.sqlId = "SQL0001";
+		super.sqlId = "SQLTest";
 	}
 
 	protected void editStatement(PreparedStatement pStmt, JavaBeansModel In) throws SQLException {
