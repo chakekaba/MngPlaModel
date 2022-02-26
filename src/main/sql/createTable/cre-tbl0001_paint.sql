@@ -1,7 +1,7 @@
 ﻿-- tbl0001_paint 塗料一覧
 
 -- テーブル削除
-drop table tbl0001_paint;
+-- drop table tbl0001_paint;
 
 -- テーブル作成
 create table tbl0001_paint (
