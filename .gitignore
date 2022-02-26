@@ -3,4 +3,4 @@ build
 .classpath
 .project
 # jdbcドライバを無視
-postgresql-42.2.24.jre7.jar
+src/main/webapp/WEB-INF/lib

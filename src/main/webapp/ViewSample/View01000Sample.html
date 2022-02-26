@@ -48,17 +48,20 @@
 	<!-- 作業モード選択 -->
 	<p>
 		作業モード<br>
+		<input type="radio" name="workMode" id="search" value="search" checked>
+		<!-- onclick="変更時に編集ボタンの有効・無効を切り替えるJS処理" -->
+		<label for="search">検索</label>
+		<input type="radio" name="workMode" id="work" value="work" disabled>
+		<!-- onclick="変更時に編集ボタンの有効・無効を切り替えるJS処理" -->
+		<label for="work">プラモ作成中</label>
 		<input type="radio" name="workMode" id="edit" value="edit" disabled>
 		<!-- onclick="変更時に編集ボタンの有効・無効を切り替えるJS処理" -->
 		<label for="edit">編集</label>
-		<input type="radio" name="workMode" id="work" value="work" disabled>
-		<!-- onclick="変更時に編集ボタンの有効・無効を切り替えるJS処理" -->
-		<label for="work">プラモ作成</label>
 	</p>
 
 	<!-- 新規作業作成 -->
 	<button type="button" onclick="location.href=
-		'/MngPlaModel/ViewSample/View01010Sample.html?registerId=new'">新規</button>
+		'/MngPlaModel/ViewSample/View01010Sample.html?workPlaceId=new'">新規</button>
 	<table>
 		<tr>
 			<th>No</th>
@@ -75,10 +78,10 @@
 			<td rowspan="2">01</td>
 			<td rowspan="2">島風</td>
 			<td rowspan="2">艦橋</td>
-			<td rowspan="2"></td>
+			<td rowspan="2"><a href="View01020Sample.html" onclick="return false;">画像一覧</a></td><!-- 仮設定 -->
 			<td rowspan="2">
 				<button type="button" onclick="location.href=
-					'/MngPlaModel/ViewSample/View01010Sample.html?registerId=0001'">編集</button>
+					'/MngPlaModel/ViewSample/View01010Sample.html?workPlaceId=0001'">編集</button>
 			</td>
 			<td>接着_ゼリー仮止め</td>
 			<td>--</td>
@@ -96,10 +99,10 @@
 			<td>02</td>
 			<td>ワスプ</td>
 			<td>飛行甲板_エレベーター</td>
-			<td></td>
+			<td><a href="View01020Sample.html" onclick="return false;">画像一覧</a></td><!-- 仮設定 -->
 			<td rowspan="2">
 				<button type="button" onclick="location.href=
-					'/MngPlaModel/ViewSample/View01010Sample.html?registerId=0002'">編集</button>
+					'/MngPlaModel/ViewSample/View01010Sample.html?workPlaceId=0002'">編集</button>
 			</td>
 			<td>塗装_ライトシーグレイ</td>
 			<td>--</td>
