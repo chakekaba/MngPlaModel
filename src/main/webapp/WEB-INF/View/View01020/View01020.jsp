@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- View01010_作業内容登録画面 -->
+<!-- View01020_作業内容編集画面 -->
 <!DOCTYPE html>
 <html>
 <head>
