@@ -15,6 +15,7 @@ create table tbl0001_paint (
 );
 
 -- 論理名・コメント付与
+comment on table tbl0001_paint is '塗料一覧';
 comment on column tbl0001_paint.paintcode is '塗料コード';
 comment on column tbl0001_paint.distributor is '販売元企業';
 comment on column tbl0001_paint.brand is 'ブランド名';
