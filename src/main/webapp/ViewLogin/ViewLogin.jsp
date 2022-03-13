@@ -5,9 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>プラモデル管理アプリ</title>
 </head>
 <body>
-
+<h2>ログイン</h2>
+<form action="/MngPlaModel/CtrlLogin" method="post">
+<label for="user">ユーザ：</label>
+<input type="text" id="user"><br>
+<label for="pass">パスワード：</label>
+<input type="password" id="pass"><br>
+<button type="submit">ログイン</button>
+</form>
 </body>
 </html>

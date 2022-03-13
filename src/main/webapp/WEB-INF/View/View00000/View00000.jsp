@@ -5,9 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>プラモデル管理アプリ</title>
 </head>
 <body>
-
+<h2>メイン</h2>
+ユーザ名：
 </body>
 </html>
