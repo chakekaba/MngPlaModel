@@ -8,7 +8,7 @@ import base.constant.ResultConstant;
 import base.logic.DbConnection;
 import base.logic.ExecuteSQL;
 import base.model.JavaBeansModel;
-import model.DummyMdl;
+import model.MdlDummy;
 import model.ExecResult;
 
 public class TestExecuteSQL extends ExecuteSQL {
@@ -18,8 +18,8 @@ public class TestExecuteSQL extends ExecuteSQL {
 		// SQL実行準備
 		DbConnection conn = new DbConnection();
 		TestExecuteSQL sql0001 = new TestExecuteSQL();
-		DummyMdl in = new DummyMdl();
-		DummyMdl out = new DummyMdl();
+		MdlDummy in = new MdlDummy();
+		MdlDummy out = new MdlDummy();
 		ExecResult result = new ExecResult();
 
 		try {

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import base.constant.ResultConstant;
 import base.model.JavaBeansModel;
-import model.DummyMdl;
+import model.MdlDummy;
 import model.ExecResult;
 
 /**
@@ -77,7 +77,7 @@ abstract public class ExecuteSQL {
 					executeCUD(pStmt);
 
 					// ダミーデータクラスを出力結果に設定
-					out = new DummyMdl();
+					out = new MdlDummy();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
