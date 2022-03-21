@@ -1,4 +1,4 @@
-package ctrl.ctrlLogin;
+package ctrl;
 
 import java.io.IOException;
 
@@ -19,8 +19,8 @@ import model.ExecResult;
 /**
  * Servlet implementation class LogicLogin
  */
-@WebServlet("/CtrlLogin")
-public class CtrlLogin extends HttpServlet {
+@WebServlet("/Ctrl00000FromLogin")
+public class Ctrl00000FromLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
