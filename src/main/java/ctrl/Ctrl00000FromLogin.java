@@ -14,7 +14,7 @@ import base.constant.WebPath;
 import logic.sv.logicLogin.LogicLogin;
 import logic.sv.logicLogin.MdlLogicLoginIn;
 import logic.sv.logicLogin.MdlLogicLoginOut;
-import model.ExecResult;
+import model.MdlResult;
 
 /**
  * Servlet implementation class LogicLogin
@@ -44,7 +44,7 @@ public class Ctrl00000FromLogin extends HttpServlet {
 
 		MdlLogicLoginOut mdlOut = new MdlLogicLoginOut();
 
-		ExecResult result = new ExecResult();
+		MdlResult result = new MdlResult();
 
 
 		// ログイン処理実行

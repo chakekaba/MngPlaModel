@@ -8,7 +8,7 @@ import base.model.JavaBeansModel;
  * @author kohei kajiki
  *
  */
-public class ExecResult extends JavaBeansModel {
+public class MdlResult extends JavaBeansModel {
 
 	/** 実行結果 **/
 	private String result;
@@ -19,7 +19,7 @@ public class ExecResult extends JavaBeansModel {
 	/**
 	 * コンストラクタ
 	 */
-	public ExecResult() {
+	public MdlResult() {
 		init();
 	}
 

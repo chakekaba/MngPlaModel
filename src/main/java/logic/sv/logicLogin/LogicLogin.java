@@ -1,6 +1,6 @@
 package logic.sv.logicLogin;
 
-import model.ExecResult;
+import model.MdlResult;
 
 public class LogicLogin {
 
@@ -16,6 +16,6 @@ public class LogicLogin {
 	 * @param mdlOut
 	 * @param result
 	 */
-	public void execute(MdlLogicLoginIn mdlIn, MdlLogicLoginOut mdlOut, ExecResult result) {
+	public void execute(MdlLogicLoginIn mdlIn, MdlLogicLoginOut mdlOut, MdlResult result) {
 	}
 }

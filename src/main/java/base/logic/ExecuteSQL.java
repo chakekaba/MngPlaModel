@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import base.constant.ResultConstant;
 import base.model.JavaBeansModel;
 import model.MdlDummy;
-import model.ExecResult;
+import model.MdlResult;
 
 /**
  * SQL実行用の基底クラス<br>
@@ -42,7 +42,7 @@ abstract public class ExecuteSQL {
 	 * @param result
 	 * @throws SQLException
 	 */
-	public void execute(DbConnection conn, JavaBeansModel in, JavaBeansModel out, ExecResult result) {
+	public void execute(DbConnection conn, JavaBeansModel in, JavaBeansModel out, MdlResult result) {
 
 		PreparedStatement pStmt = null;
 

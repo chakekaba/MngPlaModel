@@ -9,7 +9,7 @@ import base.logic.DbConnection;
 import base.logic.ExecuteSQL;
 import base.model.JavaBeansModel;
 import model.MdlDummy;
-import model.ExecResult;
+import model.MdlResult;
 
 public class TestExecuteSQL extends ExecuteSQL {
 
@@ -20,7 +20,7 @@ public class TestExecuteSQL extends ExecuteSQL {
 		TestExecuteSQL sql0001 = new TestExecuteSQL();
 		MdlDummy in = new MdlDummy();
 		MdlDummy out = new MdlDummy();
-		ExecResult result = new ExecResult();
+		MdlResult result = new MdlResult();
 
 		try {
 			conn.connect();
