@@ -9,7 +9,7 @@
 </head>
 <body>
 <h2>ログイン</h2>
-<form action="/MngPlaModel/CtrlLogin" method="post">
+<form action="/MngPlaModel/View00000" method="post">
 <label for="user">ユーザ：</label>
 <input type="text" id="user"><br>
 <label for="pass">パスワード：</label>

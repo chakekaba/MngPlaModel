@@ -11,24 +11,26 @@ public class MdlLogicLoginIn extends JavaBeansModel {
 	private String password;
 
 	public MdlLogicLoginIn() {
-		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
-	public MdlLogicLoginIn(String userName, String password) {
-
-		this.userName = userName;
-
-		this.password = password;
-	}
-
-	// getter
+	// -- ユーザ名 ---------------------------
 	public String getUserName() {
 		return userName;
 	}
 
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	// -- パスワード ---------------------------
 	public String getPassword() {
 		return password;
 	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 
 
 }

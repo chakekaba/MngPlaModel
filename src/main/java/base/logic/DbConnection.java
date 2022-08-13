@@ -7,6 +7,11 @@ import java.sql.SQLException;
 
 import base.constant.DbConnConstant;
 
+/**
+ * データベース接続クラス
+ * @author kohei kajiki
+ *
+ */
 public class DbConnection {
 
 	private Connection conn = null;
