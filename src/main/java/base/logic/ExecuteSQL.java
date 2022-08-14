@@ -6,8 +6,7 @@ import java.sql.SQLException;
 
 import base.constant.ResultConstant;
 import base.model.JavaBeansModel;
-import model.MdlDummy;
-import model.MdlResult;
+import model.MdlCommonData;
 
 /**
  * SQL実行用の基底クラス<br>
@@ -42,7 +41,7 @@ abstract public class ExecuteSQL {
 	 * @param result
 	 * @throws SQLException
 	 */
-	public void execute(DbConnection conn, JavaBeansModel in, JavaBeansModel out, MdlResult result) {
+	public void execute(DbConnection conn, MdlCommonData comData, JavaBeansModel in, JavaBeansModel out) {
 
 		PreparedStatement pStmt = null;
 
@@ -51,13 +50,14 @@ abstract public class ExecuteSQL {
 		// 初期化
 		init();
 
-		if (sql.length() == 0) {
-			String errMsg = "SQL文が設定されていません";
+		if (sql.length() == 0 || sql == null) {
+			String errMsg = sqlId + ":SQL文が設定されていません";
 
-			result.setError(ResultConstant.SQL_ERROR, errMsg);
+			comData.setResult(ResultConstant.SQL_ERROR);
+			comData.setErrorData(new ExceptionLogic(), errMsg);
 		}
 
-		if (ResultConstant.NORMAL.equals(result.getResult())) {
+		if (ResultConstant.NORMAL.equals(comData.getResult())) {
 
 			// 処理結果:正常の場合
 			try {
@@ -73,17 +73,18 @@ abstract public class ExecuteSQL {
 					// 結果セットの編集
 					editOut(rSet, out);
 				} else {
+					
 					// select以外の文の場合
 					executeCUD(pStmt);
-
-					// ダミーデータクラスを出力結果に設定
-					out = new MdlDummy();
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 				// 例外発生を記録
-				String errMsg = "SQL実行時に例外発生:" + sqlId;
-				result.setError(ResultConstant.SQL_ERROR, errMsg);
+				String errMsg = sqlId + ":SQL実行時に例外発生";
+				
+				comData.setResult(ResultConstant.SQL_ERROR);
+				comData.setErrorData(e, errMsg);
+				
 			} finally {
 				try {
 					// リソースのクローズ
