@@ -3,7 +3,9 @@ package logic.sv;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import base.constant.ResultConstant;
 import base.logic.DbConnection;
+import base.logic.ExceptionLogic;
 import base.logic.ServerLogic;
 import base.model.MdlCommonData;
 import logic.sv.model.MdlLogicLoginIn;
@@ -16,6 +18,9 @@ public class LogicLogin extends ServerLogic {
 	
 	/** 出力データ **/
 	protected MdlLogicLoginOut outputData = new MdlLogicLoginOut();
+	
+	/** ロジック処理内データ **/
+	// 不要
 	
 	/** データベース接続クラス **/
 	protected DbConnection dbconn = null;
@@ -31,46 +36,63 @@ public class LogicLogin extends ServerLogic {
 			HttpServletResponse response,
 			MdlCommonData comData) {
 		
-		getInputData(request, response, comData, inputData);
+		getInputData(request, response, comData);
 		
-		checkInputData(comData, inputData);
+		checkInputData(comData);
 		
-		editSetOutputData(request, response, comData, inputData, outputData);
+		editSetOutputData(request, response, comData);
 	}
 
 
+	@Override
 	protected void getInputData(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			MdlCommonData comData,
-			MdlLogicLoginIn inputData) {
-
+			MdlCommonData comData) {
+		
 		// ユーザ名
 		inputData.setUserName(request.getParameter("user"));
 		
 		// パスワード
 		inputData.setUserName(request.getParameter("password"));
+
 	}
 
 
+	@Override
 	protected void checkInputData(
-			MdlCommonData comData,
-			MdlLogicLoginIn inputData) {
+			MdlCommonData comData) {
+		// -- ユーザ名 -----------
+		String userName = inputData.getUserName();
+	
+		// 必須チェック
+		// 暫定
+		if (userName == null || userName.equals("")) {
+			String msg = "必須チェックエラー：ユーザ名";
+			comData.setResult(ResultConstant.LOGIC_ERROR);
+			comData.setErrorData(new ExceptionLogic(), msg);
+		}
 		
 		// -- ユーザ名 -----------
-//		String userName = inputData.getUserName();
+		String password = inputData.getPassword();
 		
 		// 必須チェック
-		
+		// 暫定
+		if (password == null || password.equals("")) {
+			String msg = "必須チェックエラー：パスワード";
+			comData.setResult(ResultConstant.LOGIC_ERROR);
+			comData.setErrorData(new ExceptionLogic(), msg);
+		}
+
 	}
 
 
+	@Override
 	protected void editSetOutputData(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			MdlCommonData comData,
-			MdlLogicLoginIn inputData,
-			MdlLogicLoginOut outputData) {
+			MdlCommonData comData) {
+		
 	}
 
 }
