@@ -8,8 +8,8 @@ import base.constant.ResultConstant;
 import base.logic.DbConnection;
 import base.logic.ExecuteSQL;
 import base.model.JavaBeansModel;
-import model.MdlCommonData;
-import model.MdlDummy;
+import base.model.MdlCommonData;
+import base.model.MdlDummy;
 
 public class TestExecuteSQL extends ExecuteSQL {
 

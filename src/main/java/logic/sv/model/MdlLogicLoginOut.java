@@ -1,6 +1,6 @@
-package logic.sv.logicLogin;
+package logic.sv.model;
 
-import model.MdlDummy;
+import base.model.MdlDummy;
 
 public class MdlLogicLoginOut extends MdlDummy {
 

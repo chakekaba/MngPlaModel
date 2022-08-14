@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import base.constant.StringEncode;
 import base.constant.WebPath;
-import logic.sv.logicLogin.LogicLogin;
-import model.MdlCommonData;
+import base.model.MdlCommonData;
+import logic.sv.LogicLogin;
 
 /**
  * Servlet implementation class Ctrl00000

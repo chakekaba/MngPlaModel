@@ -1,10 +1,9 @@
-package model;
+package base.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import base.constant.ResultConstant;
-import base.model.JavaBeansModel;
 
 /**
  * サーバ処理の共通データ保持クラス

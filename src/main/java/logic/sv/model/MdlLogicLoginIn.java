@@ -1,4 +1,4 @@
-package logic.sv.logicLogin;
+package logic.sv.model;
 
 import base.model.JavaBeansModel;
 

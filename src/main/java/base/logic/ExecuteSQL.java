@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import base.constant.ResultConstant;
 import base.model.JavaBeansModel;
-import model.MdlCommonData;
+import base.model.MdlCommonData;
 
 /**
  * SQL実行用の基底クラス<br>

@@ -1,11 +1,13 @@
-package logic.sv.logicLogin;
+package logic.sv;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import base.logic.DbConnection;
 import base.logic.ServerLogic;
-import model.MdlCommonData;
+import base.model.MdlCommonData;
+import logic.sv.model.MdlLogicLoginIn;
+import logic.sv.model.MdlLogicLoginOut;
 
 public class LogicLogin extends ServerLogic {
 

@@ -3,7 +3,7 @@ package base.logic;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.MdlCommonData;
+import base.model.MdlCommonData;
 
 public abstract class ServerLogic {
 	
