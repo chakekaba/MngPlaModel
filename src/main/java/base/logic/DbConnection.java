@@ -18,9 +18,17 @@ public class DbConnection {
 
 	/**
 	 * データベース接続
-	 * @throws Exception
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
-	public void connect() throws SQLException {
+	public void connect() throws SQLException, ClassNotFoundException {
+		
+		// ドライバーの初期化
+		// 本処理を実行しない、かつtomcat側のクラスパスにjdbcが設定されていない場合、
+		// java.sql.SQLException: No suitable driver found for jdbc:postgresql://localhost:5432/mywork
+		// というエラーが発生
+		Class.forName(DbConnConstant.DRIVER);
+		
 		// DB接続
 		conn = DriverManager.getConnection(
 				DbConnConstant.URL, DbConnConstant.USER, DbConnConstant.PASSWORD
@@ -58,6 +66,28 @@ public class DbConnection {
 	 */
 	public void close() throws SQLException {
 		if (conn != null) {
+			conn.close();
+		}
+	}
+
+	/**
+	 * データベース接続切断 - トランザクション操作あり
+	 * @throws SQLException
+	 */
+	public void close(boolean isCommit) throws SQLException {
+		
+		if (conn != null) {
+			
+			// トランザクション操作
+			if (isCommit == true) {
+				
+				// コミット
+				this.commit();
+			} else {
+				
+				// ロールバック
+				this.roolback();
+			}
 			conn.close();
 		}
 	}

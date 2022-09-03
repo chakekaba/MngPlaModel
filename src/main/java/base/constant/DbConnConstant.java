@@ -13,6 +13,8 @@ public class DbConnConstant {
 	/* パスワード */
 	public static final String PASSWORD = "mngplamodel";
 
+	/** ドライバー **/
+	public static final String DRIVER = "org.postgresql.Driver";
 	/* JNDI */
 //	public static final String JNDI = "";
 

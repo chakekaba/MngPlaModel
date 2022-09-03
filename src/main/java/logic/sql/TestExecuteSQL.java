@@ -29,7 +29,7 @@ public class TestExecuteSQL extends ExecuteSQL {
 			}
 
 			conn.close();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			comData.setErrorData(e, "DB接続でエラー");
 		}
@@ -82,16 +82,16 @@ public class TestExecuteSQL extends ExecuteSQL {
 	}
 
 	protected void editStatement(PreparedStatement pStmt, JavaBeansModel In) throws SQLException {
-//		pStmt.setString(1, "1");
+		pStmt.setString(1, "1");
 	}
 
 	protected void editOut(ResultSet rSet, JavaBeansModel out) throws SQLException {
 
 		// 実行結果の取り出し
-//		while (rSet.next()) {
-//			System.out.println("塗料コード:" + rSet.getString(1));
-//			System.out.println("カラー名:" + rSet.getString(2));
-//			System.out.println();
-//		}
+		while (rSet.next()) {
+			System.out.println("塗料コード:" + rSet.getString(1));
+			System.out.println("カラー名:" + rSet.getString(2));
+			System.out.println();
+		}
 	}
 }
