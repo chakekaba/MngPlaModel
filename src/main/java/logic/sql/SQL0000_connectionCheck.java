@@ -88,7 +88,7 @@ public class SQL0000_connectionCheck {
 	}
 	
 	/**
-	 * 終了処理
+	 * SQL終了処理
 	 * @param comData
 	 */
 	private void close(MdlCommonData comData) {
