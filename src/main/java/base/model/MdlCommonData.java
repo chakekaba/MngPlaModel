@@ -52,10 +52,19 @@ public class MdlCommonData extends JavaBeansModel {
 	}
 	
 	// -- 実行結果 ---------------------------
+	
+	/**
+	 * getter - 実行結果
+	 * @return 実行結果
+	 */
 	public String getResult() {
 		return result;
 	}
 
+	/**
+	 * setter - 実行結果
+	 * @param result 実行結果
+	 */
 	public void setResult(String result) {
 		this.result = result;
 	}
@@ -90,5 +99,22 @@ public class MdlCommonData extends JavaBeansModel {
 		
 		// エラー情報クラスリストに格納
 		errorDataList.add(errorData);
+	}
+	
+	/**
+	 * エラーログ出力（暫定）
+	 */
+	public void showErrorLog() {
+		
+		for (ErrorData errorData: errorDataList) {
+			
+			String message = errorData.getMessage();
+			
+			Exception e = errorData.getException();
+			
+			System.out.println(message);
+			
+			e.printStackTrace();
+		}
 	}
 }

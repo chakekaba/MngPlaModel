@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import base.constant.ResultConstant;
 import base.constant.StringEncode;
 import base.constant.WebPath;
 import base.model.MdlCommonData;
@@ -44,16 +45,26 @@ public class Ctrl00000 extends HttpServlet {
 //			case "yyyyy":
 //				break;
 //		}
-		
+				
 		// サーバ処理（仮）
 		LogicLogin logicLogin = new LogicLogin();
 		
 		logicLogin.execute(request, response, comData);
 		
-		// メイン画面への遷移実行
-		RequestDispatcher dispatcher = request.getRequestDispatcher(WebPath.VIEW00000);
-		
-		dispatcher.forward(request, response);
+		if (ResultConstant.NORMAL.equals(comData.getResult())) {
+			
+			// メイン画面へのフォワード遷移実行
+			RequestDispatcher dispatcher = request.getRequestDispatcher(WebPath.VIEW00000);
+			
+			dispatcher.forward(request, response);
+
+		} else {
+			
+			comData.showErrorLog();
+			
+			// 遷移元画面にリダイレクトで戻る
+			response.sendRedirect(WebPath.VIEWLOGIN);
+		}
 		
 	}
 
