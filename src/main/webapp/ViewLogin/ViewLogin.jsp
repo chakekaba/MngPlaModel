@@ -11,9 +11,9 @@
 <h2>ログイン</h2>
 <form action="/MngPlaModel/View00000" method="post">
 <label for="user">ユーザ：</label>
-<input type="text" name="user"><br>
+<input type="text" id="user" name="user"><br>
 <label for="pass">パスワード：</label>
-<input type="password" name="pass"><br>
+<input type="password" id="pass" name="pass"><br>
 <button type="submit">ログイン</button>
 </form>
 </body>
