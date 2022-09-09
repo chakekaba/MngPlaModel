@@ -62,8 +62,11 @@ public class Ctrl00000 extends HttpServlet {
 			
 			comData.showErrorLog();
 			
-			// 遷移元画面にリダイレクトで戻る
-			response.sendRedirect(WebPath.VIEWLOGIN);
+			// 遷移元画面にフォワード遷移で戻る（ブラウザ表示URLの問題は後回し）
+			RequestDispatcher dispatcher = request.getRequestDispatcher(WebPath.VIEWLOGIN);
+			
+			dispatcher.forward(request, response);
+
 		}
 		
 	}
