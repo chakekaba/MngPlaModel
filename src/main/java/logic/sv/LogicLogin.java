@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
 import base.logic.DbConnection;
 import base.logic.ExceptionLogic;
@@ -68,10 +69,10 @@ public class LogicLogin extends ServerLogic {
 			MdlCommonData comData) {
 		
 		// ユーザ名
-		inputData.setUserName(request.getParameter("user"));
+		inputData.setUserName(request.getParameter(ParamIdWeb.ViewLogin.USER));
 		
 		// パスワード
-		inputData.setPassword(request.getParameter("pass"));
+		inputData.setPassword(request.getParameter(ParamIdWeb.ViewLogin.PASS));
 
 	}
 
