@@ -82,6 +82,8 @@ public class MdlCommonData extends JavaBeansModel {
 		
 		result = ResultConstant.NORMAL;
 		
+		errorDataList.clear();
+		
 	}
 
 	/**
