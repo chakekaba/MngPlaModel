@@ -1,3 +1,4 @@
+<%@page import="base.model.MdlCommonData"%>
 <%@page import="base.constant.ParamIdWeb"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -18,5 +19,11 @@
 <input type="password" id="pass" name="<%=ParamIdWeb.ViewLogin.PASS%>"><br>
 <button type="submit">ログイン</button>
 </form>
+<%
+MdlCommonData comData = (MdlCommonData)session.getAttribute(ParamIdWeb.COM_DATA);
+// エラー情報クリア
+comData.clearErr();
+session.setAttribute(ParamIdWeb.COM_DATA, comData);
+%>
 </body>
 </html>

@@ -85,6 +85,17 @@ public class MdlCommonData extends JavaBeansModel {
 		errorDataList.clear();
 		
 	}
+	
+	/**
+	 * エラー情報クリア処理
+	 */
+	public void clearErr() {
+		
+		result = ResultConstant.NORMAL;
+		
+		errorDataList.clear();
+		
+	}
 
 	/**
 	 * エラー情報格納処理
