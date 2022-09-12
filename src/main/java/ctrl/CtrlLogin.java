@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import base.constant.ParamIdWeb;
 import base.constant.StringEncode;
-import base.constant.WebPath;
 import base.model.MdlCommonData;
 
 /**
@@ -49,7 +48,7 @@ public class CtrlLogin extends HttpServlet {
 		
 		
 		// ログイン画面に遷移
-		RequestDispatcher  dispatcher= request.getRequestDispatcher(WebPath.VIEWLOGIN);
+		RequestDispatcher  dispatcher= request.getRequestDispatcher(ParamIdWeb.ViewLogin.PAGE_PATH);
 		
 		dispatcher.forward(request, response);
 		

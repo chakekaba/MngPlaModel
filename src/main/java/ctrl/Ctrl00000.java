@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
 import base.constant.StringEncode;
-import base.constant.WebPath;
 import base.logic.URILogic;
 import base.logic.model.URILogicModel;
 import base.model.MdlCommonData;
@@ -55,7 +54,7 @@ public class Ctrl00000 extends HttpServlet {
 		if (comData == null) {
 			
 			// ログイン画面に遷移
-			dispatcher = request.getRequestDispatcher("/ViewLogin");
+			dispatcher = request.getRequestDispatcher(ParamIdWeb.ViewLogin.FORWARD_PATH);
 			
 			dispatcher.forward(request, response);
 			
@@ -101,7 +100,7 @@ public class Ctrl00000 extends HttpServlet {
 		if (ResultConstant.NORMAL.equals(comData.getResult())) {
 			
 			// メイン画面へのフォワード遷移実行
-			dispatcher = request.getRequestDispatcher(WebPath.VIEW00000);
+			dispatcher = request.getRequestDispatcher(ParamIdWeb.View00000.PAGE_PATH);
 			
 			dispatcher.forward(request, response);
 
