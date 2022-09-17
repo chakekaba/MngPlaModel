@@ -10,7 +10,7 @@ import base.model.MdlCommonData;
  * @author kohei kajiki
  *
  */
-public abstract class ServerLogic {
+public class ServerLogic {
 	
 	/**
 	 * コントローラから呼び出されるメイン処理
@@ -18,30 +18,58 @@ public abstract class ServerLogic {
 	 * @param response
 	 * @param comData
 	 */
-	abstract public void execute(
+	public void execute(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			MdlCommonData comData
-		);
+		) {
+		try {
+			
+			exeNormal(request, response, comData);
+		}catch (Exception e) {
+			
+			exeErr(request, response, comData, e);
+		}
+	};
+	
+	protected void exeNormal(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			MdlCommonData comData
+		) throws Exception {
+	};
+	
+	
+	protected void exeErr(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			MdlCommonData comData,
+			Exception e
+		) {
+	};
 	
 	/**
 	 * requestから入力パラメータ取得、Inクラスに設定
 	 * @param request
 	 * @param comData
 	 */
-	abstract protected void getInputData(
+	protected void getInputData(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			MdlCommonData comData
-		);
+		) {
+		
+	};
 	
 	/**
 	 * 入力パラメータチェック
 	 * @param comData
 	 */
-	abstract protected void checkInputData(
+	protected void checkInputData(
 			MdlCommonData comData
-		);
+		) {
+		
+	};
 	
 	/**
 	 * Outクラスに出力パラメータ設定、requestにOutクラス設定
@@ -49,9 +77,11 @@ public abstract class ServerLogic {
 	 * @param response
 	 * @param comData
 	 */
-	abstract protected void editSetOutputData(
+	protected void editSetOutputData(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			MdlCommonData comData
-		);
+		) {
+		
+	};
 }

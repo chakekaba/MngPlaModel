@@ -35,12 +35,15 @@ public class LogicLogin extends ServerLogic {
 	public LogicLogin() {
 	}
 	
-	
+	/**
+	 * 正常系処理
+	 */
 	@Override
-	public void execute(
+	protected void exeNormal(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			MdlCommonData comData) {
+			MdlCommonData comData
+		) throws Exception {
 		
 		getInputData(request, response, comData);
 		
@@ -60,8 +63,7 @@ public class LogicLogin extends ServerLogic {
 
 		}
 	}
-
-
+	
 	@Override
 	protected void getInputData(
 			HttpServletRequest request,
@@ -147,4 +149,19 @@ public class LogicLogin extends ServerLogic {
 		
 	}
 
+	/**
+	 * 想定外のエラー発生時の処理
+	 */
+	@Override
+	protected void exeErr(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			MdlCommonData comData,
+			Exception e
+		) {
+		
+		String msg = "ログイン処理で想定外のエラーが発生";
+		comData.setResult(ResultConstant.LOGIC_ERROR);
+		comData.setErrorData(e, msg);
+	};
 }
