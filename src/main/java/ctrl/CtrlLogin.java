@@ -48,7 +48,7 @@ public class CtrlLogin extends HttpServlet {
 		
 		
 		// ログイン画面に遷移
-		RequestDispatcher  dispatcher= request.getRequestDispatcher(ParamIdWeb.ViewLogin.PAGE_PATH);
+		RequestDispatcher  dispatcher= request.getRequestDispatcher(ParamIdWeb.ViewLogin.PAGE_SRC);
 		
 		dispatcher.forward(request, response);
 		

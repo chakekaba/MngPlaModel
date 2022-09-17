@@ -30,6 +30,52 @@ public class Ctrl00000 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// 文字エンコーディング設定:UTF-8
+		request.setCharacterEncoding(StringEncode.UTF8);
+		
+		// セッションスコープ取得
+		HttpSession session = request.getSession();
+		
+		// 共通データ保持クラスをセッションスコープから取得
+		MdlCommonData comData = (MdlCommonData)session.getAttribute(ParamIdWeb.COM_DATA);
+				
+		// リクエストディスパッチャ
+		RequestDispatcher dispatcher = null;
+		
+		// 共通データ保持クラスを取得できない場合
+		if (comData == null) {
+			
+			// ログイン画面に遷移
+			response.sendRedirect(ParamIdWeb.ViewLogin.FORM_PATH);
+			
+			return;
+		}
+		
+		// 遷移元画面URI取得
+		URILogic uriLogic = new URILogic();
+		URILogicModel uriLogicMdl = new URILogicModel();
+		
+		uriLogic.getReferrerViewData(request, uriLogicMdl);
+//	------------------------
+//	------------------------
+
+		// 共通データ保持クラスをセッションスコープに設定
+		session.setAttribute(ParamIdWeb.COM_DATA, comData);
+		
+		if (ResultConstant.NORMAL.equals(comData.getResult())) {
+			
+			// メイン画面へのフォワード遷移実行
+			dispatcher = request.getRequestDispatcher(ParamIdWeb.View00000.PAGE_SRC);
+			
+			dispatcher.forward(request, response);
+
+		} else {
+			
+			comData.showErrorLog();
+			
+			// 遷移元画面用servletにリダイレクト遷移で戻る
+			response.sendRedirect(uriLogicMdl.getFullURI());
+		}
 	}
 	
 	
@@ -54,9 +100,7 @@ public class Ctrl00000 extends HttpServlet {
 		if (comData == null) {
 			
 			// ログイン画面に遷移
-			dispatcher = request.getRequestDispatcher(ParamIdWeb.ViewLogin.FORWARD_PATH);
-			
-			dispatcher.forward(request, response);
+			response.sendRedirect(ParamIdWeb.ViewLogin.FORM_PATH);
 			
 			return;
 		}
@@ -100,7 +144,7 @@ public class Ctrl00000 extends HttpServlet {
 		if (ResultConstant.NORMAL.equals(comData.getResult())) {
 			
 			// メイン画面へのフォワード遷移実行
-			dispatcher = request.getRequestDispatcher(ParamIdWeb.View00000.PAGE_PATH);
+			dispatcher = request.getRequestDispatcher(ParamIdWeb.View00000.PAGE_SRC);
 			
 			dispatcher.forward(request, response);
 

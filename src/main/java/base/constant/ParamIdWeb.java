@@ -12,11 +12,14 @@ public class ParamIdWeb {
 
 	public static class ViewLogin {
 		
-		/** サーブレットパス **/
+		/** フォワードパス **/
 		public static final String FORWARD_PATH = "/ViewLogin";
 		
+		/** 画面フォーム/リダイレクト用パス **/
+		public static final String FORM_PATH = "/MngPlaModel/ViewLogin";
+		
 		/** 画面ファイルパス **/
-		public static final String PAGE_PATH = "/ViewLogin/ViewLogin.jsp";
+		public static final String PAGE_SRC = "/ViewLogin/ViewLogin.jsp";
 		
 		/** ユーザ **/
 		public static final String USER = "user";
@@ -31,7 +34,10 @@ public class ParamIdWeb {
 		/** サーブレットパス **/
 		public static final String FORWARD_PATH = "/View00000";
 		
+		/** 画面フォーム/リダイレクト用パス **/
+		public static final String FORM_PATH = "/MngPlaModel/View00000";
+
 		/** 画面ファイルパス **/
-		public static final String PAGE_PATH = "/WEB-INF/View/View00000/View00000.jsp";
+		public static final String PAGE_SRC = "/WEB-INF/View/View00000/View00000.jsp";
 	}
 }
