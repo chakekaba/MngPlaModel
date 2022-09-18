@@ -4,25 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <title>プラモデル管理アプリ</title>
-<style>
-	table{
-		border-collapse: collapse;
-		border: solid 2px;
-	}
-
-	th {
-		border: solid 1px
-	}
-
-	td {
-		border-width: 1px ;
-		border-style: solid dotted;
-	}
-</style>
+<link rel="stylesheet" href="css/View01010Sample.css">
 </head>
 <body>
 <h1 class="title">作業内容編集</h1>
-<form action="/MngPlaModel/ViewSample/View01000Sample.html" onsubmit="inputValueCheck">
+<form method="post" action="/MngPlaModel/ViewSample/View01000Sample.html" onsubmit="inputValueCheck" >
 	<!-- 作業概要 -->
 	<div class="Overview">
 		表示No:xx<br><!-- View01000_作業一覧で表示している番号 -->
@@ -57,23 +43,14 @@
 		<!-- 作業詳細一覧 -->
 		<table>
 			<tr>
-				<th>作業内容</th>
-				<th>優先度</th>
-				<th>進捗率</th>
+				<th class="workdetail">作業内容</th>
+				<th class="priority">優先度</th>
+				<th class="progressRate">進捗率</th>
 			</tr>
 			<tr id="0001">
-				<td>
-			 		<select name="work_1">
-						<option value="--">--</option>
-						<option value="XF-25">塗装_ライトシーグレイ</option>
-						<option value="glue01">接着_ゼリー瞬間接着剤</option>
-						<option value="glue02">接着_低粘度瞬間接着剤</option>
-						<option value="glue03">接着_プラパーツ</option>
-						<!-- 作業種別：「その他」を用意して、フリーテキストを記載できるようにしたい -->
-					</select>
-				</td>
-				<td><input type="text"></td>
-				<td><input type="text">%</td>
+				<td class="workdetail">塗装_ライトシーグレイ</td>
+				<td class="priority"><input type="text"></td>
+				<td class="progressRate"><input type="text">%</td>
 			</tr>
 		</table>
 	</div>

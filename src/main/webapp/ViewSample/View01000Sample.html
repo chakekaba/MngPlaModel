@@ -20,24 +20,9 @@
 	</div>
 	<div>
 		対象作業<br>
-<!-- 		<select name="work_0">
-			<option value="--">--</option>
-			<option value="painting">塗装</option>
-			<option value="glueing">接着</option>
-		</select>
-		<select name="work_1">
-			<option value="--">--</option>
-			<option value="XF-25">ライトシーグレイ</option>
-		</select>
- -->
- 		<!-- 後々ツリーメニューに置き換えたい -->
- 		<select name="work_1">
-			<option value="--">--</option>
-			<option value="XF-25">塗装_ライトシーグレイ</option>
-			<option value="glue01">接着_ゼリー瞬間接着剤</option>
-			<option value="glue02">接着_低粘度瞬間接着剤</option>
-			<option value="glue03">接着_プラパーツ</option>
-		</select>
+		<input type="text" disabled>
+		<button type="button" onclick="location.href=
+			'/MngPlaModel/ViewSample/View01010Sample.html?workPlaceId=new'">作業選択</button>
  	</div>
 	<button type="submit">検索</button>
 	<button type="button">リセット</button><!-- javascriptで実装する。 -->
@@ -62,33 +47,35 @@
 
 	<!-- 新規作業作成 -->
 	<button type="button" onclick="location.href=
-		'/MngPlaModel/ViewSample/View01010Sample.html?workPlaceId=new'">新規</button>
+		'/MngPlaModel/ViewSample/View01010Sample.html'">新規</button>
 	<table>
 		<tr>
-			<th>No</th>
+			<th>詳細</th>
 			<th>プラモデル</th>
 			<th>場所</th>
 			<th>画像</th>
-			<th>編集</th>
 			<th>作業内容</th>
 			<th>優先度</th>
 			<th>進捗率</th>
 			<th>チェック欄</th>
 		</tr>
 		<tr>
-			<td rowspan="2">01</td>
+			<td rowspan="2">
+				<form method="post">
+					<input type="hidden" name="workid" value="0000">
+					<button type="submit" formaction=
+						"/MngPlaModel/ViewSample/View01010Sample.html">参照</button>
+					<button type="submit" formaction=
+						"/MngPlaModel/ViewSample/View01010Sample.html">編集</button>
+				</form>
+			</td>
 			<td rowspan="2">島風</td>
 			<td rowspan="2">艦橋</td>
 			<td rowspan="2"><a href="View01020Sample.html" onclick="return false;">画像一覧</a></td><!-- 仮設定 -->
-			<td rowspan="2">
-				<button type="button" onclick="location.href=
-					'/MngPlaModel/ViewSample/View01010Sample.html?workPlaceId=0001'">編集</button>
-			</td>
 			<td>接着_ゼリー仮止め</td>
 			<td>--</td>
 			<td>40%</td>
 			<td><input type="checkbox"></td>
-
 		</tr>
 		<tr>
 			<td>塗装_軍艦色</td>
@@ -97,14 +84,18 @@
 			<td><input type="checkbox"></td>
 		</tr>
 		<tr>
-			<td>02</td>
+			<td rowspan="1">
+				<form method="post">
+					<input type="hidden" name="workid" value="0001">
+					<button type="submit" formaction=
+						"/MngPlaModel/ViewSample/View01010Sample.html">参照</button>
+					<button type="submit" formaction=
+						"/MngPlaModel/ViewSample/View01010Sample.html">編集</button>
+				</form>
+			</td>
 			<td>ワスプ</td>
 			<td>飛行甲板_エレベーター</td>
 			<td><a href="View01020Sample.html" onclick="return false;">画像一覧</a></td><!-- 仮設定 -->
-			<td rowspan="2">
-				<button type="button" onclick="location.href=
-					'/MngPlaModel/ViewSample/View01010Sample.html?workPlaceId=0002'">編集</button>
-			</td>
 			<td>塗装_ライトシーグレイ</td>
 			<td>--</td>
 			<td>75%</td>
