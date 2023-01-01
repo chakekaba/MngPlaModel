@@ -1,0 +1,55 @@
+<!-- View02000Sample_塗料一覧 サンプル -->
+<!-- http://localhost:8080/MngPlaModel/ViewSample/View02000Sample.html -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>プラモデル管理アプリ</title>
+<link rel="stylesheet" href="css/View02000Sample.css">
+</head>
+<body>
+<h1>塗料一覧</h1>
+
+<form action="" method="post">
+	<div>
+		<!-- 塗料名（部分一致） -->
+		<label for="paintnm">塗料名（部分一致）</label>
+		<input type="text" name="paintnm" id="paintnm">
+		<br>
+		<label for="brandnm">ブランド名</label>
+		<select name="brandnm" id="brandnm">
+			<option value="mrc">Mr.カラー</option>
+		</select>
+		<br>
+		<label for="plmdl">プラモデル</label>
+		<select name="plmdl" id="plmdl">
+			<option value="0002">ワスプ 1/700</option>
+		</select>
+	</div>
+	<button type="submit">検索</button>
+</form>
+<!-- 検索一覧テーブル -->
+<div class="searchTable">
+	<table>
+		<thead>
+			<tr>
+				<th>カラーコード</th>
+				<th>カラー名</th>
+				<th>ブランド名</th>
+				<th>所持</th>
+				<th>近似色</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>XF-1</td>
+				<td>フラットブラック</td>
+				<td>アクリル塗料ミニ</td>
+				<td>所持</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>
