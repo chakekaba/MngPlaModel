@@ -57,7 +57,7 @@ public class ServerLogic {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			MdlCommonData comData
-		) {
+		)  throws Exception {
 		
 	};
 	
@@ -67,7 +67,7 @@ public class ServerLogic {
 	 */
 	protected void checkInputData(
 			MdlCommonData comData
-		) {
+		)  throws Exception {
 		
 	};
 	
@@ -81,7 +81,7 @@ public class ServerLogic {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			MdlCommonData comData
-		) {
+		)  throws Exception {
 		
 	};
 }
