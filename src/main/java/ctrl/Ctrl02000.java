@@ -16,20 +16,28 @@ import base.constant.StringEncode;
 import base.logic.URILogic;
 import base.logic.model.URILogicModel;
 import base.model.MdlCommonData;
-import logic.sv.LogicLogin;
+import logic.sv.Logic02000;
 
 /**
- * Servlet implementation class Ctrl00000
+ * Servlet implementation class Ctrl02000
  */
-@WebServlet("/View00000")
-public class Ctrl00000 extends HttpServlet {
+@WebServlet("/View02000")
+public class Ctrl02000 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Ctrl02000() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		// 文字エンコーディング設定:UTF-8
 		request.setCharacterEncoding(StringEncode.UTF8);
 		
@@ -51,31 +59,21 @@ public class Ctrl00000 extends HttpServlet {
 			return;
 		}
 		
-		// 遷移処理でエラー発生→リダイレクトで遷移元に戻ってきた場合
-		if (!ResultConstant.NORMAL.equals(comData.getResult())) {
-			
-			dispatcher = request.getRequestDispatcher(ParamIdWeb.View00000.PAGE_SRC);
-			
-			dispatcher.forward(request, response);
-
-			return;
-		}
-
 		// 遷移元画面URI取得
 		URILogic uriLogic = new URILogic();
 		URILogicModel uriLogicMdl = new URILogicModel();
 		
 		uriLogic.getReferrerViewData(request, uriLogicMdl);
-//	------------------------
-//	------------------------
-
-		// 共通データ保持クラスをセッションスコープに設定
-		session.setAttribute(ParamIdWeb.COM_DATA, comData);
 		
+		// サーバ処理（仮）
+		Logic02000 logic02000 = new Logic02000();
+		logic02000.execute(request, response, comData);
+		
+		// 遷移先画面判定
 		if (ResultConstant.NORMAL.equals(comData.getResult())) {
 			
 			// メイン画面へのフォワード遷移実行
-			dispatcher = request.getRequestDispatcher(ParamIdWeb.View00000.PAGE_SRC);
+			dispatcher = request.getRequestDispatcher(ParamIdWeb.View02000.PAGE_SRC);
 			
 			dispatcher.forward(request, response);
 
@@ -87,8 +85,7 @@ public class Ctrl00000 extends HttpServlet {
 			response.sendRedirect(uriLogicMdl.getFullURI());
 		}
 	}
-	
-	
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -114,7 +111,8 @@ public class Ctrl00000 extends HttpServlet {
 			
 			return;
 		}
-
+		
+		
 		// 遷移元画面URI取得
 		URILogic uriLogic = new URILogic();
 		URILogicModel uriLogicMdl = new URILogicModel();
@@ -123,32 +121,19 @@ public class Ctrl00000 extends HttpServlet {
 		
 		String viewIdFr = uriLogicMdl.getServletPath();
 
-//		// 遷移元の画面ID取得
-//		// 一旦省略
-//		String viewIdFr = "遷移元画面ID";
-//
-//		// 遷移元別のサーバ処理を実行
-//		switch (viewIdFr) {
-//			case "xxxxx":
-//				break;
-//
-//			case "yyyyy":
-//				break;
-//		}
-				
+		// 以下編集中 ------------------
 		// サーバ処理（仮）
-		LogicLogin logicLogin = new LogicLogin();
+		Logic02000 logic02000 = new Logic02000();
 		
-		logicLogin.execute(request, response, comData);
-		
+		logic02000.execute(request, response, comData);
 		
 		// 共通データ保持クラスをセッションスコープに設定
 		session.setAttribute(ParamIdWeb.COM_DATA, comData);
-		
+
 		if (ResultConstant.NORMAL.equals(comData.getResult())) {
 			
-			// メイン画面へのフォワード遷移実行
-			dispatcher = request.getRequestDispatcher(ParamIdWeb.View00000.PAGE_SRC);
+			// 塗料一覧画面へのフォワード遷移実行
+			dispatcher = request.getRequestDispatcher(ParamIdWeb.View02000.PAGE_SRC);
 			
 			dispatcher.forward(request, response);
 
@@ -159,7 +144,6 @@ public class Ctrl00000 extends HttpServlet {
 			// 遷移元画面用servletにリダイレクト遷移で戻る
 			response.sendRedirect(uriLogicMdl.getFullURI());
 		}
-		
-	}
 
+	}
 }
