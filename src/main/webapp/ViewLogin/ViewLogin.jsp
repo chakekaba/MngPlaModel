@@ -9,15 +9,26 @@
 <head>
 <meta charset="UTF-8">
 <title>プラモデル管理アプリ</title>
+<!-- BootstrapのCSS読み込み -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!-- jQuery読み込み -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- BootstrapのJS読み込み -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="container">
 <h2>ログイン</h2>
 <form action="/MngPlaModel/View00000" method="post">
-<label for="user">ユーザ：</label>
-<input type="text" id="user" name="<%=ParamIdWeb.ViewLogin.USER%>"><br>
-<label for="pass">パスワード：</label>
-<input type="password" id="pass" name="<%=ParamIdWeb.ViewLogin.PASS%>"><br>
-<button type="submit">ログイン</button>
+	<div class="mb-3 w-50">
+		<label for="user" class="form-label">ユーザ：</label>
+		<input type="text" id="user" name="<%=ParamIdWeb.ViewLogin.USER%>" class="form-control">
+	</div>
+	<div class="mb-3 w-50">
+		<label for="pass" class="form-label">パスワード：</label>
+		<input type="password" id="pass" name="<%=ParamIdWeb.ViewLogin.PASS%>" class="form-control">
+	</div>
+	<button type="submit" class="btn btn-primary mb-3">ログイン</button>
 </form>
 <%
 MdlCommonData comData = (MdlCommonData)session.getAttribute(ParamIdWeb.COM_DATA);
@@ -25,5 +36,6 @@ MdlCommonData comData = (MdlCommonData)session.getAttribute(ParamIdWeb.COM_DATA)
 comData.clearErr();
 session.setAttribute(ParamIdWeb.COM_DATA, comData);
 %>
+</div>
 </body>
 </html>

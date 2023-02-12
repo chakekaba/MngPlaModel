@@ -14,20 +14,27 @@
 <head>
 <meta charset="UTF-8">
 <title>プラモデル管理アプリ</title>
-<!-- <link rel="stylesheet" href="/MngPlaModel/WEB-INF/View/View02000/View02000.css"> -->
-<link rel="stylesheet" href="/MngPlaModel/ViewSample/css/View02000Sample.css">
+<!-- BootstrapのCSS読み込み -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!-- jQuery読み込み -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- BootstrapのJS読み込み -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="container">
 <h1>塗料一覧</h1>
-<form action="<%= ParamIdWeb.View02000.FORM_PATH %>" method="post">
-	<div>
-		<!-- 塗料名（部分一致） -->
-		<label for="paintnm">塗料名（部分一致）</label>
-		<input type="text" name="<%= ParamIdWeb.View02000.COLOR_NM %>"
+<form action="<%= ParamIdWeb.View02000.FORM_PATH %>" method="post" class="mb-3 border-bottom">
+	<!-- 塗料名（部分一致） -->
+	<div class="mb-3 w-50">
+		<label for="paintnm" class="form-label">塗料名（部分一致）</label>
+		<input type="text" class="form-control" name="<%= ParamIdWeb.View02000.COLOR_NM %>"
 			id="paintnm" value="${param['colornm']}">
-		<br>
-		<label for="brandnm">ブランド名</label>
-		<select name="<%= ParamIdWeb.View02000.BRAND_ID %>" id="brandnm">
+	</div>
+	<!-- ブランド -->
+	<div class="mb-3 w-50">
+		<label for="brandnm" class="form-label">ブランド</label>
+		<select class="form-control" name="<%= ParamIdWeb.View02000.BRAND_ID %>" id="brandnm">
 			<option />
 			<c:forEach var="brand" items="${View02000Out.brandList}">
 				<c:choose>
@@ -40,9 +47,11 @@
 				</c:choose>
 			</c:forEach>
 		</select>
-		<br>
-		<label for="plmdl">プラモデル</label>
-		<select name="<%= ParamIdWeb.View02000.PLMDL_ID %>" id="plmdl">
+	</div>
+	<!-- プラモデル -->
+	<div class="mb-3 w-50">
+		<label for="plmdl" class="form-label">プラモデル</label>
+		<select class="form-control" name="<%= ParamIdWeb.View02000.PLMDL_ID %>" id="plmdl">
 			<option />
 			<c:forEach var="plmdl" items="${View02000Out.plmdlList}">
 				<c:choose>
@@ -55,14 +64,14 @@
 				</c:choose>
 			</c:forEach>
 		</select>
-		<input type="hidden" name="<%= ParamIdWeb.View02000.SEARCH_EXE_FLG %>" value="1">
 	</div>
-	<button type="submit">検索</button>
+	<input type="hidden" name="<%= ParamIdWeb.View02000.SEARCH_EXE_FLG %>" value="1">
+	<button type="submit" class="btn btn-primary mb-3">検索</button>
 </form>
 <!-- 検索一覧テーブル -->
-<div class="searchTable">
-	<table>
-		<thead>
+<div class="mb-3">
+	<table class="table table-sm table-striped table-hover table-bordered">
+		<thead class="table-secondary">
 			<tr>
 				<th>ブランド名</th>
 				<th>カラーコード</th>
@@ -86,11 +95,14 @@
 		</tbody>
 	</table>
 </div>
-<a href="<%= ParamIdWeb.View00000.FORM_PATH %>">メイン画面</a>
+<div class="mb-3">
+	<a href="<%= ParamIdWeb.View00000.FORM_PATH %>">メイン画面</a>
+</div>
 <%
 MdlCommonData comData = (MdlCommonData)session.getAttribute(ParamIdWeb.COM_DATA);
 // エラー情報クリア
 comData.clearErr();
 %>
+</div>
 </body>
 </html>
