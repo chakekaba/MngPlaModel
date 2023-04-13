@@ -96,6 +96,9 @@ public class Logic02000 extends ServerLogic {
 		}
 		
 		inputData.setSearchExeFlg(searchExeFlg);
+		
+		// リクエストパラメータに設定
+		request.setAttribute(ParamIdWeb.View02000.INDATA, inputData);
 	}
 	
 	@Override
