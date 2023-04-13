@@ -67,6 +67,9 @@ public class ParamIdWeb {
 		/** 検索実行フラグ(0:false, 1:true) **/
 		public static final String SEARCH_EXE_FLG = "searchExeFlg";
 		
+		/** 入力データ **/
+		public static final String INDATA = "View02000In";
+
 		/** 出力データ **/
 		public static final String OUTDATA = "View02000Out";
 	}
