@@ -78,9 +78,6 @@ public class Ctrl02000 extends HttpServlet {
 			dispatcher.forward(request, response);
 
 		} else {
-			
-			comData.showErrorLog();
-			
 			// 遷移元画面用servletにリダイレクト遷移で戻る
 			response.sendRedirect(uriLogicMdl.getFullURI());
 		}
@@ -138,8 +135,6 @@ public class Ctrl02000 extends HttpServlet {
 			dispatcher.forward(request, response);
 
 		} else {
-			
-			comData.showErrorLog();
 			
 			// 遷移元画面用servletにリダイレクト遷移で戻る
 			response.sendRedirect(uriLogicMdl.getFullURI());

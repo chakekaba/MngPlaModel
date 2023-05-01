@@ -23,7 +23,29 @@
 </head>
 <body>
 <div class="container">
-<h1>塗料一覧</h1>
+	<div class="row mb-3">
+		<div class="col">
+			<h2>塗料一覧</h2>
+		</div>
+	</div>
+	<c:if test="${not empty comData.errorDataList }">
+		<!-- エラーメッセージ表示 -->
+		<div class="row mb-3">
+			<ul>
+				<c:forEach var="errorData" items="${ comData.errorDataList }">
+					<c:if test="${ errorData.isINFO() }">
+						<li class="alert alert-info"><c:out value="${ errorData.message }" /></li>
+					</c:if>
+					<c:if test="${ errorData.isWARNING() }">
+						<li class="alert alert-warning"><c:out value="${ errorData.message }" /></li>
+					</c:if>
+					<c:if test="${ errorData.isSEVERE() }">
+						<li class="alert alert-danger"><c:out value="${ errorData.message }" /></li>
+					</c:if>
+				</c:forEach>
+			</ul>
+		</div>
+	</c:if>
 <form action="<%= ParamIdWeb.View02000.FORM_PATH %>" method="post" class="mb-3 border-bottom">
 	<!-- 塗料名（部分一致） -->
 	<div class="mb-3 w-50">
@@ -98,11 +120,7 @@
 <div class="mb-3">
 	<a href="<%= ParamIdWeb.View00000.FORM_PATH %>">メイン画面</a>
 </div>
-<%
-MdlCommonData comData = (MdlCommonData)session.getAttribute(ParamIdWeb.COM_DATA);
-// エラー情報クリア
-comData.clearErr();
-%>
+${ comData.clearErr() }
 </div>
 </body>
 </html>

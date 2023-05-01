@@ -2,6 +2,8 @@ package logic.sv;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +39,9 @@ public class Logic02000 extends ServerLogic {
 	/** データベース接続クラス **/
 	protected DbConnection dbconn = null;
 
+	/** ロガーインスタンス **/
+	Logger logger = Logger.getLogger(Logic02000.class.getName());
+
 	/**
 	 * 正常系処理
 	 */
@@ -46,6 +51,8 @@ public class Logic02000 extends ServerLogic {
 			HttpServletResponse response,
 			MdlCommonData comData
 		) throws Exception {
+		
+		logger.setLevel(Level.INFO);
 		
 		// DB接続
 		dbconn = new DbConnection();
@@ -118,6 +125,11 @@ public class Logic02000 extends ServerLogic {
 		
 		sql0001.execute(dbconn, comData, sqlin, sqlout);
 		
+		// 例外発生の場合DBロールバック実行
+		if (!comData.getResult().equals(ResultConstant.NORMAL)) {
+			dbconn.roolback();
+		}
+		
 		// 出力データにブランドリストを設定
 		outputData.setBrandList(sqlout);
 	}
@@ -136,6 +148,11 @@ public class Logic02000 extends ServerLogic {
 		
 		sql0002.execute(dbconn, comData, sqlin, sqlout);
 		
+		// 例外発生の場合DBロールバック実行
+		if (!comData.getResult().equals(ResultConstant.NORMAL)) {
+			dbconn.roolback();
+		}
+		
 		// 出力データにプラモデルリストを設定
 		outputData.setPlmdlList(sqlout);
 	}
@@ -145,7 +162,7 @@ public class Logic02000 extends ServerLogic {
 	 * @param comData
 	 */
 	protected void doSql_SQL0003(
-			MdlCommonData comData) {
+			MdlCommonData comData) throws Exception {
 		SQL0003_SelPaintList sql0003 = new SQL0003_SelPaintList();
 		SQL0003In sqlin = new SQL0003In();
 		List<SQL0003Out> sqlout = new ArrayList<SQL0003Out>();
@@ -184,6 +201,11 @@ public class Logic02000 extends ServerLogic {
 		// SQL実行
 		sql0003.execute(dbconn, comData, sqlin, sqlout);
 		
+		// 例外発生の場合DBロールバック実行
+		if (!comData.getResult().equals(ResultConstant.NORMAL)) {
+			dbconn.roolback();
+		}
+		
 		// 出力データにプラモデルリストを設定
 		outputData.setResultList(sqlout);
 	}
@@ -210,7 +232,7 @@ public class Logic02000 extends ServerLogic {
 		
 		String msg = "塗料一覧で想定外のエラーが発生";
 		comData.setResult(ResultConstant.LOGIC_ERROR);
-		comData.setErrorData(e, msg);
+		comData.setErrorData(logger, Level.SEVERE, e, msg);
 	}
 
 }
