@@ -1,6 +1,8 @@
 package logic.sv;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +33,9 @@ public class LogicLogin extends ServerLogic {
 	/** データベース接続クラス **/
 	protected DbConnection dbconn = null;
 	
+	/** ロガーインスタンス **/
+	Logger logger = Logger.getLogger(LogicLogin.class.getName());
+	
 	/** コンストラクタ **/
 	public LogicLogin() {
 	}
@@ -45,23 +50,16 @@ public class LogicLogin extends ServerLogic {
 			MdlCommonData comData
 		) throws Exception {
 		
+		logger.setLevel(Level.INFO);
+		
 		getInputData(request, response, comData);
 		
 		checkInputData(comData);
 		
+		doSql_SQL0000(comData);
 		
-		// 実行結果が正常の場合
-		if (ResultConstant.NORMAL.equals(comData.getResult())) {
-			
-			// 
-			doSql_SQL0000(comData);
-		}
-		
-		// 実行結果が正常の場合
-		if (ResultConstant.NORMAL.equals(comData.getResult())) {
-			editSetOutputData(request, response, comData);
+		editSetOutputData(request, response, comData);
 
-		}
 	}
 	
 	@Override
@@ -90,7 +88,8 @@ public class LogicLogin extends ServerLogic {
 		if (userName == null || userName.equals("")) {
 			String msg = "必須チェックエラー：ユーザ名";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
-			comData.setErrorData(new ExceptionLogic(), msg);
+//			comData.setErrorData(new ExceptionLogic(), msg);
+			comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
 		}
 		
 		// -- ユーザ名 -----------
@@ -101,7 +100,7 @@ public class LogicLogin extends ServerLogic {
 		if (password == null || password.equals("")) {
 			String msg = "必須チェックエラー：パスワード";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
-			comData.setErrorData(new ExceptionLogic(), msg);
+			comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
 		}
 
 	}
@@ -129,7 +128,7 @@ public class LogicLogin extends ServerLogic {
 			String errMsg = "DB接続時にエラー発生";
 			
 			comData.setResult(ResultConstant.LOGIC_ERROR);
-			comData.setErrorData(e, errMsg);
+			comData.setErrorData(logger, Level.SEVERE, e, errMsg);
 		} finally {
 			try {
 				if (dbconn != null) {
@@ -162,6 +161,6 @@ public class LogicLogin extends ServerLogic {
 		
 		String msg = "ログイン処理で想定外のエラーが発生";
 		comData.setResult(ResultConstant.LOGIC_ERROR);
-		comData.setErrorData(e, msg);
+		comData.setErrorData(logger, Level.SEVERE, e, msg);
 	};
 }

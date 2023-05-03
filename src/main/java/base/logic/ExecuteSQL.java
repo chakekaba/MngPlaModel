@@ -54,7 +54,8 @@ abstract public class ExecuteSQL {
 			String errMsg = sqlId + ":SQL文が設定されていません";
 
 			comData.setResult(ResultConstant.SQL_ERROR);
-			comData.setErrorData(new ExceptionLogic(), errMsg);
+//			comData.setErrorData(new ExceptionLogic(), errMsg);
+			comData.setErrorData(null, null, new ExceptionLogic(), errMsg);
 		}
 
 		if (ResultConstant.NORMAL.equals(comData.getResult())) {
@@ -83,7 +84,8 @@ abstract public class ExecuteSQL {
 				String errMsg = sqlId + ":SQL実行時に例外発生";
 				
 				comData.setResult(ResultConstant.SQL_ERROR);
-				comData.setErrorData(e, errMsg);
+//				comData.setErrorData(e, errMsg);
+				comData.setErrorData(null, null, e, errMsg);
 				
 			} finally {
 				try {
