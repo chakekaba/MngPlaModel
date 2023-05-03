@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import base.constant.ResultConstant;
 import base.logic.DbConnection;
@@ -19,6 +21,9 @@ import logic.sql.model.SQL0003Out;
  *
  */
 public class SQL0003_SelPaintList {
+
+	/** ロガーインスタンス **/
+	Logger logger = Logger.getLogger(SQL0000_connectionCheck.class.getName());
 
 	/** SQL文**/
 	protected static final String sql = 
@@ -110,6 +115,8 @@ public class SQL0003_SelPaintList {
 			SQL0003In inData,
 			List<SQL0003Out> outData) {
 		
+		logger.setLevel(Level.INFO);
+
 		try {
 			
 			editStatement(conn, inData);
@@ -122,7 +129,7 @@ public class SQL0003_SelPaintList {
 			String errMsg = sqlId + ":SQL実行時に例外発生";
 			
 			comData.setResult(ResultConstant.SQL_ERROR);
-			comData.setErrorData(e, errMsg);
+			comData.setErrorData(logger, Level.WARNING, e, errMsg);
 		} finally {
 			close(comData);
 		}
@@ -212,7 +219,7 @@ public class SQL0003_SelPaintList {
 			String errMsg = sqlId + ":リソースのクローズ処理時に例外発生（異常終了とはしない）";
 
 			// 実行結果は更新せず
-			comData.setErrorData(e, errMsg);
+			comData.setErrorData(logger, Level.INFO, e, errMsg);
 		}
 	}
 }

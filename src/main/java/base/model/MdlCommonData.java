@@ -2,6 +2,8 @@ package base.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import base.constant.ResultConstant;
 
@@ -19,13 +21,31 @@ public class MdlCommonData extends JavaBeansModel {
 	private List<ErrorData> errorDataList = new ArrayList<ErrorData>();
 	
 	/** エラー情報クラス **/
-	private class ErrorData {
+	public class ErrorData {
+		
+		/** ログレベル **/
+		private Level logLevel;
 		
 		/** 発生例外 **/
 		private Exception exception;
 		
 		/** メッセージ **/
 		private String message;
+
+		// -- ログレベル ---------------------------
+		/**
+		 * @return logLevel
+		 */
+		public Level getLogLevel() {
+			return logLevel;
+		}
+
+		/**
+		 * @param logLevel セットする logLevel
+		 */
+		public void setLogLevel(Level logLevel) {
+			this.logLevel = logLevel;
+		}
 
 		// -- 発生例外 ---------------------------
 		public Exception getException() {
@@ -43,6 +63,17 @@ public class MdlCommonData extends JavaBeansModel {
 
 		public void setMessage(String message) {
 			this.message = message;
+		}
+		
+		public boolean isINFO() {
+			return this.logLevel.equals(Level.INFO);
+		}
+		
+		public boolean isWARNING() {
+			return this.logLevel.equals(Level.WARNING);
+		}
+		public boolean isSEVERE() {
+			return this.logLevel.equals(Level.SEVERE);
 		}
 	}
 
@@ -69,6 +100,14 @@ public class MdlCommonData extends JavaBeansModel {
 		this.result = result;
 	}
 	
+	// -- エラー情報クラスリスト ---------------------------
+	/**
+	 * @return errorDataList
+	 */
+	public List<ErrorData> getErrorDataList() {
+		return errorDataList;
+	}
+
 	// -- 検出エラー件数 ---------------------------
 	public int getErrorCnt() {
 		return this.errorDataList.size();
@@ -97,37 +136,68 @@ public class MdlCommonData extends JavaBeansModel {
 		
 	}
 
+//	/**
+//	 * エラー情報格納処理
+//	 * @param exception
+//	 * @param message
+//	 */
+//	public void setErrorData(Exception exception, String message) {
+//		
+//		// エラー情報クラスにエラー情報を設定
+//		ErrorData errorData = new ErrorData();
+//		
+//		errorData.setException(exception);
+//		errorData.setMessage(message);
+//		
+//		// エラー情報クラスリストに格納
+//		errorDataList.add(errorData);
+//	}
+	
+	
 	/**
 	 * エラー情報格納処理
-	 * @param exception
-	 * @param message
+	 * @param logger 出力先ロガー
+	 * @param level エラーレベル
+	 * @param exception 発生例外
+	 * @param message 表示メッセージ
 	 */
-	public void setErrorData(Exception exception, String message) {
+	public void setErrorData(Logger logger, Level level, Exception exception, String message) {
 		
-		// エラー情報クラスにエラー情報を設定
+		// メッセージ出力
+		if (!logger.equals(null)) {
+			logger.log(level, message);
+		}
+		
+		// エラー情報出力
+		if (!exception.equals(null)) {
+			exception.printStackTrace();
+		}
+		
+		// エラー情報格納
 		ErrorData errorData = new ErrorData();
 		
 		errorData.setException(exception);
+		errorData.setLogLevel(level);
 		errorData.setMessage(message);
 		
 		// エラー情報クラスリストに格納
 		errorDataList.add(errorData);
 	}
-	
-	/**
-	 * エラーログ出力（暫定）
-	 */
-	public void showErrorLog() {
-		
-		for (ErrorData errorData: errorDataList) {
-			
-			String message = errorData.getMessage();
-			
-			Exception e = errorData.getException();
-			
-			System.out.println(message);
-			
-			e.printStackTrace();
-		}
-	}
+
+//	/**
+//	 * エラーログ出力（暫定）
+//	 */
+//	public void showErrorLog() {
+//		
+//		for (ErrorData errorData: errorDataList) {
+//			
+//			String message = errorData.getMessage();
+//			
+//			Exception e = errorData.getException();
+//			
+//			System.out.println(message);
+//			
+//			e.printStackTrace();
+//		}
+//	}
 }

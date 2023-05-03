@@ -31,7 +31,7 @@ public class TestExecuteSQL extends ExecuteSQL {
 			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			comData.setErrorData(e, "DB接続でエラー");
+			comData.setErrorData(null, null, e, "DB接続でエラー");
 		}
 
 	}
