@@ -22,7 +22,10 @@
 		<div class="mb-3 w-50">
 			<label for="brandid" class="form-label">ブランド</label>
 			<select class="form-control" id="brandid" name="brandid">
-				<option value="">
+				<option hidden>選択してください</option>
+				<option value="am">アクリル塗料ミニ（タミヤ/水性アクリル）</option>
+				<option value="mc">Mr.カラー（GSIクレオス/ラッカー）</option>
+				<option value="sh">水性ホビーカラー（GSIクレオス/水性アクリル）</option>
 			</select>
 		</div>
 		<!-- カラーコード -->
@@ -39,16 +42,16 @@
 		<div class="mb-3 w-50">
 			<label for="posession" class="form-label">所持状況</label>
 			<select class="form-control" id="posession" name="posession">
-				<option value="0" selected>未所持</option>
-				<option value="1">所持</option>
+				<option value="1" selected>所持</option>
+				<option value="0">未所持</option>
 			</select>
 		</div>
 		<!-- 選択肢表示 -->
 		<div class="mb-3 w-50">
 			<label for="selvisible" class="form-label">選択肢表示</label>
 			<select class="form-control" id="selvisible" name="selvisible">
-				<option value="0" selected>非表示</option>
-				<option value="1">表示</option>
+				<option value="1" selected>表示</option>
+				<option value="0">非表示</option>
 			</select>
 		</div>
 		<!-- 近似色 -->
@@ -64,6 +67,10 @@
 			<button type="submit" class="btn btn-primary">登録</button>
 		</div>
 	</form>
+	<div>
+		<!-- 塗料一覧画面遷移ボタン -->
+		<a href="/MngPlaModel/ViewSample/View02000Sample.html" class="btn btn-info" role="button">塗料一覧画面</a>
+	</div>
 </div>
 </body>
 </html>
