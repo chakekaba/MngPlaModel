@@ -4,43 +4,43 @@ import base.model.JavaBeansModel;
 
 /**
  * @author kk-ma
- * 塗料一覧行数カウント用SQL1_OutDM
+ * 塗料一覧行数カウント用SQL_OutDM
  */
 public class SQL1001In extends JavaBeansModel {
 	
-	/** ブランドID **/
-	private String brandid;
+	/** 塗料ID **/
+	private String paintid;
 	
-	/** カラーコード **/
-	private String colorcode;
+	/** 選択肢表示 **/
+	private String selvisible;
 
 	// getter/setter -----------------------------------------
 	/**
-	 * @return brandid
+	 * @return paintid
 	 */
-	public String getBrandid() {
-		return brandid;
+	public String getPaintid() {
+		return paintid;
 	}
 
 	/**
-	 * @param brandid セットする brandid
+	 * @param paintid セットする paintid
 	 */
-	public void setBrandid(String brandid) {
-		this.brandid = brandid;
+	public void setPaintid(String paintid) {
+		this.paintid = paintid;
+	}	
+
+	/**
+	 * @return selvisible
+	 */
+	public String getSelvisible() {
+		return selvisible;
 	}
 
 	/**
-	 * @return colorcode
+	 * @param selvisible セットする selvisible
 	 */
-	public String getColorcode() {
-		return colorcode;
-	}
-
-	/**
-	 * @param colorcode セットする colorcode
-	 */
-	public void setColorcode(String colorcode) {
-		this.colorcode = colorcode;
+	public void setSelvisible(String selvisible) {
+		this.selvisible = selvisible;
 	}
 	// getter/setter end -----------------------------------------
 }

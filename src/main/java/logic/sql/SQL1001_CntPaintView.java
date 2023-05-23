@@ -13,23 +13,24 @@ import base.model.MdlCommonData;
 import logic.sql.model.SQL1001In;
 import logic.sql.model.SQL1XXXCntOut;
 
+
 /**
- * 塗料一覧行数カウント用SQL1（ブランドID,カラーコード）
+ * 塗料一覧行数カウント用SQL（検索対象：塗料ID・選択肢表示）
  * @author kk-ma
  */
-public class SQL1001_CntPaintView_1 {
+public class SQL1001_CntPaintView {
 	
 	/** ロガーインスタンス **/
-	Logger logger = Logger.getLogger(SQL1001_CntPaintView_1.class.getName());
-	
+	Logger logger = Logger.getLogger(SQL1001_CntPaintView.class.getName());
+
 	/** SQL文**/
 	protected static final String sql =
-			"select\n"
-			+ "    count(*)\n"
-			+ "from paintView\n"
-			+ "where\n"
-			+ "    brandid = ?\n"
-			+ "    and colorcode = ?";
+			"select\r\n"
+			+ "    count(*)\r\n"
+			+ "from paintView\r\n"
+			+ "where\r\n"
+			+ "    paintid = ?\r\n"
+			+ "    and selvisible like ?";
 
 	/** SQLid **/
 	protected static final String sqlId = "SQL1001";
@@ -39,12 +40,11 @@ public class SQL1001_CntPaintView_1 {
 	
 	/** SQL結果リスト **/
 	protected ResultSet rSet = null;
-
 	
 	/**
 	 * コンストラクタ
 	 */
-	public SQL1001_CntPaintView_1() {
+	public SQL1001_CntPaintView() {
 	}
 	
 	/**
@@ -54,14 +54,14 @@ public class SQL1001_CntPaintView_1 {
 	public static void main(String[] args) {
 		DbConnection conn = new DbConnection();
 		MdlCommonData comData = new MdlCommonData();
-		SQL1001_CntPaintView_1 sql1001 = new SQL1001_CntPaintView_1();
+		SQL1001_CntPaintView sql1001 = new SQL1001_CntPaintView();
 		SQL1001In inData = new SQL1001In();
 		SQL1XXXCntOut outData = new SQL1XXXCntOut();
-		
-//		inData.setBrandid("am");
-		inData.setBrandid("zz");
-		inData.setColorcode("X-10");
-//		inData.setColorcode("zzzz");
+
+		inData.setPaintid("amX-10");
+//		inData.setPaintid("xxxxxx");
+//		inData.setSelvisible("%%");
+		inData.setSelvisible("1");
 		
 		try {
 			conn.connect();
@@ -72,6 +72,7 @@ public class SQL1001_CntPaintView_1 {
 		}
 		
 		System.out.println("行数：" + outData.getRowCnt());
+
 	}
 	
 	/**
@@ -88,7 +89,6 @@ public class SQL1001_CntPaintView_1 {
 			SQL1XXXCntOut outData) {
 		
 		logger.setLevel(Level.INFO);
-
 		
 		try {
 			editStatement(conn, inData);
@@ -119,11 +119,11 @@ public class SQL1001_CntPaintView_1 {
 		
 		pstmt = conn.getStatement(sql);
 		
-		// ブランドID
-		pstmt.setString(1, inData.getBrandid());
+		// 近似塗料ID
+		pstmt.setString(1, inData.getPaintid());
 		
-		// カラーコード
-		pstmt.setString(2, inData.getColorcode());
+		// 選択肢表示
+		pstmt.setString(2, inData.getSelvisible());
 	}
 	
 	/**
