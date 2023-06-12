@@ -15,6 +15,11 @@ import logic.sql.model.SQL0003Out;
 import logic.sql.model.SQL2001In;
 import logic.sql.model.SQL2001Out;
 
+/**
+ * 塗料一覧登録SQL
+ * @author kk-ma
+ *
+ */
 public class SQL2001_InsPaintList {
 
 	/** ロガーインスタンス **/

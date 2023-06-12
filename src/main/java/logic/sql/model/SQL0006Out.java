@@ -3,18 +3,20 @@ package logic.sql.model;
 import base.model.JavaBeansModel;
 
 /**
+ * 塗料情報データ取得OutDM
  * @author kk-ma
- * 塗料一覧行数カウント用SQL_InDM
+ *
  */
-public class SQL1001In extends JavaBeansModel {
-	
+public class SQL0006Out extends JavaBeansModel {
+
 	/** 塗料ID **/
 	private String paintid;
-	
-	/** 選択肢表示 **/
-	private String selvisible;
+
+	/** 塗料情報 **/
+	private String paintData;
 
 	// getter/setter -----------------------------------------
+
 	/**
 	 * @return paintid
 	 */
@@ -27,20 +29,21 @@ public class SQL1001In extends JavaBeansModel {
 	 */
 	public void setPaintid(String paintid) {
 		this.paintid = paintid;
-	}	
-
-	/**
-	 * @return selvisible
-	 */
-	public String getSelvisible() {
-		return selvisible;
 	}
 
 	/**
-	 * @param selvisible セットする selvisible
+	 * @return paintData
 	 */
-	public void setSelvisible(String selvisible) {
-		this.selvisible = selvisible;
+	public String getPaintData() {
+		return paintData;
 	}
+
+	/**
+	 * @param paintData セットする paintData
+	 */
+	public void setPaintData(String paintData) {
+		this.paintData = paintData;
+	}
+
 	// getter/setter end -----------------------------------------
 }
