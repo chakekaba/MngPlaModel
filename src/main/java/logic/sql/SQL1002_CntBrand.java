@@ -24,7 +24,7 @@ public class SQL1002_CntBrand {
 	/** ロガーインスタンス **/
 	Logger logger = Logger.getLogger(SQL1002_CntBrand.class.getName());
 
-	/** SQL文1_全対象 **/
+	/** SQL文0_全対象 **/
 	protected final String sqlNo0 =
 			"select\n"
 			+ "    count(*)\n"
@@ -49,6 +49,7 @@ public class SQL1002_CntBrand {
 	/** SQL番号1_種別:塗料 **/
 	public static final int SQL_NO1 = 1;
 	
+	/** SQL格納リスト **/
 	protected final String[] sqlList = {
 			sqlNo0,
 			sqlNo1

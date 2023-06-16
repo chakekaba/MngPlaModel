@@ -115,6 +115,8 @@ public class Logic02010 extends ServerLogic {
 		SQL0001In sqlin = new SQL0001In();
 		List<SQL0001Out> sqlout = new ArrayList<SQL0001Out>();
 		
+		sqlin.setSqlNo(SQL0001_SelBrandList.SQL_NO1);
+		
 		sql0001.execute(dbconn, comData, sqlin, sqlout);
 		
 		// 例外発生の場合DBロールバック実行

@@ -3,6 +3,7 @@ package logic.sql;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,14 +20,36 @@ public class SQL0001_SelBrandList {
 	/** ロガーインスタンス **/
 	Logger logger = Logger.getLogger(SQL0000_connectionCheck.class.getName());
 
-	/** SQL文**/
-	protected static final String sql = 
+	/** SQL文0_全対象 **/
+	protected final String sqlNo0 = 
 			"select\r\n"
 			+ "  brandid,\r\n"
 			+ "  brandnm\r\n"
 			+ "from mst0000_brand\r\n"
 			+ "order by brandid";
 	
+	/** SQL番号0_全対象 **/
+	public static final int SQL_NO0 = 0;
+
+	/** SQL文1_種別:塗料 **/
+	protected final String sqlNo1 =
+			"select\r\n"
+			+ "  brandid,\r\n"
+			+ "  brandnm\r\n"
+			+ "from mst0000_brand\r\n"
+			+ "where\r\n"
+			+ "  producttypeid in ('lcr','acl','ena')\r\n"
+			+ "order by brandid";
+	
+	/** SQL番号1_種別:塗料 **/
+	public static final int SQL_NO1 = 1;
+	
+	/** SQL格納リスト **/
+	protected final String[] sqlList = {
+			sqlNo0,
+			sqlNo1
+	};
+
 	/** SQLid **/
 	protected static final String sqlId = "SQL0001";
 	
@@ -40,6 +63,43 @@ public class SQL0001_SelBrandList {
 	 * コンストラクタ
 	 */
 	public SQL0001_SelBrandList() {
+	}
+	
+	/**
+	 * 動作確認テスト用
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		DbConnection conn = new DbConnection();
+		MdlCommonData comData = new MdlCommonData();
+		
+		SQL0001_SelBrandList sql0001 = new SQL0001_SelBrandList();
+		SQL0001In sqlin = new SQL0001In();
+		List<SQL0001Out> sqloutList = new ArrayList<SQL0001Out>();
+		
+		sqlin.setSqlNo(SQL_NO0);
+//		sqlin.setSqlNo(SQL_NO1);
+		
+		try {
+			conn.connect();
+			sql0001.execute(conn, comData, sqlin, sqloutList);
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (ResultConstant.NORMAL.equals(comData.getResult())) {
+			
+			System.out.println("行数：" + sqloutList.size());
+			
+			for (SQL0001Out sqlout: sqloutList) {
+
+				System.out.println("-----------------\r\n");
+				System.out.println(sqlout.getBrandid());
+				System.out.println(sqlout.getBrandnm());
+			}
+		}
 	}
 	
 	/**
@@ -86,6 +146,9 @@ public class SQL0001_SelBrandList {
 	private void editStatement(
 			DbConnection conn,
 			SQL0001In inData) throws SQLException {
+		
+		String sql = sqlList[inData.getSqlNo()];
+		
 		pstmt = conn.getStatement(sql);
 	}
 	
