@@ -118,7 +118,10 @@
 	</table>
 </div>
 <div class="mb-3">
-	<a href="<%= ParamIdWeb.View00000.FORM_PATH %>">メイン画面</a>
+	<a href="<%= ParamIdWeb.View02010.FORM_PATH %>" class="btn btn-info" role="button">塗料登録</a>
+</div>
+<div class="mb-3">
+	<a href="<%= ParamIdWeb.View00000.FORM_PATH %>" class="btn btn-info" role="button">メイン画面</a>
 </div>
 ${ comData.clearErr() }
 </div>
