@@ -164,12 +164,12 @@ public class MdlCommonData extends JavaBeansModel {
 	public void setErrorData(Logger logger, Level level, Exception exception, String message) {
 		
 		// メッセージ出力
-		if (!logger.equals(null)) {
+		if (logger != null) {
 			logger.log(level, message);
 		}
 		
 		// エラー情報出力
-		if (!exception.equals(null)) {
+		if (exception != null) {
 			exception.printStackTrace();
 		}
 		
