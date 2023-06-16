@@ -61,10 +61,10 @@
 			<c:forEach var="brand" items="${View02000Out.brandList}">
 				<c:choose>
 					<c:when test="${View02000In.brandid == brand.brandid}">
-						<option value="${brand.brandid}" selected>${brand.brandnm}</option>
+						<option value="${brand.brandid}" selected>${brand.brandData}</option>
 					</c:when>
 					<c:otherwise>
-						<option value="${brand.brandid}">${brand.brandnm}</option>
+						<option value="${brand.brandid}">${brand.brandData}</option>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -106,7 +106,7 @@
 		<tbody>
 			<c:forEach var="result" items="${View02000Out.resultList}">
 			<tr>
-				<td>${result.brandnm}</td>
+				<td>${result.brandData}</td>
 				<td>${result.colorcode}</td>
 				<td>${result.colornm}</td>
 				<td>${result.posession}</td>

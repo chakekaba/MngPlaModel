@@ -50,10 +50,10 @@
 					<c:forEach var="brand" items="${View02010Out.brandList}">
 						<c:choose>
 							<c:when test="${View02010Out.brandid == brand.brandid}">
-								<option value="${brand.brandid}" selected>${brand.brandnm}</option>
+								<option value="${brand.brandid}" selected>${brand.brandData}</option>
 							</c:when>
 							<c:otherwise>
-								<option value="${brand.brandid}">${brand.brandnm}</option>
+								<option value="${brand.brandid}">${brand.brandData}</option>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>

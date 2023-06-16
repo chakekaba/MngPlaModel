@@ -8,8 +8,8 @@ public class SQL0001Out extends JavaBeansModel {
 	/** ブランドID **/
 	private String brandid;
 	
-	/** ブランド名 **/
-	private String brandnm;
+	/** ブランド情報 **/
+	private String brandData;
 
 	// getter/setter -----------------------------------------
 	/**
@@ -27,17 +27,17 @@ public class SQL0001Out extends JavaBeansModel {
 	}
 
 	/**
-	 * @return brandnm ブランド名
+	 * @return brandData ブランド情報
 	 */
-	public String getBrandnm() {
-		return brandnm;
+	public String getBrandData() {
+		return brandData;
 	}
 
 	/**
-	 * @param brandnm ブランド名
+	 * @param brandData ブランド情報
 	 */
-	public void setBrandnm(String brandnm) {
-		this.brandnm = brandnm;
+	public void setBrandData(String brandData) {
+		this.brandData = brandData;
 	}
 	// getter/setter end -----------------------------------------
 }

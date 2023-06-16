@@ -24,9 +24,19 @@ public class SQL0001_SelBrandList {
 	protected final String sqlNo0 = 
 			"select\r\n"
 			+ "  brandid,\r\n"
-			+ "  brandnm\r\n"
-			+ "from mst0000_brand\r\n"
-			+ "order by brandid";
+			+ "  coalesce(brand.brandnm || ' ', '') ||\r\n"
+			+ "  '(' ||\r\n"
+			+ "  coalesce(company.compnm || ' ', '') ||\r\n"
+			+ "  '/' ||\r\n"
+			+ "  coalesce(ptype.abbr || ' ', '') ||\r\n"
+			+ "  ')'\r\n"
+			+ "  as brandData\r\n"
+			+ "from mst0000_brand brand\r\n"
+			+ "left join mst0001_company company on\r\n"
+			+ "  company.compid = brand.compid\r\n"
+			+ "left join mst0002_producttype ptype on\r\n"
+			+ "  ptype.producttypeid = brand.producttypeid\r\n"
+			+ "order by brand.brandid";
 	
 	/** SQL番号0_全対象 **/
 	public static final int SQL_NO0 = 0;
@@ -35,11 +45,21 @@ public class SQL0001_SelBrandList {
 	protected final String sqlNo1 =
 			"select\r\n"
 			+ "  brandid,\r\n"
-			+ "  brandnm\r\n"
-			+ "from mst0000_brand\r\n"
+			+ "  coalesce(brand.brandnm || ' ', '') ||\r\n"
+			+ "  '(' ||\r\n"
+			+ "  coalesce(company.compnm || ' ', '') ||\r\n"
+			+ "  '/' ||\r\n"
+			+ "  coalesce(ptype.abbr || ' ', '') ||\r\n"
+			+ "  ')'\r\n"
+			+ "  as brandData\r\n"
+			+ "from mst0000_brand brand\r\n"
+			+ "left join mst0001_company company on\r\n"
+			+ "  company.compid = brand.compid\r\n"
+			+ "left join mst0002_producttype ptype on\r\n"
+			+ "  ptype.producttypeid = brand.producttypeid\r\n"
 			+ "where\r\n"
-			+ "  producttypeid in ('lcr','acl','ena')\r\n"
-			+ "order by brandid";
+			+ "  brand.producttypeid in ('lcr','acl','ena')\r\n"
+			+ "order by brand.brandid";
 	
 	/** SQL番号1_種別:塗料 **/
 	public static final int SQL_NO1 = 1;
@@ -97,7 +117,7 @@ public class SQL0001_SelBrandList {
 
 				System.out.println("-----------------\r\n");
 				System.out.println(sqlout.getBrandid());
-				System.out.println(sqlout.getBrandnm());
+				System.out.println(sqlout.getBrandData());
 			}
 		}
 	}
@@ -178,7 +198,7 @@ public class SQL0001_SelBrandList {
 			rowData.setBrandid(rSet.getString(1));
 			
 			// ブランド名
-			rowData.setBrandnm(rSet.getString(2));
+			rowData.setBrandData(rSet.getString(2));
 			
 			// 出力データリストに行データを設定
 			outData.add(rowData);
