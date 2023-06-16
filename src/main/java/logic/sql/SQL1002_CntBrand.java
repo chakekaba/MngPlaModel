@@ -115,6 +115,7 @@ public class SQL1002_CntBrand {
 			SQL1XXXCntOut outData) {
 		
 		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, sqlId + ":開始");
 		
 		try {
 			editStatement(conn, inData);
@@ -132,6 +133,7 @@ public class SQL1002_CntBrand {
 			close(comData);
 		}
 
+		logger.log(Level.INFO, sqlId + ":終了");
 	}
 
 	/**

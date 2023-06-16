@@ -131,6 +131,7 @@ public class SQL2001_InsPaintList {
 			SQL2001Out outData) {
 		
 		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, sqlId + ":開始");
 
 		try {
 			
@@ -148,6 +149,8 @@ public class SQL2001_InsPaintList {
 		} finally {
 			close(comData);
 		}
+
+		logger.log(Level.INFO, sqlId + ":終了");
 	}
 	
 	/**

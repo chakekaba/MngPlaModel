@@ -89,6 +89,7 @@ public class SQL1001_CntPaintView {
 			SQL1XXXCntOut outData) {
 		
 		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, sqlId + ":開始");
 		
 		try {
 			editStatement(conn, inData);
@@ -105,6 +106,8 @@ public class SQL1001_CntPaintView {
 		} finally {
 			close(comData);
 		}
+
+		logger.log(Level.INFO, sqlId + ":終了");
 	}
 	
 	/**

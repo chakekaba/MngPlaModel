@@ -105,6 +105,7 @@ public class SQL0004_SelPaintPulldown {
 			List<SQL0004Out> outData) {
 		
 		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, sqlId + ":開始");
 
 		try {
 			
@@ -123,6 +124,7 @@ public class SQL0004_SelPaintPulldown {
 			close(comData);
 		}
 
+		logger.log(Level.INFO, sqlId + ":終了");
 	}
 	
 	/**

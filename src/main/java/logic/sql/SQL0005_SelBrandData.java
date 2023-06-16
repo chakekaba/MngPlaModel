@@ -58,6 +58,34 @@ public class SQL0005_SelBrandData {
 	}
 	
 	/**
+	 * 動作確認テスト
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		DbConnection conn = new DbConnection();
+		MdlCommonData comData = new MdlCommonData();
+		
+		SQL0005_SelBrandData sql0005 = new SQL0005_SelBrandData();
+		SQL0005In inData = new SQL0005In();
+		SQL0005Out outData = new SQL0005Out();
+		
+		inData.setBrandid("am");
+		
+		try {
+			conn.connect();
+			sql0005.execute(conn, comData, inData, outData);
+			conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (ResultConstant.NORMAL.equals(comData.getResult())) {
+			System.out.println(outData.getBrandid());
+			System.out.println(outData.getBrandData());
+		}
+	}
+	
+	/**
 	 * メイン処理
 	 * @param conn
 	 * @param comData
@@ -71,6 +99,7 @@ public class SQL0005_SelBrandData {
 			SQL0005Out outData) {
 		
 		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, sqlId + ":開始");
 		
 
 		try {
@@ -90,6 +119,7 @@ public class SQL0005_SelBrandData {
 			close(comData);
 		}
 
+		logger.log(Level.INFO, sqlId + ":終了");
 	}
 
 	/**

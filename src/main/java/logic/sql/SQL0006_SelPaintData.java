@@ -58,6 +58,34 @@ public class SQL0006_SelPaintData {
 	}
 	
 	/**
+	 * 動作確認テスト
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		DbConnection conn = new DbConnection();
+		MdlCommonData comData = new MdlCommonData();
+		
+		SQL0006_SelPaintData sql0006 = new SQL0006_SelPaintData();
+		SQL0006In inData = new SQL0006In();
+		SQL0006Out outData = new SQL0006Out();
+		
+		inData.setPaintid("amX-11");
+		
+		try {
+			conn.connect();
+			sql0006.execute(conn, comData, inData, outData);
+			conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (ResultConstant.NORMAL.equals(comData.getResult())) {
+			System.out.println(outData.getPaintid());
+			System.out.println(outData.getPaintData());
+		}
+	}
+
+	/**
 	 * メイン処理
 	 * @param conn
 	 * @param comData
@@ -71,6 +99,7 @@ public class SQL0006_SelPaintData {
 			SQL0006Out outData) {
 		
 		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, sqlId + ":開始");
 
 		try {
 			
@@ -89,6 +118,7 @@ public class SQL0006_SelPaintData {
 			close(comData);
 		}
 
+		logger.log(Level.INFO, sqlId + ":終了");
 	}
 
 	/**
