@@ -4,10 +4,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
 import base.constant.ValueConstant;
@@ -16,6 +12,9 @@ import base.logic.DbConnection;
 import base.logic.ExceptionLogic;
 import base.logic.ServerLogic;
 import base.model.MdlCommonData;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import logic.sql.SQL0005_SelBrandData;
 import logic.sql.SQL0006_SelPaintData;
 import logic.sql.SQL1001_CntPaintView;

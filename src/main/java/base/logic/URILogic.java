@@ -1,8 +1,9 @@
 package base.logic;
 
-import javax.servlet.http.HttpServletRequest;
+
 
 import base.logic.model.URILogicModel;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class URILogic {
 

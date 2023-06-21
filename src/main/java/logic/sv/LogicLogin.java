@@ -4,15 +4,14 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
 import base.logic.DbConnection;
 import base.logic.ExceptionLogic;
 import base.logic.ServerLogic;
 import base.model.MdlCommonData;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import logic.sql.SQL0000_connectionCheck;
 import logic.sql.model.SQL0000In;
 import logic.sql.model.SQL0000Out;
