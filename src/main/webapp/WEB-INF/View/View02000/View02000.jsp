@@ -106,7 +106,7 @@
 		<tbody>
 			<c:forEach var="result" items="${View02000Out.resultList}">
 			<tr>
-				<td>${result.brandData}</td>
+				<td>${result.brandnm}</td>
 				<td>${result.colorcode}</td>
 				<td>${result.colornm}</td>
 				<td>${result.posession}</td>
