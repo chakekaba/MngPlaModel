@@ -4,27 +4,25 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
 import base.logic.DbConnection;
 import base.logic.ExceptionLogic;
-import base.logic.ServerLogic_old;
+import base.logic.ServerLogicAbstract;
+import base.model.JavaBeansModel;
 import base.model.MdlCommonData;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import logic.sql.SQL0000_connectionCheck;
 import logic.sql.model.SQL0000In;
 import logic.sql.model.SQL0000Out;
 import logic.sv.model.MdlLogicLoginIn;
 import logic.sv.model.MdlLogicLoginOut;
 
-public class LogicLogin extends ServerLogic_old {
+public class LogicLogin extends ServerLogicAbstract {
 
 	/** 入力データ **/
-	protected MdlLogicLoginIn inputData = new MdlLogicLoginIn();
+	protected MdlLogicLoginIn inputData_ = null;
 	
 	/** 出力データ **/
-	protected MdlLogicLoginOut outputData = new MdlLogicLoginOut();
+	protected MdlLogicLoginOut outputData_ = null;
 	
 	/** ロジック処理内データ **/
 	// 不要
@@ -32,55 +30,64 @@ public class LogicLogin extends ServerLogic_old {
 	/** データベース接続クラス **/
 	protected DbConnection dbconn = null;
 	
+	/** 処理ID **/
+	protected String logicId = "LogicLogin";
+	
 	/** ロガーインスタンス **/
 	Logger logger = Logger.getLogger(LogicLogin.class.getName());
 	
 	/** コンストラクタ **/
 	public LogicLogin() {
 	}
-	
-	/**
-	 * 正常系処理
-	 */
-	@Override
-	protected void exeNormal(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData
-		) throws Exception {
-		
-		logger.setLevel(Level.INFO);
-		
-		getInputData(request, response, comData);
-		
-		checkInputData(comData);
-		
-		doSql_SQL0000(comData);
-		
-		editSetOutputData(request, response, comData);
 
-	}
-	
 	@Override
-	protected void getInputData(
-			HttpServletRequest request,
-			HttpServletResponse response,
+	public void execute(
+			JavaBeansModel inputData,
+			JavaBeansModel outputData,
+			MdlCommonData comData) {
+
+		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, logicId + ":開始");
+		
+		try {
+			
+			init(inputData, outputData, comData);
+			
+			checkInputData(comData);
+			
+			doSql_SQL0000(comData);
+			
+			editSetOutputData(comData);
+
+		} catch (Exception e) {
+			
+			exeErr(comData, e);
+		} finally {
+			
+			exeFinal(comData);
+		}
+		
+		logger.log(Level.INFO, logicId + ":終了");
+		
+	}
+
+	@Override
+	protected void init(
+			JavaBeansModel inputData,
+			JavaBeansModel outputData,
 			MdlCommonData comData) {
 		
-		// ユーザ名
-		inputData.setUserName(request.getParameter(ParamIdWeb.ViewLogin.USER));
+		// 入力・出力データクラスキャスト
+		this.inputData_ = (MdlLogicLoginIn)inputData;
+		this.outputData_ = (MdlLogicLoginOut)outputData;
 		
-		// パスワード
-		inputData.setPassword(request.getParameter(ParamIdWeb.ViewLogin.PASS));
-
 	}
-
 
 	@Override
 	protected void checkInputData(
 			MdlCommonData comData) {
 		// -- ユーザ名 -----------
-		String userName = inputData.getUserName();
+		String userName = this.inputData_.getUserName();
 	
 		// 必須チェック
 		// 暫定
@@ -92,7 +99,7 @@ public class LogicLogin extends ServerLogic_old {
 		}
 		
 		// -- ユーザ名 -----------
-		String password = inputData.getPassword();
+		String password = this.inputData_.getPassword();
 		
 		// 必須チェック
 		// 暫定
@@ -138,28 +145,25 @@ public class LogicLogin extends ServerLogic_old {
 			}
 		}
 	}
+
+	@Override
+	protected void editSetOutputData(MdlCommonData comData) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	};
 	
 	@Override
-	protected void editSetOutputData(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData) {
-		
-	}
-
-	/**
-	 * 想定外のエラー発生時の処理
-	 */
-	@Override
-	protected void exeErr(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData,
-			Exception e
-		) {
+	protected void exeErr(MdlCommonData comData, Exception e) {
 		
 		String msg = "ログイン処理で想定外のエラーが発生";
 		comData.setResult(ResultConstant.LOGIC_ERROR);
 		comData.setErrorData(logger, Level.SEVERE, e, msg);
-	};
+	}
+
+	@Override
+	protected void exeFinal(MdlCommonData comData) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
+
 }

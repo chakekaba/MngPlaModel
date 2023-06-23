@@ -18,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import logic.sv.LogicLogin;
+import logic.sv.model.MdlLogicLoginIn;
+import logic.sv.model.MdlLogicLoginOut;
 
 /**
  * Servlet implementation class Ctrl00000
@@ -59,7 +61,7 @@ public class Ctrl00000 extends HttpServlet {
 			// ログイン画面に遷移
 			response.sendRedirect(ParamIdWeb.ViewLogin.FORM_PATH);
 			logger.log(Level.INFO, String.format("%s:終了_redirect '%s'", ctrlId, ParamIdWeb.ViewLogin.FORM_PATH));
-
+			
 			return;
 		}
 		
@@ -158,10 +160,19 @@ public class Ctrl00000 extends HttpServlet {
 //				break;
 //		}
 				
-		// サーバ処理（仮）
+		// ロジック処理（仮）
 		LogicLogin logicLogin = new LogicLogin();
+		MdlLogicLoginIn inputData = new MdlLogicLoginIn();
+		MdlLogicLoginOut outputData = new MdlLogicLoginOut();
 		
-		logicLogin.execute(request, response, comData);
+		// ユーザ名
+		inputData.setUserName(request.getParameter(ParamIdWeb.ViewLogin.USER));
+		
+		// パスワード
+		inputData.setPassword(request.getParameter(ParamIdWeb.ViewLogin.PASS));
+		
+		// ロジック処理実行
+		logicLogin.execute(inputData, outputData, comData);
 		
 		
 		// 共通データ保持クラスをセッションスコープに設定
