@@ -58,6 +58,7 @@ public class SQL0002_SelPlmdlList {
 			List<SQL0002Out> outData) {
 		
 		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, sqlId + ":開始");
 
 		try {
 			
@@ -75,6 +76,8 @@ public class SQL0002_SelPlmdlList {
 		} finally {
 			close(comData);
 		}
+		
+		logger.log(Level.INFO, sqlId + ":終了");
 	}
 	
 	/**

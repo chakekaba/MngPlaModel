@@ -66,6 +66,7 @@ public class Ctrl02010 extends HttpServlet {
 			
 			// ログイン画面に遷移
 			response.sendRedirect(ParamIdWeb.ViewLogin.FORM_PATH);
+			logger.log(Level.INFO, String.format("%s:終了_redirect '%s'", ctrlId, ParamIdWeb.ViewLogin.FORM_PATH));
 			
 			return;
 		}
@@ -128,6 +129,7 @@ public class Ctrl02010 extends HttpServlet {
 			
 			// ログイン画面に遷移
 			response.sendRedirect(ParamIdWeb.ViewLogin.FORM_PATH);
+			logger.log(Level.INFO, String.format("%s:終了_redirect '%s'", ctrlId, ParamIdWeb.ViewLogin.FORM_PATH));
 			
 			return;
 		}

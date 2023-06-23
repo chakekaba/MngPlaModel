@@ -47,6 +47,7 @@ public class SQL0000_connectionCheck {
 			SQL0000Out outData) {
 		
 		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, sqlId + ":開始");
 
 		try {
 			
@@ -64,6 +65,8 @@ public class SQL0000_connectionCheck {
 		} finally {
 			close(comData);
 		}
+
+		logger.log(Level.INFO, sqlId + ":終了");
 	}
 	
 	/**

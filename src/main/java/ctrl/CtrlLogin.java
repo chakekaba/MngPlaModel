@@ -1,6 +1,8 @@
 package ctrl;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import base.constant.ParamIdWeb;
 import base.constant.StringEncode;
@@ -19,13 +21,22 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/ViewLogin")
 public class CtrlLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
+	/** ロガーインスタンス **/
+	Logger logger = Logger.getLogger(CtrlLogin.class.getName());
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// コントローラID
+		final String ctrlId = "CtrlLogin";
+		
+		// ロガー開始
+		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, ctrlId + ":開始");
+
 		// 文字エンコーディング設定:UTF-8
 		request.setCharacterEncoding(StringEncode.UTF8);
 
@@ -51,7 +62,7 @@ public class CtrlLogin extends HttpServlet {
 		
 		dispatcher.forward(request, response);
 		
-		
+		logger.log(Level.INFO, ctrlId + ":終了");
 		
 	}
 

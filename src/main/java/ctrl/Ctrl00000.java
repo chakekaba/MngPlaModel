@@ -1,6 +1,8 @@
 package ctrl;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
@@ -24,11 +26,21 @@ import logic.sv.LogicLogin;
 public class Ctrl00000 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	/** ロガーインスタンス **/
+	Logger logger = Logger.getLogger(Ctrl00000.class.getName());
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// コントローラID
+		final String ctrlId = "Ctrl00000/get";
+		
+		// ロガー開始
+		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, ctrlId + ":開始");
+
 		// 文字エンコーディング設定:UTF-8
 		request.setCharacterEncoding(StringEncode.UTF8);
 		
@@ -46,7 +58,8 @@ public class Ctrl00000 extends HttpServlet {
 			
 			// ログイン画面に遷移
 			response.sendRedirect(ParamIdWeb.ViewLogin.FORM_PATH);
-			
+			logger.log(Level.INFO, String.format("%s:終了_redirect '%s'", ctrlId, ParamIdWeb.ViewLogin.FORM_PATH));
+
 			return;
 		}
 		
@@ -56,6 +69,7 @@ public class Ctrl00000 extends HttpServlet {
 			dispatcher = request.getRequestDispatcher(ParamIdWeb.View00000.PAGE_SRC);
 			
 			dispatcher.forward(request, response);
+			logger.log(Level.INFO, ctrlId + ":終了_エラー時中断");
 
 			return;
 		}
@@ -83,6 +97,9 @@ public class Ctrl00000 extends HttpServlet {
 			// 遷移元画面用servletにリダイレクト遷移で戻る
 			response.sendRedirect(uriLogicMdl.getFullURI());
 		}
+		
+		logger.log(Level.INFO, ctrlId + ":終了");
+
 	}
 	
 	
@@ -90,6 +107,13 @@ public class Ctrl00000 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		// コントローラID
+		final String ctrlId = "Ctrl00000/post";
+		
+		// ロガー開始
+		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, ctrlId + ":開始");
 
 		// 文字エンコーディング設定:UTF-8
 		request.setCharacterEncoding(StringEncode.UTF8);
@@ -108,6 +132,7 @@ public class Ctrl00000 extends HttpServlet {
 			
 			// ログイン画面に遷移
 			response.sendRedirect(ParamIdWeb.ViewLogin.FORM_PATH);
+			logger.log(Level.INFO, String.format("%s:終了_redirect '%s'", ctrlId, ParamIdWeb.ViewLogin.FORM_PATH));
 			
 			return;
 		}
@@ -155,6 +180,8 @@ public class Ctrl00000 extends HttpServlet {
 			response.sendRedirect(uriLogicMdl.getFullURI());
 		}
 		
+		logger.log(Level.INFO, ctrlId + ":終了");
+
 	}
 
 }
