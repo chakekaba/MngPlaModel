@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
 import base.logic.DbConnection;
-import base.logic.ServerLogic;
+import base.logic.ServerLogic_old;
 import base.model.MdlCommonData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +22,7 @@ import logic.sql.model.SQL0004Out;
 import logic.sv.model.MdlLogic02010In;
 import logic.sv.model.MdlLogic02010Out;
 
-public class Logic02010 extends ServerLogic {
+public class Logic02010 extends ServerLogic_old {
 	
 	/** 入力データ **/
 	protected MdlLogic02010In inputData = new MdlLogic02010In();

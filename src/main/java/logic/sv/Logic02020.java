@@ -10,7 +10,7 @@ import base.constant.ValueConstant;
 import base.logic.CheckUtil;
 import base.logic.DbConnection;
 import base.logic.ExceptionLogic;
-import base.logic.ServerLogic;
+import base.logic.ServerLogic_old;
 import base.model.MdlCommonData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,7 +32,7 @@ import logic.sql.model.SQL2001Out;
 import logic.sv.model.MdlLogic02020In;
 import logic.sv.model.MdlLogic02020Out;
 
-public class Logic02020 extends ServerLogic {
+public class Logic02020 extends ServerLogic_old {
 
 	/** 入力データ **/
 	protected MdlLogic02020In inputData = new MdlLogic02020In();

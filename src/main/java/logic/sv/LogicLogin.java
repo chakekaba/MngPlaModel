@@ -8,7 +8,7 @@ import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
 import base.logic.DbConnection;
 import base.logic.ExceptionLogic;
-import base.logic.ServerLogic;
+import base.logic.ServerLogic_old;
 import base.model.MdlCommonData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +18,7 @@ import logic.sql.model.SQL0000Out;
 import logic.sv.model.MdlLogicLoginIn;
 import logic.sv.model.MdlLogicLoginOut;
 
-public class LogicLogin extends ServerLogic {
+public class LogicLogin extends ServerLogic_old {
 
 	/** 入力データ **/
 	protected MdlLogicLoginIn inputData = new MdlLogicLoginIn();
