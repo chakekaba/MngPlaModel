@@ -17,12 +17,6 @@ public abstract class ServerLogicAbstract {
 			JavaBeansModel outputData,
 			MdlCommonData comData);
 
-	protected abstract void exeErr(
-			MdlCommonData comData,
-			Exception e);
-
-	protected abstract void exeFinal(MdlCommonData comData);
-
 	protected abstract void init(
 			JavaBeansModel inputData,
 			JavaBeansModel outputData,

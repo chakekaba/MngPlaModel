@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import base.constant.ResultConstant;
 import base.logic.DbConnection;
 import base.logic.ExceptionLogic;
-import base.model.JavaBeansModel;
 import base.model.MdlCommonData;
 import logic.sql.SQL0000_connectionCheck;
 import logic.sql.model.SQL0000In;
@@ -43,8 +42,6 @@ public class LogicLogin {
 
 		try {
 
-			init(inputData, outputData, comData);
-
 			checkInputData(inputData, comData);
 
 			doSql_SQL0000(comData);
@@ -53,20 +50,16 @@ public class LogicLogin {
 
 		} catch (Exception e) {
 
-			exeErr(comData, e);
+			String msg = "ログイン処理で想定外のエラーが発生";
+			comData.setResult(ResultConstant.LOGIC_ERROR);
+			comData.setErrorData(logger, Level.SEVERE, e, msg);
 		} finally {
 
-			exeFinal(comData);
+			// 処理なし
 		}
 
 		logger.log(Level.INFO, logicId + ":終了");
 
-	}
-
-	protected void init(
-			JavaBeansModel inputData,
-			JavaBeansModel outputData,
-			MdlCommonData comData) {
 	}
 
 	protected void checkInputData(
@@ -138,18 +131,5 @@ public class LogicLogin {
 			MdlCommonData comData) {
 		// TODO 自動生成されたメソッド・スタブ
 
-	};
-
-	protected void exeErr(MdlCommonData comData, Exception e) {
-
-		String msg = "ログイン処理で想定外のエラーが発生";
-		comData.setResult(ResultConstant.LOGIC_ERROR);
-		comData.setErrorData(logger, Level.SEVERE, e, msg);
 	}
-
-	protected void exeFinal(MdlCommonData comData) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
 }
