@@ -1,0 +1,136 @@
+<!-- View02100Sample_使用塗料紐づけ一覧 サンプル -->
+<!-- http://localhost:8080/MngPlaModel/ViewSample/View02100Sample.html -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>プラモデル管理アプリ</title>
+<!-- BootstrapのCSS読み込み -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!-- jQuery読み込み -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- BootstrapのJS読み込み -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+	<div class="row mb-3">
+		<h1>使用塗料紐づけ一覧</h1>
+	</div>
+	<!-- フォーム① -->
+	<div class="row border px-3 mb-3">
+		<form action="/MngPlaModel/ViewSample/View02100Sample.html" method="get" ><!-- 本番ソースではpostメソッド使用 -->
+			<!-- プラモデル -->
+			<div class="row mb-3">
+				<label for="plmdl" class="form-label">プラモデル</label>
+				<select class="form-control" name="plmdlid" id="plmdl">
+					<option hidden></option>
+					<option value="0001">島風 1/700</option>
+					<option value="0002">ワスプ 1/700</option>
+					<option value="0003">ボルチモア 1/700</option>
+					<option value="0004">クリーヴランド 1/700</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary mb-3">検索</button>
+		</form>
+		<p>現在表示中：島風 1/700</p>
+	</div>
+	<div>
+		<!-- タブ部分 -->
+		<ul class="nav nav-tabs mb-3">
+			<!-- 使用タブ-->
+			<li class="nav-item">
+				<a class="nav-link active" href="#contents-used" data-bs-toggle="tab">使用</a>
+			</li>
+			<!-- 未使用タブ-->
+			<li class="nav-item">
+				<a class="nav-link" href="#contents-unused" data-bs-toggle="tab">未使用</a>
+			</li>
+		</ul>
+		<!-- タブ内コンテンツ -->
+		<div class="tab-content">
+			<!-- 使用タブ-->
+			<div class="tab-pane active" id="contents-used">
+				<div class="row mb-3 px-3">
+					<!-- 抽出検索フォーム -->
+					<form action="/MngPlaModel/ViewSample/View02100Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
+						<input class="form-control" name="plmdlid" value="0001" hidden>
+						<div class="row mb-3">
+							<label for="colornm_used" class="form-label">カラー名（部分一致）</label>
+							<input class="form-control" name="colornm_used" id="colornm_used" disabled>
+						</div>
+						<button type="submit" class="btn btn-primary mb-3" disabled>検索（使用塗料）</button>
+					</form>
+				</div>
+				<!-- テーブル -->
+				<table class="table table-sm table-striped table-hover table-bordered">
+					<thead class="table-secondary">
+						<tr>
+							<th>ブランド</th>
+							<th>カラーコード</th>
+							<th>カラー名</th>
+							<th>メモ</th>
+							<th>更新</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>（ブランド情報）</td>
+							<td>（カラーコード）</td>
+							<td>（カラー名）</td>
+							<td><p>（メモxxxxxxxxxxxxxxxxxxxxxxxxxxd）</p></td>
+							<td>
+								<form action="/MngPlaModel/ViewSample/View02110Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
+									<input type="hidden" name="plmdlid" value="（プラモデルid）"> 
+									<input type="hidden" name="paintid" value="（塗料id）"> 
+									<button type="submit" class="btn btn-primary">更新</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- 未使用タブ-->
+			<div class="tab-pane" id="contents-unused">
+				<div class="row mb-3 px-3">
+					<!-- 抽出検索フォーム -->
+					<form action="/MngPlaModel/ViewSample/View02100Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
+						<input class="form-control" name="plmdlid" value="0001" hidden>
+						<div class="row mb-3">
+							<label for="colornm_used" class="form-label">カラー名（部分一致）</label>
+							<input class="form-control" name="colornm_used" id="colornm_used" disabled>
+						</div>
+						<button type="submit" class="btn btn-primary mb-3" disabled>検索（未使用塗料）</button>
+					</form>
+				</div>
+				<!-- テーブル -->
+				<table class="table table-sm table-striped table-hover table-bordered">
+					<thead class="table-secondary">
+						<tr>
+							<th>ブランド</th>
+							<th>カラーコード</th>
+							<th>カラー名</th>
+							<th>更新</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>（ブランド情報）</td>
+							<td>（カラーコード）</td>
+							<td>（カラー名）</td>
+							<td>
+								<form action="/MngPlaModel/ViewSample/View02110Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
+									<input type="hidden" name="plmdlid" value="（プラモデルid）"> 
+									<input type="hidden" name="paintid" value="（塗料id）"> 
+									<button type="submit" class="btn btn-primary">更新</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
