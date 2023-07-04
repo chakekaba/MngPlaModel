@@ -47,6 +47,7 @@ class LogicLoginUT {
 					"checkInputData",
 					MdlLogicLoginIn.class,
 					MdlCommonData.class);
+
 			method.setAccessible(true);
 		}
 
@@ -83,6 +84,10 @@ class LogicLoginUT {
 			assertTrue(errorData.isWARNING());
 		}
 
+		/**
+		 * testInvalidメソッド用テストデータ提供
+		 * @return
+		 */
 		static Stream<Arguments> dataTestInvalid() {
 			return Stream.of(
 					Arguments.arguments(null, "_pass", "必須チェックエラー：ユーザ名"),
@@ -104,6 +109,7 @@ class LogicLoginUT {
 			"'a','b'",
 			"'sssssssss', 'xxxxxxxxxx'"
 		})
+		@DisplayName("正常な入力値データの場合")
 		public void testValid(String name, String pass) {
 
 			// 入力データ設定
@@ -117,7 +123,24 @@ class LogicLoginUT {
 			assertEquals(0, comData.getErrorCnt());
 		}
 
+		/** エラーが複数発生するパターンは LogicLoginIT で実施 **/
 	}
 
+	@Nested
+	@DisplayName("doSql_SQL0000メソッド")
+	class doSql_SQL0000Test {
 
+		@BeforeEach
+		public void defMdlData() throws Exception{
+
+			// doSql_SQL0000メソッド取得
+			method = LogicLogin.class.getDeclaredMethod(
+					"doSql_SQL0000",
+					MdlCommonData.class);
+
+			method.setAccessible(true);
+		}
+
+
+	}
 }
