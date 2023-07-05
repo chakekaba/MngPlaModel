@@ -21,19 +21,21 @@
 	<div class="mb-3 px-3">
 		<form action="/MngPlaModel/ViewSample/View02110Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
 			<div class="row mb-3">
-				プラモデル：島風 1/700
-				<input type="hidden" value="0001">
+				<label class="form-label col-1">プラモデル：</label>
+				<div class="col">島風 1/700</div>
+				<input type="hidden" class="form-control" value="0001">
 			</div>
 			<!-- 塗料 -->
 			<div class="row mb-3">
-				塗料：呉海軍工廠グレイ（日本海軍）
-				<input type="hidden" value="amXF-75">
+				<label class="form-label col-1">塗料：</label>
+				<div class="col">呉海軍工廠グレイ（日本海軍）</div>
+				<input type="hidden" class="form-control" value="amXF-75">
 			</div>
 			<!-- 使用有無 -->
 			<div class="row mb-3">
-				<label for="isused" class="form-label">使用状況：</label>
-				<p class="col-1">使用</p>
-				<p class="col-1">→</p>
+				<label for="isused" class="form-label col-1">使用状況：</label>
+				<div class="col-5 border bg-light">使用</div>
+				<div class="col-1 text-center fs-2">→</div>
 				<select class="form-control col" name="isused" id="isused">
 					<option>使用</option>
 					<option>未使用</option>
@@ -41,9 +43,10 @@
 			</div>
 			<!-- メモ -->
 			<div class="row mb-3">
-				<p class="col-5">船体他の基本色として使用xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</p>
-				<p class="col-1">→</p>
-				<textarea class="form-control" rows="5">船体他の基本色として使用</textarea>
+				<label for="memo"  class="form-label col-1">メモ：</label>
+				<div class="col-5 text-break border bg-light">船体他の基本色として使用xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</div>
+				<div class="col-1 text-center fs-2">→</div>
+				<textarea class="form-control col" rows="5" name="memo" id="memo">船体他の基本色として使用xxxxxxxxxxxxbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbxxxxooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo</textarea>
 			</div>
 			<button type="submit" class="btn btn-primary mb-3">更新</button>
 		</form>

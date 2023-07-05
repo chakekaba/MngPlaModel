@@ -33,9 +33,12 @@
 			</div>
 			<button type="submit" class="btn btn-primary mb-3">検索</button>
 		</form>
-		<p>現在表示中：島風 1/700</p>
 	</div>
-	<div>
+	<div class="row mb-3">
+		<div class="col-2 pt-2">検索対象プラモデル：</div>
+		<div class="col-2 border bg-light pt-2">島風 1/700</div>
+	</div>
+	<div class="border">
 		<!-- タブ部分 -->
 		<ul class="nav nav-tabs mb-3">
 			<!-- 使用タブ-->
@@ -50,84 +53,113 @@
 		<!-- タブ内コンテンツ -->
 		<div class="tab-content">
 			<!-- 使用タブ-->
-			<div class="tab-pane active" id="contents-used">
+			<div class="tab-pane px-3 active" id="contents-used">
 				<div class="row mb-3 px-3">
 					<!-- 抽出検索フォーム -->
 					<form action="/MngPlaModel/ViewSample/View02100Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
 						<input class="form-control" name="plmdlid" value="0001" hidden>
-						<div class="row mb-3">
+						<div class="mb-3">
 							<label for="colornm_used" class="form-label">カラー名（部分一致）</label>
 							<input class="form-control" name="colornm_used" id="colornm_used" disabled>
 						</div>
 						<button type="submit" class="btn btn-primary mb-3" disabled>検索（使用塗料）</button>
 					</form>
 				</div>
-				<!-- テーブル -->
-				<table class="table table-sm table-striped table-hover table-bordered">
-					<thead class="table-secondary">
-						<tr>
-							<th>ブランド</th>
-							<th>カラーコード</th>
-							<th>カラー名</th>
-							<th>メモ</th>
-							<th>更新</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>（ブランド情報）</td>
-							<td>（カラーコード）</td>
-							<td>（カラー名）</td>
-							<td><p>（メモxxxxxxxxxxxxxxxxxxxxxxxxxxd）</p></td>
-							<td>
-								<form action="/MngPlaModel/ViewSample/View02110Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
-									<input type="hidden" name="plmdlid" value="（プラモデルid）"> 
-									<input type="hidden" name="paintid" value="（塗料id）"> 
-									<button type="submit" class="btn btn-primary">更新</button>
-								</form>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="row mb-3 px-3">
+					<!-- テーブル -->
+					<table class="table table-sm table-striped table-hover table-bordered">
+						<thead class="table-secondary">
+							<tr>
+								<th class="col-2">ブランド</th>
+								<th class="col-1">カラーコード</th>
+								<th class="col-2">カラー名</th>
+								<th class="col">メモ</th>
+								<th class="col-1">更新</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>（ブランド情報）</td>
+								<td>（カラーコード）</td>
+								<td>（カラー名）</td>
+								<td class="text-break">（メモxxxxxxxxxxxxxxxxxxxxxxxxxsssssssssssssssssssssssssssssssssssssssssssssssssssdxd）</td>
+								<td>
+									<form action="/MngPlaModel/ViewSample/View02110Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
+										<input type="hidden" name="plmdlid" value="（プラモデルid）"> 
+										<input type="hidden" name="paintid" value="（塗料id）"> 
+										<button type="submit" class="btn btn-primary">更新</button>
+									</form>
+								</td>
+							</tr>
+							<tr>
+								<td>アクリル塗料ミニ</td>
+								<td>XF-75</td>
+								<td>呉海軍工廠グレイ（日本海軍）</td>
+								<td>船体色全般として使用</td>
+								<td>
+									<form action="/MngPlaModel/ViewSample/View02110Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
+										<input type="hidden" name="plmdlid" value="0001"> 
+										<input type="hidden" name="paintid" value="amXF-75"> 
+										<button type="submit" class="btn btn-primary">更新</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<!-- 未使用タブ-->
-			<div class="tab-pane" id="contents-unused">
+			<div class="tab-pane px-3" id="contents-unused">
 				<div class="row mb-3 px-3">
 					<!-- 抽出検索フォーム -->
 					<form action="/MngPlaModel/ViewSample/View02100Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
 						<input class="form-control" name="plmdlid" value="0001" hidden>
-						<div class="row mb-3">
+						<div class="mb-3">
 							<label for="colornm_used" class="form-label">カラー名（部分一致）</label>
 							<input class="form-control" name="colornm_used" id="colornm_used" disabled>
 						</div>
 						<button type="submit" class="btn btn-primary mb-3" disabled>検索（未使用塗料）</button>
 					</form>
 				</div>
-				<!-- テーブル -->
-				<table class="table table-sm table-striped table-hover table-bordered">
-					<thead class="table-secondary">
-						<tr>
-							<th>ブランド</th>
-							<th>カラーコード</th>
-							<th>カラー名</th>
-							<th>更新</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>（ブランド情報）</td>
-							<td>（カラーコード）</td>
-							<td>（カラー名）</td>
-							<td>
-								<form action="/MngPlaModel/ViewSample/View02110Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
-									<input type="hidden" name="plmdlid" value="（プラモデルid）"> 
-									<input type="hidden" name="paintid" value="（塗料id）"> 
-									<button type="submit" class="btn btn-primary">更新</button>
-								</form>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="row mb-3 px-3">
+					<!-- テーブル -->
+					<table class="table table-sm table-striped table-hover table-bordered">
+						<thead class="table-secondary">
+							<tr>
+								<th class="col-2">ブランド</th>
+								<th class="col-1">カラーコード</th>
+								<th class="col-2">カラー名</th>
+								<th class="col-1">更新</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>（ブランド情報）</td>
+								<td>（カラーコード）</td>
+								<td>（カラー名）</td>
+								<td>
+									<form action="/MngPlaModel/ViewSample/View02110Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
+										<input type="hidden" name="plmdlid" value="（プラモデルid）"> 
+										<input type="hidden" name="paintid" value="（塗料id）"> 
+										<button type="submit" class="btn btn-primary">更新</button>
+									</form>
+								</td>
+							</tr>
+							<tr>
+								<td>Mr.カラー</td>
+								<td>C607</td>
+								<td>灰色2704(N5) 海上自衛隊護衛艦色</td>
+								<td>
+									<form action="/MngPlaModel/ViewSample/View02110Sample.html" method="get"><!-- 本番ソースではpostメソッド使用 -->
+										<input type="hidden" name="plmdlid" value="0001"> 
+										<input type="hidden" name="paintid" value="mcC607"> 
+										<button type="submit" class="btn btn-primary">更新</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
