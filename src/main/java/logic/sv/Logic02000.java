@@ -104,8 +104,6 @@ public class Logic02000 extends ServerLogic {
 		
 		inputData.setSearchExeFlg(searchExeFlg);
 		
-		// リクエストパラメータに設定
-		request.setAttribute(ParamIdWeb.View02000.INDATA, inputData);
 	}
 	
 	@Override
@@ -220,6 +218,15 @@ public class Logic02000 extends ServerLogic {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			MdlCommonData comData) throws Exception {
+		
+		// 塗料名
+		outputData.setColornm(inputData.getColornm());
+		
+		// ブランドID
+		outputData.setBrandid(inputData.getBrandid());
+		
+		// プラモデルID
+		outputData.setPlmdlid(inputData.getPlmdlid());
 		
 		request.setAttribute(ParamIdWeb.View02000.OUTDATA, outputData);
 	}

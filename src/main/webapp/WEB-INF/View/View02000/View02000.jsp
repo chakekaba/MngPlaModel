@@ -51,7 +51,7 @@
 	<div class="mb-3 w-50">
 		<label for="paintnm" class="form-label">塗料名（部分一致）</label>
 		<input type="text" class="form-control" name="<%= ParamIdWeb.View02000.COLOR_NM %>"
-			id="paintnm" value="${View02000In.colornm}">
+			id="paintnm" value="${View02000Out.colornm}">
 	</div>
 	<!-- ブランド -->
 	<div class="mb-3 w-50">
@@ -60,7 +60,7 @@
 			<option />
 			<c:forEach var="brand" items="${View02000Out.brandList}">
 				<c:choose>
-					<c:when test="${View02000In.brandid == brand.brandid}">
+					<c:when test="${View02000Out.brandid == brand.brandid}">
 						<option value="${brand.brandid}" selected>${brand.brandData}</option>
 					</c:when>
 					<c:otherwise>
@@ -77,7 +77,7 @@
 			<option />
 			<c:forEach var="plmdl" items="${View02000Out.plmdlList}">
 				<c:choose>
-					<c:when test="${View02000In.plmdlid == plmdl.plmdlid}">
+					<c:when test="${View02000Out.plmdlid == plmdl.plmdlid}">
 						<option value="${plmdl.plmdlid}" selected>${plmdl.plmdlnm}</option>
 					</c:when>
 					<c:otherwise>
