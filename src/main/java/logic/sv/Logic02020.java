@@ -47,9 +47,6 @@ public class Logic02020 extends ServerLogic {
 	/** ロガーインスタンス **/
 	Logger logger = Logger.getLogger(Logic02020.class.getName());
 	
-	/** 値判定処理クラス **/
-	CheckUtil checkUtil = new CheckUtil();
-	
 	/** ロジックID **/
 	protected final String logicId = "Logic02020";
 
@@ -93,7 +90,7 @@ public class Logic02020 extends ServerLogic {
 			doSql_SQL0005(comData);
 			
 			if (ResultConstant.NORMAL.equals(comData.getResult())
-					&& checkUtil.requiredCheck(inputData.getAppaintid())) {
+					&& CheckUtil.requiredCheck(inputData.getAppaintid())) {
 				
 				// 近似塗料情報取得SQL実行
 				doSql_SQL0006(comData);
@@ -160,7 +157,7 @@ public class Logic02020 extends ServerLogic {
 		/** ブランドID **/
 		// 必須チェック
 		String brandid = inputData.getBrandid();
-		boolean brandidExist = checkUtil.requiredCheck(brandid);
+		boolean brandidExist = CheckUtil.requiredCheck(brandid);
 		if (!brandidExist) {
 			String msg = "必須チェックエラー：ブランドID";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
@@ -191,7 +188,7 @@ public class Logic02020 extends ServerLogic {
 		/** カラーコード **/
 		// 必須チェック
 		String colorcode = inputData.getColorcode();
-		boolean colorcodeExist = checkUtil.requiredCheck(colorcode);
+		boolean colorcodeExist = CheckUtil.requiredCheck(colorcode);
 		if (!colorcodeExist) {
 			String msg = "必須チェックエラー：カラーコード";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
@@ -204,7 +201,7 @@ public class Logic02020 extends ServerLogic {
 			
 			int maxLength = 6;
 			
-			if (!checkUtil.lengthCheck(colorcode, maxLength)) {
+			if (!CheckUtil.lengthCheck(colorcode, maxLength)) {
 				String msg = "文字列長チェックエラー：カラーコード";
 				comData.setResult(ResultConstant.LOGIC_ERROR);
 				comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
@@ -237,7 +234,7 @@ public class Logic02020 extends ServerLogic {
 		/** カラー名 **/
 		// 必須チェック
 		String colorname = inputData.getColornm();
-		boolean colornameExist = checkUtil.requiredCheck(colorname);
+		boolean colornameExist = CheckUtil.requiredCheck(colorname);
 		if (!colornameExist) {
 			String msg = "必須チェックエラー：カラー名";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
@@ -250,7 +247,7 @@ public class Logic02020 extends ServerLogic {
 			
 			int maxLength = 20;
 			
-			if (!checkUtil.lengthCheck(colorname, maxLength)) {
+			if (!CheckUtil.lengthCheck(colorname, maxLength)) {
 				String msg = "文字列長チェックエラー：カラー名";
 				comData.setResult(ResultConstant.LOGIC_ERROR);
 				comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
@@ -260,7 +257,7 @@ public class Logic02020 extends ServerLogic {
 		/** 所持 **/
 		// 必須チェック
 		String posession = inputData.getPosession();
-		boolean posessionExist = checkUtil.requiredCheck(posession);
+		boolean posessionExist = CheckUtil.requiredCheck(posession);
 		if (!posessionExist) {
 			String msg = "必須チェックエラー：所持";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
@@ -281,7 +278,7 @@ public class Logic02020 extends ServerLogic {
 		/** 選択肢表示 **/
 		// 必須チェック
 		String selVisible = inputData.getSelvisible();
-		boolean selVisibleExist = checkUtil.requiredCheck(selVisible);
+		boolean selVisibleExist = CheckUtil.requiredCheck(selVisible);
 		if (!selVisibleExist) {
 			String msg = "必須チェックエラー：選択肢表示";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
@@ -303,7 +300,7 @@ public class Logic02020 extends ServerLogic {
 		// 設定値存在チェック
 		String appaintid = inputData.getAppaintid();
 		// appaintidが設定されている場合存在チェック実行
-		if (checkUtil.requiredCheck(appaintid)) {
+		if (CheckUtil.requiredCheck(appaintid)) {
 			
 			sqlin = new SQL1001In();
 			sqlout = new SQL1XXXCntOut();
