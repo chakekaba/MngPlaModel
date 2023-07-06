@@ -1,6 +1,7 @@
 package logic.sv;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,18 +11,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
+import base.logic.CheckUtil;
 import base.logic.DbConnection;
+import base.logic.ExceptionLogic;
 import base.logic.ServerLogic;
 import base.model.MdlCommonData;
 import logic.sql.SQL0001_SelBrandList;
 import logic.sql.SQL0002_SelPlmdlList;
 import logic.sql.SQL0003_SelPaintList;
+import logic.sql.SQL1002_CntBrand;
 import logic.sql.model.SQL0001In;
 import logic.sql.model.SQL0001Out;
 import logic.sql.model.SQL0002In;
 import logic.sql.model.SQL0002Out;
 import logic.sql.model.SQL0003In;
 import logic.sql.model.SQL0003Out;
+import logic.sql.model.SQL1002In;
+import logic.sql.model.SQL1XXXCntOut;
 import logic.sv.model.MdlLogic02000In;
 import logic.sv.model.MdlLogic02000Out;
 
@@ -109,7 +115,74 @@ public class Logic02000 extends ServerLogic {
 	@Override
 	protected void checkInputData(
 			MdlCommonData comData) throws Exception {
-		/** 省略（暫定）**/
+		
+		/** 検索実行フラグ **/
+		String searchExeFlg = inputData.getSearchExeFlg();
+		
+		final String[] searchExeFlgList = {"0", "1"};
+		
+		// 必須チェック
+		if (!CheckUtil.requiredCheck(searchExeFlg)) {
+			String msg = "必須チェックエラー：検索実行フラグ";
+			comData.setResult(ResultConstant.LOGIC_ERROR);
+			comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
+		}
+		
+		// 設定可能値チェック
+		if (!Arrays.asList(searchExeFlgList).contains(searchExeFlg)) {
+			String msg = "設定可能値チェックエラー：検索実行フラグ";
+			comData.setResult(ResultConstant.LOGIC_ERROR);
+			comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
+		}
+		
+		// 検索実行フラグが "1":検索実行 の場合
+		if ("1".equals(searchExeFlg)) {
+			
+			/** 塗料名 **/
+			String colornm = inputData.getColornm();
+			
+			// 文字列長チェック
+			int maxLenColornm = 20;
+			
+			if (!CheckUtil.lengthCheck(colornm, maxLenColornm)) {
+				String msg = "文字列長チェックエラー：カラーコード";
+				comData.setResult(ResultConstant.LOGIC_ERROR);
+				comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
+			}
+			
+			/** ブランドID **/
+			String brandid = inputData.getBrandid();
+			
+			// 設定可能値チェック
+			// ブランドIDが入力されている場合
+			if (CheckUtil.requiredCheck(brandid)) {
+				
+				SQL1002_CntBrand sql1002 = new SQL1002_CntBrand();
+				SQL1002In sql1002In = new SQL1002In();
+				SQL1XXXCntOut sqlout = new SQL1XXXCntOut();
+				
+				sql1002In.setSqlNo(SQL1002_CntBrand.SQL_NO1);
+				sql1002In.setBrandid(inputData.getBrandid());
+				
+				sql1002.execute(dbconn, comData, sql1002In, sqlout);
+				
+				// 設定可能値でない場合
+				if (sqlout.getRowCnt() != 1) {
+					String msg = "設定可能値チェックエラー：ブランドID";
+					comData.setResult(ResultConstant.LOGIC_ERROR);
+					comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
+				}
+			}
+			
+			/** プラモデルID **/
+			String plmdlid = inputData.getPlmdlid();
+			
+			// 設定可能値チェック
+			// プラモデルIDが入力されている場合
+			if (CheckUtil.requiredCheck(plmdlid)) {
+				/** 省略（暫定）**/
+			}
+		}
 	}
 	
 	/**
