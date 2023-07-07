@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import logic.sv.Logic02010;
+import logic.sv.model.MdlLogic02010In;
+import logic.sv.model.MdlLogic02010Out;
 import logic.sv.model.MdlLogic02020Out;
 
 /**
@@ -75,14 +77,38 @@ public class Ctrl02010 extends HttpServlet {
 		MdlLogic02020Out mdlLogic02020Out = (MdlLogic02020Out)session.getAttribute(ParamIdWeb.View02020.OUTDATA);
 		boolean mdlLogic02020OutExist = mdlLogic02020Out != null;
 		
-		// リクエストスコープに処理パターンを設定
-		String logicPtn = ParamIdWeb.View02010.GET;
-		request.setAttribute(ParamIdWeb.View02010.LOGIC_PTN, logicPtn);
-		
 		// サーバ処理
 		Logic02010 logic02010 = new Logic02010();
-		logic02010.execute(request, response, comData);
+		MdlLogic02010In inputData = new MdlLogic02010In();
+		MdlLogic02010Out outputData = new MdlLogic02010Out();
 		
+		// ブランドID
+		inputData.setBrandid(request.getParameter(ParamIdWeb.View02010.BRAND_ID));
+		
+		// カラーコード
+		inputData.setColorcode(request.getParameter(ParamIdWeb.View02010.COLOR_CODE));
+		
+		// カラー名
+		inputData.setColornm(request.getParameter(ParamIdWeb.View02010.COLOR_NAME));
+		
+		// 所持
+		inputData.setPosession(request.getParameter(ParamIdWeb.View02010.POSESSION));
+		
+		// 選択肢表示
+		inputData.setSelvisible(request.getParameter(ParamIdWeb.View02010.SEL_VISIBLE));
+		
+		// 近似塗料ID
+		inputData.setAppaintid(request.getParameter(ParamIdWeb.View02010.APPAINTID));
+		
+		// 処理パターン
+		inputData.setLogicPtn(ParamIdWeb.View02010.GET);
+		
+		// サーバ処理実行
+		logic02010.execute(inputData, outputData, comData);
+		
+		// 出力データをリクエストスコープに設定
+		request.setAttribute(ParamIdWeb.View02010.OUTDATA, outputData);
+
 		// 遷移先画面判定
 		if (ResultConstant.NORMAL.equals(comData.getResult())
 				|| mdlLogic02020OutExist) {
@@ -134,13 +160,37 @@ public class Ctrl02010 extends HttpServlet {
 			return;
 		}
 		
-		// リクエストスコープに処理パターン設定
-		String logicPtn = ParamIdWeb.View02010.POST;
-		request.setAttribute(ParamIdWeb.View02010.LOGIC_PTN, logicPtn);
-		
 		// サーバ処理
 		Logic02010 logic02010 = new Logic02010();
-		logic02010.execute(request, response, comData);
+		MdlLogic02010In inputData = new MdlLogic02010In();
+		MdlLogic02010Out outputData = new MdlLogic02010Out();
+		
+		// ブランドID
+		inputData.setBrandid(request.getParameter(ParamIdWeb.View02010.BRAND_ID));
+		
+		// カラーコード
+		inputData.setColorcode(request.getParameter(ParamIdWeb.View02010.COLOR_CODE));
+		
+		// カラー名
+		inputData.setColornm(request.getParameter(ParamIdWeb.View02010.COLOR_NAME));
+		
+		// 所持
+		inputData.setPosession(request.getParameter(ParamIdWeb.View02010.POSESSION));
+		
+		// 選択肢表示
+		inputData.setSelvisible(request.getParameter(ParamIdWeb.View02010.SEL_VISIBLE));
+		
+		// 近似塗料ID
+		inputData.setAppaintid(request.getParameter(ParamIdWeb.View02010.APPAINTID));
+		
+		// 処理パターン
+		inputData.setLogicPtn(ParamIdWeb.View02010.POST);
+		
+		// サーバ処理実行
+		logic02010.execute(inputData, outputData, comData);
+		
+		// 出力データをリクエストスコープに設定
+		request.setAttribute(ParamIdWeb.View02010.OUTDATA, outputData);
 
 		// 塗料登録画面へフォワード遷移
 		dispatcher = request.getRequestDispatcher(ParamIdWeb.View02010.PAGE_SRC);
