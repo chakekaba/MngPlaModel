@@ -113,5 +113,10 @@ public class MdlLogic02000Out extends JavaBeansModel {
 		this.resultList = resultList;
 	}
 	
-	
+	/**
+	 * @return resultList_検索結果リスト の件数
+	 */
+	public int getResultListCnt() {
+		return resultList.size();
+	}
 }
