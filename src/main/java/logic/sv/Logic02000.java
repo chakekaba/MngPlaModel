@@ -1,20 +1,17 @@
 package logic.sv;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
 import base.logic.CheckUtil;
 import base.logic.DbConnection;
 import base.logic.ExceptionLogic;
-import base.logic.ServerLogic_old;
 import base.model.MdlCommonData;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import logic.sql.SQL0001_SelBrandList;
 import logic.sql.SQL0002_SelPlmdlList;
 import logic.sql.SQL0003_SelPaintList;
@@ -30,13 +27,7 @@ import logic.sql.model.SQL1XXXCntOut;
 import logic.sv.model.MdlLogic02000In;
 import logic.sv.model.MdlLogic02000Out;
 
-public class Logic02000 extends ServerLogic_old {
-
-	/** 入力データ **/
-	protected MdlLogic02000In inputData = new MdlLogic02000In();
-	
-	/** 出力データ **/
-	protected MdlLogic02000Out outputData = new MdlLogic02000Out();
+public class Logic02000 {
 	
 	/** ロジック処理内データ **/
 	// 不要
@@ -44,76 +35,78 @@ public class Logic02000 extends ServerLogic_old {
 	/** データベース接続クラス **/
 	protected DbConnection dbconn = null;
 
+	/** 処理ID **/
+	protected String logicId = "Logic02000";
+
 	/** ロガーインスタンス **/
 	Logger logger = Logger.getLogger(Logic02000.class.getName());
+	
+	/** コンストラクタ **/
+	public Logic02000() {
+	}
 
 	/**
-	 * 正常系処理
+	 * メイン実行処理
+	 * @param inputData
+	 * @param outputData
+	 * @param comData
 	 */
-	@Override
-	protected void exeNormal(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData
-		) throws Exception {
+	public void execute(
+			MdlLogic02000In inputData,
+			MdlLogic02000Out outputData,
+			MdlCommonData comData) {
 		
 		logger.setLevel(Level.INFO);
-		
-		// DB接続
-		dbconn = new DbConnection();
-		dbconn.connect();
-		
-		getInputData(request, response, comData);
-		
-		checkInputData(comData);
-		
-		doSql_SQL0001(comData);
-		
-		doSql_SQL0002(comData);
-		
-		// 検索実行フラグ = "1" の場合
-		if ("1".equals(inputData.getSearchExeFlg())) {
-			
-			doSql_SQL0003(comData);
-		}
-		
-		editSetOutputData(request, response, comData);
-		
-		// DB切断
-		dbconn.close();
-	}
-	
-	@Override
-	protected void getInputData(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData) throws Exception {
-		
-		/** 以下リクエストパラメータ取り出し **/
-		// 塗料名
-		inputData.setColornm(request.getParameter(ParamIdWeb.View02000.COLOR_NM));
-		
-		// ブランドID
-		inputData.setBrandid(request.getParameter(ParamIdWeb.View02000.BRAND_ID));
-		
-		// プラモデルID
-		inputData.setPlmdlid(request.getParameter(ParamIdWeb.View02000.PLMDL_ID));
-		
-		// 検索実行フラグ
-		String searchExeFlg = request.getParameter(ParamIdWeb.View02000.SEARCH_EXE_FLG);
+		logger.log(Level.INFO, logicId + ":開始");
 
-		// 取得した検索実行フラグが null の場合
-		if (searchExeFlg == null) {
-			searchExeFlg = "0";
+		try {
+			// DB接続
+			dbconn = new DbConnection();
+			dbconn.connect();
+
+			checkInputData(inputData, comData);
+			
+			doSql_SQL0001(inputData, outputData, comData);
+			
+			doSql_SQL0002(inputData, outputData, comData);
+			
+			// 検索実行フラグ = "1" の場合
+			if ("1".equals(inputData.getSearchExeFlg())) {
+				
+				doSql_SQL0003(inputData, outputData, comData);
+			}
+			
+			editSetOutputData(inputData, outputData, comData);
+			
+		} catch (Exception e) {
+			String msg = "塗料一覧で想定外のエラーが発生";
+			comData.setResult(ResultConstant.LOGIC_ERROR);
+			comData.setErrorData(logger, Level.SEVERE, e, msg);
+		} finally {
+			
+			// DB切断
+			try {
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} catch (SQLException e) {
+				// 何も処理しない
+			}
+
 		}
-		
-		inputData.setSearchExeFlg(searchExeFlg);
-		
+
+		logger.log(Level.INFO, logicId + ":終了");
+
 	}
 	
-	@Override
+	/**
+	 * 入力値チェック処理
+	 * @param inputData
+	 * @param comData
+	 */
 	protected void checkInputData(
-			MdlCommonData comData) throws Exception {
+			MdlLogic02000In inputData,
+			MdlCommonData comData) {
 		
 		/** 検索実行フラグ **/
 		String searchExeFlg = inputData.getSearchExeFlg();
@@ -186,10 +179,14 @@ public class Logic02000 extends ServerLogic_old {
 	
 	/**
 	 * 検索条件用ブランドリスト取得SQL実行
+	 * @param inputData
+	 * @param outputData
 	 * @param comData
 	 * @throws Exception
 	 */
 	protected void doSql_SQL0001(
+			MdlLogic02000In inputData,
+			MdlLogic02000Out outputData,
 			MdlCommonData comData) throws Exception {
 		
 		SQL0001_SelBrandList sql0001 = new SQL0001_SelBrandList();
@@ -211,10 +208,14 @@ public class Logic02000 extends ServerLogic_old {
 	
 	/**
 	 * 検索条件用プラモデルリスト取得SQL実行
+	 * @param inputData
+	 * @param outputData
 	 * @param comData
 	 * @throws Exception
 	 */
 	protected void doSql_SQL0002(
+			MdlLogic02000In inputData,
+			MdlLogic02000Out outputData,
 			MdlCommonData comData) throws Exception {
 		
 		SQL0002_SelPlmdlList sql0002 = new SQL0002_SelPlmdlList();
@@ -234,9 +235,14 @@ public class Logic02000 extends ServerLogic_old {
 
 	/**
 	 * 塗料一覧リスト取得SQL実行
+	 * @param inputData
+	 * @param outputData
 	 * @param comData
+	 * @throws Exception
 	 */
 	protected void doSql_SQL0003(
+			MdlLogic02000In inputData,
+			MdlLogic02000Out outputData,
 			MdlCommonData comData) throws Exception {
 		SQL0003_SelPaintList sql0003 = new SQL0003_SelPaintList();
 		SQL0003In sqlin = new SQL0003In();
@@ -285,11 +291,16 @@ public class Logic02000 extends ServerLogic_old {
 		outputData.setResultList(sqlout);
 	}
 	
-	@Override
+	/**
+	 * 出力データ編集処理
+	 * @param inputData
+	 * @param outputData
+	 * @param comData
+	 */
 	protected void editSetOutputData(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData) throws Exception {
+			MdlLogic02000In inputData,
+			MdlLogic02000Out outputData,
+			MdlCommonData comData) {
 		
 		// 塗料名
 		outputData.setColornm(inputData.getColornm());
@@ -300,23 +311,6 @@ public class Logic02000 extends ServerLogic_old {
 		// プラモデルID
 		outputData.setPlmdlid(inputData.getPlmdlid());
 		
-		request.setAttribute(ParamIdWeb.View02000.OUTDATA, outputData);
-	}
-
-	/**
-	 * 想定外のエラー発生時の処理
-	 */
-	@Override
-	protected void exeErr(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData,
-			Exception e
-		) {
-		
-		String msg = "塗料一覧で想定外のエラーが発生";
-		comData.setResult(ResultConstant.LOGIC_ERROR);
-		comData.setErrorData(logger, Level.SEVERE, e, msg);
 	}
 
 }

@@ -18,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import logic.sv.Logic02000;
+import logic.sv.model.MdlLogic02000In;
+import logic.sv.model.MdlLogic02000Out;
 
 /**
  * Servlet implementation class Ctrl02000
@@ -88,9 +90,28 @@ public class Ctrl02000 extends HttpServlet {
 		
 		uriLogic.getReferrerViewData(request, uriLogicMdl);
 		
-		// サーバ処理（仮）
+		// サーバ処理
 		Logic02000 logic02000 = new Logic02000();
-		logic02000.execute(request, response, comData);
+		MdlLogic02000In inputData = new MdlLogic02000In();
+		MdlLogic02000Out outputData = new MdlLogic02000Out();
+		
+		// 塗料名
+		inputData.setColornm(request.getParameter(ParamIdWeb.View02000.COLOR_NM));
+		
+		// ブランドID
+		inputData.setBrandid(request.getParameter(ParamIdWeb.View02000.BRAND_ID));
+		
+		// プラモデルID
+		inputData.setPlmdlid(request.getParameter(ParamIdWeb.View02000.PLMDL_ID));
+		
+		// 検索実行フラグ
+		inputData.setSearchExeFlg("0"); // 検索実行せず
+
+		// ロジック処理実行
+		logic02000.execute(inputData, outputData, comData);
+		
+		// 出力データをリクエストスコープに設定
+		request.setAttribute(ParamIdWeb.View02000.OUTDATA, outputData);
 		
 		// 遷移先画面判定
 		if (ResultConstant.NORMAL.equals(comData.getResult())) {
@@ -152,15 +173,29 @@ public class Ctrl02000 extends HttpServlet {
 		
 		String viewIdFr = uriLogicMdl.getServletPath();
 
-		// 以下編集中 ------------------
-		// サーバ処理（仮）
+		// サーバ処理
 		Logic02000 logic02000 = new Logic02000();
+		MdlLogic02000In inputData = new MdlLogic02000In();
+		MdlLogic02000Out outputData = new MdlLogic02000Out();
 		
-		logic02000.execute(request, response, comData);
+		// 塗料名
+		inputData.setColornm(request.getParameter(ParamIdWeb.View02000.COLOR_NM));
 		
-		// 共通データ保持クラスをセッションスコープに設定
-		session.setAttribute(ParamIdWeb.COM_DATA, comData);
+		// ブランドID
+		inputData.setBrandid(request.getParameter(ParamIdWeb.View02000.BRAND_ID));
+		
+		// プラモデルID
+		inputData.setPlmdlid(request.getParameter(ParamIdWeb.View02000.PLMDL_ID));
+		
+		// 検索実行フラグ
+		inputData.setSearchExeFlg("1"); // 検索実行
 
+		// ロジック処理実行
+		logic02000.execute(inputData, outputData, comData);
+		
+		// 出力データをリクエストスコープに設定
+		request.setAttribute(ParamIdWeb.View02000.OUTDATA, outputData);
+		
 		if (ResultConstant.NORMAL.equals(comData.getResult())) {
 			
 			// 塗料一覧画面へのフォワード遷移実行
