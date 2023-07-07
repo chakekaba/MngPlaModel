@@ -46,84 +46,92 @@
 			</ul>
 		</div>
 	</c:if>
-<form action="<%= ParamIdWeb.View02000.FORM_PATH %>" method="post" class="mb-3 border-bottom">
-	<!-- 塗料名（部分一致） -->
-	<div class="mb-3 w-50">
-		<label for="paintnm" class="form-label">塗料名（部分一致）</label>
-		<input type="text" class="form-control" name="<%= ParamIdWeb.View02000.COLOR_NM %>"
-			id="paintnm" value="${View02000In.colornm}">
+	<form action="<%= ParamIdWeb.View02000.FORM_PATH %>" method="post" class="mb-3 border-bottom">
+		<!-- 塗料名（部分一致） -->
+		<div class="mb-3 w-50">
+			<label for="paintnm" class="form-label">塗料名（部分一致）</label>
+			<input type="text" class="form-control" name="<%= ParamIdWeb.View02000.COLOR_NM %>"
+				id="paintnm" value="${View02000Out.colornm}">
+		</div>
+		<!-- ブランド -->
+		<div class="mb-3 w-50">
+			<label for="brandnm" class="form-label">ブランド</label>
+			<select class="form-control" name="<%= ParamIdWeb.View02000.BRAND_ID %>" id="brandnm">
+				<option />
+				<c:forEach var="brand" items="${View02000Out.brandList}">
+					<c:choose>
+						<c:when test="${View02000Out.brandid == brand.brandid}">
+							<option value="${brand.brandid}" selected>${brand.brandData}</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${brand.brandid}">${brand.brandData}</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</select>
+		</div>
+		<!-- プラモデル -->
+		<div class="mb-3 w-50">
+			<label for="plmdl" class="form-label">プラモデル</label>
+			<select class="form-control" name="<%= ParamIdWeb.View02000.PLMDL_ID %>" id="plmdl">
+				<option />
+				<c:forEach var="plmdl" items="${View02000Out.plmdlList}">
+					<c:choose>
+						<c:when test="${View02000Out.plmdlid == plmdl.plmdlid}">
+							<option value="${plmdl.plmdlid}" selected>${plmdl.plmdlnm}</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${plmdl.plmdlid}">${plmdl.plmdlnm}</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</select>
+		</div>
+		<input type="hidden" name="<%= ParamIdWeb.View02000.SEARCH_EXE_FLG %>" value="1">
+		<button type="submit" class="btn btn-primary mb-3">検索</button>
+	</form>
+	<div class="row">
+		<p class="col text-end">
+			検索件数：
+		</p>
+		<p class="col-2 border p-3">
+			${ View02000Out.getResultListCnt() }
+		</p>
 	</div>
-	<!-- ブランド -->
-	<div class="mb-3 w-50">
-		<label for="brandnm" class="form-label">ブランド</label>
-		<select class="form-control" name="<%= ParamIdWeb.View02000.BRAND_ID %>" id="brandnm">
-			<option />
-			<c:forEach var="brand" items="${View02000Out.brandList}">
-				<c:choose>
-					<c:when test="${View02000In.brandid == brand.brandid}">
-						<option value="${brand.brandid}" selected>${brand.brandData}</option>
-					</c:when>
-					<c:otherwise>
-						<option value="${brand.brandid}">${brand.brandData}</option>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</select>
+	<!-- 検索一覧テーブル -->
+	<div class="mb-3">
+		<table class="table table-sm table-striped table-hover table-bordered">
+			<thead class="table-secondary">
+				<tr>
+					<th>ブランド名</th>
+					<th>カラーコード</th>
+					<th>カラー名</th>
+					<th>所持</th>
+					<th>近似カラーコード</th>
+					<th>近似カラー名</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="result" items="${View02000Out.resultList}">
+				<tr>
+					<td>${result.brandnm}</td>
+					<td>${result.colorcode}</td>
+					<td>${result.colornm}</td>
+					<td>${result.posession}</td>
+					<td>${result.apcolorcode}</td>
+					<td>${result.apcolornm}</td>
+				</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
-	<!-- プラモデル -->
-	<div class="mb-3 w-50">
-		<label for="plmdl" class="form-label">プラモデル</label>
-		<select class="form-control" name="<%= ParamIdWeb.View02000.PLMDL_ID %>" id="plmdl">
-			<option />
-			<c:forEach var="plmdl" items="${View02000Out.plmdlList}">
-				<c:choose>
-					<c:when test="${View02000In.plmdlid == plmdl.plmdlid}">
-						<option value="${plmdl.plmdlid}" selected>${plmdl.plmdlnm}</option>
-					</c:when>
-					<c:otherwise>
-						<option value="${plmdl.plmdlid}">${plmdl.plmdlnm}</option>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</select>
+	<div class="mb-3">
+		<a href="<%= ParamIdWeb.View02010.FORM_PATH %>" class="btn btn-info" role="button">塗料登録</a>
 	</div>
-	<input type="hidden" name="<%= ParamIdWeb.View02000.SEARCH_EXE_FLG %>" value="1">
-	<button type="submit" class="btn btn-primary mb-3">検索</button>
-</form>
-<!-- 検索一覧テーブル -->
-<div class="mb-3">
-	<table class="table table-sm table-striped table-hover table-bordered">
-		<thead class="table-secondary">
-			<tr>
-				<th>ブランド名</th>
-				<th>カラーコード</th>
-				<th>カラー名</th>
-				<th>所持</th>
-				<th>近似カラーコード</th>
-				<th>近似カラー名</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="result" items="${View02000Out.resultList}">
-			<tr>
-				<td>${result.brandnm}</td>
-				<td>${result.colorcode}</td>
-				<td>${result.colornm}</td>
-				<td>${result.posession}</td>
-				<td>${result.apcolorcode}</td>
-				<td>${result.apcolornm}</td>
-			</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-</div>
-<div class="mb-3">
-	<a href="<%= ParamIdWeb.View02010.FORM_PATH %>" class="btn btn-info" role="button">塗料登録</a>
-</div>
-<div class="mb-3">
-	<a href="<%= ParamIdWeb.View00000.FORM_PATH %>" class="btn btn-info" role="button">メイン画面</a>
-</div>
-${ comData.clearErr() }
+	<div class="mb-3">
+		<a href="<%= ParamIdWeb.View00000.FORM_PATH %>" class="btn btn-info" role="button">メイン画面</a>
+	</div>
+	${ comData.clearErr() }
 </div>
 </body>
 </html>

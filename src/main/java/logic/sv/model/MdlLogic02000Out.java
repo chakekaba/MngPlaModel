@@ -11,6 +11,15 @@ import logic.sql.model.SQL0003Out;
 
 public class MdlLogic02000Out extends JavaBeansModel {
 
+	/** 塗料名 **/
+	private String colornm;
+	
+	/** ブランドID **/
+	private String brandid;
+	
+	/** プラモデルID **/
+	private String plmdlid;
+	
 	/** ブランドリスト **/
 	private List<SQL0001Out> brandList = new ArrayList<SQL0001Out>();
 	
@@ -19,6 +28,48 @@ public class MdlLogic02000Out extends JavaBeansModel {
 	
 	/** 検索結果リスト **/
 	private List<SQL0003Out> resultList = new ArrayList<SQL0003Out>();
+
+	/**
+	 * @return colornm
+	 */
+	public String getColornm() {
+		return colornm;
+	}
+
+	/**
+	 * @param colornm セットする colornm
+	 */
+	public void setColornm(String colornm) {
+		this.colornm = colornm;
+	}
+
+	/**
+	 * @return brandid
+	 */
+	public String getBrandid() {
+		return brandid;
+	}
+
+	/**
+	 * @param brandid セットする brandid
+	 */
+	public void setBrandid(String brandid) {
+		this.brandid = brandid;
+	}
+
+	/**
+	 * @return plmdlid
+	 */
+	public String getPlmdlid() {
+		return plmdlid;
+	}
+
+	/**
+	 * @param plmdlid セットする plmdlid
+	 */
+	public void setPlmdlid(String plmdlid) {
+		this.plmdlid = plmdlid;
+	}
 
 	/**
 	 * @return brandList
@@ -62,5 +113,10 @@ public class MdlLogic02000Out extends JavaBeansModel {
 		this.resultList = resultList;
 	}
 	
-	
+	/**
+	 * @return resultList_検索結果リスト の件数
+	 */
+	public int getResultListCnt() {
+		return resultList.size();
+	}
 }

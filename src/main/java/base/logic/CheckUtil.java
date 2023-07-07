@@ -18,7 +18,7 @@ public class CheckUtil {
 	 * @param str
 	 * @return
 	 */
-	public boolean requiredCheck(String str) {
+	public static boolean requiredCheck(String str) {
 		return !(str == null || str.trim().isEmpty());
 	}
 	
@@ -28,7 +28,7 @@ public class CheckUtil {
 	 * @param maxLen
 	 * @return
 	 */
-	public boolean lengthCheck(String str, int maxLen) {
+	public static boolean lengthCheck(String str, int maxLen) {
 		return str.length() <= maxLen;
 	}
 	
