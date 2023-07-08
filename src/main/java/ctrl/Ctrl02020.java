@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import logic.sv.Logic02020;
+import logic.sv.model.MdlLogic02020In;
+import logic.sv.model.MdlLogic02020Out;
 
 /**
  * Servlet implementation class Ctrl02020
@@ -69,13 +71,35 @@ public class Ctrl02020 extends HttpServlet {
 			return;
 		}
 		
-		// リクエストスコープに処理パターンを設定
-		String logicPtn = request.getPathInfo();
-		request.setAttribute(ParamIdWeb.View02020.LOGIC_PTN, logicPtn);
-		
 		// サーバ処理
 		Logic02020 logic02020 = new Logic02020();
-		logic02020.execute(request, response, comData);
+		MdlLogic02020In inputData = new MdlLogic02020In();
+		MdlLogic02020Out outputData = new MdlLogic02020Out();
+		
+		// ブランドID
+		inputData.setBrandid(request.getParameter(ParamIdWeb.View02010.BRAND_ID));
+
+		// カラーコード
+		inputData.setColorcode(request.getParameter(ParamIdWeb.View02010.COLOR_CODE));
+
+		// カラー名
+		inputData.setColornm(request.getParameter(ParamIdWeb.View02010.COLOR_NAME));
+
+		// 所持
+		inputData.setPosession(request.getParameter(ParamIdWeb.View02010.POSESSION));
+
+		// 選択肢表示
+		inputData.setSelvisible(request.getParameter(ParamIdWeb.View02010.SEL_VISIBLE));
+
+		// 近似塗料ID
+		inputData.setAppaintid(request.getParameter(ParamIdWeb.View02010.APPAINTID));
+
+		// 処理パターン
+		String logicPtn = request.getPathInfo();
+		inputData.setLogicPtn(logicPtn);
+		
+		// サーバ処理実行
+		logic02020.execute(inputData, outputData, comData);
 		
 		// 遷移先画面判定
 		// 拡張パスが"/register
@@ -83,10 +107,16 @@ public class Ctrl02020 extends HttpServlet {
 		if (ParamIdWeb.View02020.EXT_PATH.equals(logicPtn)
 				|| !ResultConstant.NORMAL.equals(comData.getResult())) {
 			
+			// セッションスコープに出力データを設定
+			session.setAttribute(ParamIdWeb.View02020.OUTDATA, outputData);
+
 			// 塗料登録画面servletへリダイレクト遷移
 			response.sendRedirect(ParamIdWeb.View02010.FORM_PATH);
 		} else {
 			
+			// リクエストスコープに出力データを設定
+			request.setAttribute(ParamIdWeb.View02020.OUTDATA, outputData);
+
 			// 塗料登録確認画面へフォワード遷移
 			dispatcher = request.getRequestDispatcher(ParamIdWeb.View02020.PAGE_SRC);
 			dispatcher.forward(request, response);
