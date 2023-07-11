@@ -105,7 +105,7 @@ public class Ctrl02000 extends HttpServlet {
 		inputData.setPlmdlid(request.getParameter(ParamIdWeb.View02000.PLMDL_ID));
 		
 		// 検索実行フラグ
-		inputData.setSearchExeFlg("0"); // 検索実行せず
+		inputData.setSearchExeFlg(false); // 検索実行せず
 
 		// ロジック処理実行
 		logic02000.execute(inputData, outputData, comData);
@@ -188,7 +188,7 @@ public class Ctrl02000 extends HttpServlet {
 		inputData.setPlmdlid(request.getParameter(ParamIdWeb.View02000.PLMDL_ID));
 		
 		// 検索実行フラグ
-		inputData.setSearchExeFlg("1"); // 検索実行
+		inputData.setSearchExeFlg(true); // 検索実行
 
 		// ロジック処理実行
 		logic02000.execute(inputData, outputData, comData);

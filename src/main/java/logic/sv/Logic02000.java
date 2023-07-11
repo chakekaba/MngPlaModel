@@ -2,7 +2,6 @@ package logic.sv;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,8 +69,8 @@ public class Logic02000 {
 			
 			doSql_SQL0002(inputData, outputData, comData);
 			
-			// 検索実行フラグ = "1" の場合
-			if ("1".equals(inputData.getSearchExeFlg())) {
+			// 検索実行フラグ = true:検索実行 の場合
+			if (inputData.getSearchExeFlg()) {
 				
 				doSql_SQL0003(inputData, outputData, comData);
 			}
@@ -108,27 +107,8 @@ public class Logic02000 {
 			MdlLogic02000In inputData,
 			MdlCommonData comData) {
 		
-		/** 検索実行フラグ **/
-		String searchExeFlg = inputData.getSearchExeFlg();
-		
-		final String[] searchExeFlgList = {"0", "1"};
-		
-		// 必須チェック
-		if (!CheckUtil.requiredCheck(searchExeFlg)) {
-			String msg = "必須チェックエラー：検索実行フラグ";
-			comData.setResult(ResultConstant.LOGIC_ERROR);
-			comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
-		}
-		
-		// 設定可能値チェック
-		if (!Arrays.asList(searchExeFlgList).contains(searchExeFlg)) {
-			String msg = "設定可能値チェックエラー：検索実行フラグ";
-			comData.setResult(ResultConstant.LOGIC_ERROR);
-			comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
-		}
-		
-		// 検索実行フラグが "1":検索実行 の場合
-		if ("1".equals(searchExeFlg)) {
+		// 検索実行フラグが true:検索実行 の場合
+		if (inputData.getSearchExeFlg()) {
 			
 			/** 塗料名 **/
 			String colornm = inputData.getColornm();
