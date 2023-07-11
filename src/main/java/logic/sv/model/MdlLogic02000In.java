@@ -17,10 +17,36 @@ public class MdlLogic02000In extends JavaBeansModel {
 	private String searchExeFlg;
 	
 	
+	/**
+	 * コンストラクタ（フィールド初期化）
+	 */
 	public MdlLogic02000In(){
 		this.init();
 	}
 	
+	
+	
+	/**
+	 * コンストラクタ（フィールド設定）
+	 * @param colornm
+	 * @param brandid
+	 * @param plmdlid
+	 * @param searchExeFlg
+	 */
+	public MdlLogic02000In(
+			String colornm,
+			String brandid,
+			String plmdlid,
+			String searchExeFlg) {
+		super();
+		this.colornm = colornm;
+		this.brandid = brandid;
+		this.plmdlid = plmdlid;
+		this.searchExeFlg = searchExeFlg;
+	}
+
+
+
 	/**
 	 * フィールド初期化処理
 	 */
