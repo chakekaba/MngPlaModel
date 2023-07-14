@@ -110,11 +110,13 @@ class LogicLoginUT {
 			"'sssssssss', 'xxxxxxxxxx'"
 		})
 		@DisplayName("正常な入力値データの場合")
-		public void testValid(String name, String pass) {
+		public void testValid(String name, String pass) throws Exception {
 
 			// 入力データ設定
 			inputData.setUserName(name);
 			inputData.setPassword(pass);
+			
+			method.invoke(logicLogin, inputData, comData);
 
 			// 実行結果判定
 			assertEquals(ResultConstant.NORMAL, comData.getResult());
