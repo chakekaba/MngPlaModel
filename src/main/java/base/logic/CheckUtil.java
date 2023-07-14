@@ -24,6 +24,7 @@ public class CheckUtil {
 	
 	/**
 	 * 文字列長チェック
+	 * （チェック対象が Null でないかの判定は事前に別個で行うものとする）
 	 * @param str
 	 * @param maxLen
 	 * @return

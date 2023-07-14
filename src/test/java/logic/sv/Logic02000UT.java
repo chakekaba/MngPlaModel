@@ -197,7 +197,7 @@ class Logic02000UT {
 			String colornm = "_colornm";
 			String brandid = "_brandid";
 			String plmdlid = "_plmdlid";
-			boolean searchExeFlg = true;
+			boolean searchExeFlg = false;
 			
 			String expected = null;
 			

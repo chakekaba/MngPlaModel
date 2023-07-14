@@ -116,10 +116,14 @@ public class Logic02000 {
 			// 文字列長チェック
 			int maxLenColornm = 20;
 			
-			if (!CheckUtil.lengthCheck(colornm, maxLenColornm)) {
-				String msg = "文字列長チェックエラー：カラーコード";
-				comData.setResult(ResultConstant.LOGIC_ERROR);
-				comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
+			if (colornm != null) {
+				
+				// 塗料名が null でない場合、文字列長チェック実行
+				if (!CheckUtil.lengthCheck(colornm, maxLenColornm)) {
+					String msg = "文字列長チェックエラー：カラーコード";
+					comData.setResult(ResultConstant.LOGIC_ERROR);
+					comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
+				}
 			}
 			
 			/** ブランドID **/
@@ -282,15 +286,19 @@ public class Logic02000 {
 			MdlLogic02000Out outputData,
 			MdlCommonData comData) {
 		
-		// 塗料名
-		outputData.setColornm(inputData.getColornm());
-		
-		// ブランドID
-		outputData.setBrandid(inputData.getBrandid());
-		
-		// プラモデルID
-		outputData.setPlmdlid(inputData.getPlmdlid());
-		
+		// 検索実行フラグがtrueの場合、検索条件を出力データとして設定
+		if (inputData.getSearchExeFlg()) {
+			
+			// 塗料名
+			outputData.setColornm(inputData.getColornm());
+			
+			// ブランドID
+			outputData.setBrandid(inputData.getBrandid());
+			
+			// プラモデルID
+			outputData.setPlmdlid(inputData.getPlmdlid());
+			
+		}
 	}
 
 }
