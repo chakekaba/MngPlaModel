@@ -1,5 +1,5 @@
 -- Project Name : プラモデル管理アプリ
--- Date/Time    : 2023/04/12 18:36:03
+-- Date/Time    : 2023/07/16 18:49:34
 -- Author       : kk-ma
 -- RDBMS Type   : PostgreSQL
 -- Application  : A5:SQL Mk-2
@@ -124,7 +124,14 @@ select
     colornm,  -- カラー名
     posession,  -- 所持
     selvisible, -- 選択肢表示
-    appaintid   -- 近似塗料ID
+    appaintid,  -- 近似塗料ID
+    translate(colorcode, '1234567890', '') as ccode_str,    -- カラーコード文字部
+    cast(
+        translate(colorcode, 
+            translate(colorcode, '1234567890', ''), 
+        '')
+    as integer)
+    as ccode_num    -- カラーコード数値部
 from
     tbl0000_paint
 ;
@@ -152,14 +159,16 @@ comment on column paintView.colornm is 'カラー名';
 comment on column paintView.posession is '所持';
 comment on column paintView.selvisible is '選択肢表示';
 comment on column paintView.appaintid is '近似塗料ID';
+comment on column paintView.ccode_str is 'カラーコード文字部';
+comment on column paintView.ccode_num is 'カラーコード数値部';
 
 comment on table tbl0000_paint is '塗料一覧';
 comment on column tbl0000_paint.brandid is 'ブランドID';
 comment on column tbl0000_paint.colorcode is 'カラーコード:販売されている商品名としてのカラーコード';
 comment on column tbl0000_paint.colornm is 'カラー名';
 comment on column tbl0000_paint.posession is '所持:0:無,1:有';
-comment on column tbl0000_paint.selvisible is '選択肢表示:0:無,1:有';
-comment on column tbl0000_paint.appaintid is '近似塗料ID:ブランドID+カラーコード';
+comment on column tbl0000_paint.selvisible is '選択肢表示:0:無,1:有 基本的に「所持：１（有）」の場合「1:有」に設定';
+comment on column tbl0000_paint.appaintid is '近似塗料ID:ブランドID+カラーコード 「選択肢表示」が"1:表示"の塗料のみ、近似塗料として設定可能';
 
 comment on table tbl0001_mixpaint is '混合塗料';
 comment on column tbl0001_mixpaint.mixpaintid is '混合塗料ID:''MIX''&(自動採番5桁数値)';
