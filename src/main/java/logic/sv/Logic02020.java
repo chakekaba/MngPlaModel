@@ -4,17 +4,12 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
 import base.constant.ValueConstant;
 import base.logic.CheckUtil;
 import base.logic.DbConnection;
 import base.logic.ExceptionLogic;
-import base.logic.ServerLogic;
 import base.model.MdlCommonData;
 import logic.sql.SQL0005_SelBrandData;
 import logic.sql.SQL0006_SelPaintData;
@@ -33,7 +28,7 @@ import logic.sql.model.SQL2001Out;
 import logic.sv.model.MdlLogic02020In;
 import logic.sv.model.MdlLogic02020Out;
 
-public class Logic02020 extends ServerLogic {
+public class Logic02020 {
 
 	/** 入力データ **/
 	protected MdlLogic02020In inputData = new MdlLogic02020In();
@@ -47,110 +42,172 @@ public class Logic02020 extends ServerLogic {
 	/** ロガーインスタンス **/
 	Logger logger = Logger.getLogger(Logic02020.class.getName());
 	
-	/** 値判定処理クラス **/
-	CheckUtil checkUtil = new CheckUtil();
-	
 	/** ロジックID **/
 	protected final String logicId = "Logic02020";
 
-	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response, MdlCommonData comData) {
-
+	public void execute(
+			MdlLogic02020In inputData,
+			MdlLogic02020Out outputData,
+			MdlCommonData comData) {
 		logger.setLevel(Level.INFO);
 		logger.log(Level.INFO, logicId + ":開始");
 		
-		super.execute(request, response, comData);
-		
-		logger.log(Level.INFO, logicId + ":終了");
-	}
+		try {
+			// DB接続
+			dbconn = new DbConnection();
+			dbconn.connect();
 
-	@Override
-	protected void exeNormal(HttpServletRequest request, HttpServletResponse response, MdlCommonData comData)
-			throws Exception {
+			checkInputData(inputData, comData);
 
-		logger.setLevel(Level.INFO);
-
-		// DB接続
-		dbconn = new DbConnection();
-		dbconn.connect();
-
-		getInputData(request, response, comData);
-
-		checkInputData(comData);
-
-		// 処理パターンが"/register"
-		// かつ、処理結果が"正常"の場合
-		if (ParamIdWeb.View02020.EXT_PATH.equals(inputData.getLogicPtn())
-				&& ResultConstant.NORMAL.equals(comData.getResult())) {
-
-			// 塗料一覧登録SQL実行
-			doSql_SQL2001(comData);
-			
-		} else if (ResultConstant.NORMAL.equals(comData.getResult())) {
-			// 処理結果が"正常"の場合
-			
-			// ブランド情報取得SQL実行
-			doSql_SQL0005(comData);
-			
-			if (ResultConstant.NORMAL.equals(comData.getResult())
-					&& checkUtil.requiredCheck(inputData.getAppaintid())) {
-				
-				// 近似塗料情報取得SQL実行
-				doSql_SQL0006(comData);
-				
-			}
-		}
-		
-		if (ResultConstant.NORMAL.equals(comData.getResult())) {
-		}
-
-		editSetOutputData(request, response, comData);
-
-		// DBクローズ処理
-		Boolean result = ResultConstant.NORMAL.equals(comData.getResult());
-		dbconn.close(result);
-		
-		if (ParamIdWeb.View02020.EXT_PATH.equals(inputData.getLogicPtn())
-				&& ResultConstant.NORMAL.equals(comData.getResult())) {
 			// 処理パターンが"/register"
 			// かつ、処理結果が"正常"の場合
-			String msg = "塗料登録処理が正常に完了しました。";
-			comData.setErrorData(logger, Level.INFO, null, msg);
+			if (ParamIdWeb.View02020.EXT_PATH.equals(inputData.getLogicPtn())
+					&& ResultConstant.NORMAL.equals(comData.getResult())) {
+
+				// 塗料一覧登録SQL実行
+				doSql_SQL2001(inputData, outputData, comData);
+				
+			} else if (ResultConstant.NORMAL.equals(comData.getResult())) {
+				// 処理結果が"正常"の場合
+				
+				// ブランド情報取得SQL実行
+				doSql_SQL0005(inputData, outputData, comData);
+				
+				if (ResultConstant.NORMAL.equals(comData.getResult())
+						&& CheckUtil.requiredCheck(inputData.getAppaintid())) {
+					
+					// 近似塗料情報取得SQL実行
+					doSql_SQL0006(inputData, outputData, comData);
+					
+				}
+			}
+			
+			if (ResultConstant.NORMAL.equals(comData.getResult())) {
+			}
+
+			editSetOutputData(inputData, outputData, comData);;
+
+			// DBクローズ処理
+			Boolean result = ResultConstant.NORMAL.equals(comData.getResult());
+			dbconn.close(result);
+			
+			if (ParamIdWeb.View02020.EXT_PATH.equals(inputData.getLogicPtn())
+					&& ResultConstant.NORMAL.equals(comData.getResult())) {
+				// 処理パターンが"/register"
+				// かつ、処理結果が"正常"の場合
+				String msg = "塗料登録処理が正常に完了しました。";
+				comData.setErrorData(logger, Level.INFO, null, msg);
+			}
+
+		} catch (Exception e) {
+			
+			String msg = "塗料登録処理で想定外のエラーが発生";
+			comData.setResult(ResultConstant.LOGIC_ERROR);
+			comData.setErrorData(logger, Level.SEVERE, e, msg);
+			
+		} finally {
+			
+			// DB切断
+			try {
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} catch (SQLException e) {
+				// 何も処理しない
+			}
+
 		}
-
+		logger.log(Level.INFO, logicId + ":終了");
+		
 	}
 
-	@Override
-	protected void getInputData(HttpServletRequest request, HttpServletResponse response, MdlCommonData comData)
-			throws Exception {
 
-		// ブランドID
-		inputData.setBrandid(request.getParameter(ParamIdWeb.View02010.BRAND_ID));
+//	@Override
+//	protected void exeNormal(HttpServletRequest request, HttpServletResponse response, MdlCommonData comData)
+//			throws Exception {
+//
+//		logger.setLevel(Level.INFO);
+//
+//		// DB接続
+//		dbconn = new DbConnection();
+//		dbconn.connect();
+//
+//		getInputData(request, response, comData);
+//
+//		checkInputData(comData);
+//
+//		// 処理パターンが"/register"
+//		// かつ、処理結果が"正常"の場合
+//		if (ParamIdWeb.View02020.EXT_PATH.equals(inputData.getLogicPtn())
+//				&& ResultConstant.NORMAL.equals(comData.getResult())) {
+//
+//			// 塗料一覧登録SQL実行
+//			doSql_SQL2001(comData);
+//			
+//		} else if (ResultConstant.NORMAL.equals(comData.getResult())) {
+//			// 処理結果が"正常"の場合
+//			
+//			// ブランド情報取得SQL実行
+//			doSql_SQL0005(comData);
+//			
+//			if (ResultConstant.NORMAL.equals(comData.getResult())
+//					&& CheckUtil.requiredCheck(inputData.getAppaintid())) {
+//				
+//				// 近似塗料情報取得SQL実行
+//				doSql_SQL0006(comData);
+//				
+//			}
+//		}
+//		
+//		if (ResultConstant.NORMAL.equals(comData.getResult())) {
+//		}
+//
+//		editSetOutputData(request, response, comData);
+//
+//		// DBクローズ処理
+//		Boolean result = ResultConstant.NORMAL.equals(comData.getResult());
+//		dbconn.close(result);
+//		
+//		if (ParamIdWeb.View02020.EXT_PATH.equals(inputData.getLogicPtn())
+//				&& ResultConstant.NORMAL.equals(comData.getResult())) {
+//			// 処理パターンが"/register"
+//			// かつ、処理結果が"正常"の場合
+//			String msg = "塗料登録処理が正常に完了しました。";
+//			comData.setErrorData(logger, Level.INFO, null, msg);
+//		}
+//
+//	}
+//
+//	@Override
+//	protected void getInputData(HttpServletRequest request, HttpServletResponse response, MdlCommonData comData)
+//			throws Exception {
+//
+//		// ブランドID
+//		inputData.setBrandid(request.getParameter(ParamIdWeb.View02010.BRAND_ID));
+//
+//		// カラーコード
+//		inputData.setColorcode(request.getParameter(ParamIdWeb.View02010.COLOR_CODE));
+//
+//		// カラー名
+//		inputData.setColornm(request.getParameter(ParamIdWeb.View02010.COLOR_NAME));
+//
+//		// 所持
+//		inputData.setPosession(request.getParameter(ParamIdWeb.View02010.POSESSION));
+//
+//		// 選択肢表示
+//		inputData.setSelvisible(request.getParameter(ParamIdWeb.View02010.SEL_VISIBLE));
+//
+//		// 近似塗料ID
+//		inputData.setAppaintid(request.getParameter(ParamIdWeb.View02010.APPAINTID));
+//
+//		// 処理パターン
+//		inputData.setLogicPtn((String)request.getAttribute(ParamIdWeb.View02010.LOGIC_PTN));
+//	}
+//
 
-		// カラーコード
-		inputData.setColorcode(request.getParameter(ParamIdWeb.View02010.COLOR_CODE));
-
-		// カラー名
-		inputData.setColornm(request.getParameter(ParamIdWeb.View02010.COLOR_NAME));
-
-		// 所持
-		inputData.setPosession(request.getParameter(ParamIdWeb.View02010.POSESSION));
-
-		// 選択肢表示
-		inputData.setSelvisible(request.getParameter(ParamIdWeb.View02010.SEL_VISIBLE));
-
-		// 近似塗料ID
-		inputData.setAppaintid(request.getParameter(ParamIdWeb.View02010.APPAINTID));
-
-		// 処理パターン
-		inputData.setLogicPtn((String)request.getAttribute(ParamIdWeb.View02010.LOGIC_PTN));
-	}
-
-	/**
-	 *
-	 */
-	@Override
-	protected void checkInputData(MdlCommonData comData) throws Exception {
+	protected void checkInputData(
+			MdlLogic02020In inputData,
+			MdlCommonData comData) {
 		
 		// SQL1001実行準備
 		SQL1001_CntPaintView sql1001 = new SQL1001_CntPaintView();
@@ -160,7 +217,7 @@ public class Logic02020 extends ServerLogic {
 		/** ブランドID **/
 		// 必須チェック
 		String brandid = inputData.getBrandid();
-		boolean brandidExist = checkUtil.requiredCheck(brandid);
+		boolean brandidExist = CheckUtil.requiredCheck(brandid);
 		if (!brandidExist) {
 			String msg = "必須チェックエラー：ブランドID";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
@@ -191,7 +248,7 @@ public class Logic02020 extends ServerLogic {
 		/** カラーコード **/
 		// 必須チェック
 		String colorcode = inputData.getColorcode();
-		boolean colorcodeExist = checkUtil.requiredCheck(colorcode);
+		boolean colorcodeExist = CheckUtil.requiredCheck(colorcode);
 		if (!colorcodeExist) {
 			String msg = "必須チェックエラー：カラーコード";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
@@ -204,7 +261,7 @@ public class Logic02020 extends ServerLogic {
 			
 			int maxLength = 6;
 			
-			if (!checkUtil.lengthCheck(colorcode, maxLength)) {
+			if (!CheckUtil.lengthCheck(colorcode, maxLength)) {
 				String msg = "文字列長チェックエラー：カラーコード";
 				comData.setResult(ResultConstant.LOGIC_ERROR);
 				comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
@@ -237,7 +294,7 @@ public class Logic02020 extends ServerLogic {
 		/** カラー名 **/
 		// 必須チェック
 		String colorname = inputData.getColornm();
-		boolean colornameExist = checkUtil.requiredCheck(colorname);
+		boolean colornameExist = CheckUtil.requiredCheck(colorname);
 		if (!colornameExist) {
 			String msg = "必須チェックエラー：カラー名";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
@@ -250,7 +307,7 @@ public class Logic02020 extends ServerLogic {
 			
 			int maxLength = 20;
 			
-			if (!checkUtil.lengthCheck(colorname, maxLength)) {
+			if (!CheckUtil.lengthCheck(colorname, maxLength)) {
 				String msg = "文字列長チェックエラー：カラー名";
 				comData.setResult(ResultConstant.LOGIC_ERROR);
 				comData.setErrorData(logger, Level.WARNING, new ExceptionLogic(), msg);
@@ -260,7 +317,7 @@ public class Logic02020 extends ServerLogic {
 		/** 所持 **/
 		// 必須チェック
 		String posession = inputData.getPosession();
-		boolean posessionExist = checkUtil.requiredCheck(posession);
+		boolean posessionExist = CheckUtil.requiredCheck(posession);
 		if (!posessionExist) {
 			String msg = "必須チェックエラー：所持";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
@@ -281,7 +338,7 @@ public class Logic02020 extends ServerLogic {
 		/** 選択肢表示 **/
 		// 必須チェック
 		String selVisible = inputData.getSelvisible();
-		boolean selVisibleExist = checkUtil.requiredCheck(selVisible);
+		boolean selVisibleExist = CheckUtil.requiredCheck(selVisible);
 		if (!selVisibleExist) {
 			String msg = "必須チェックエラー：選択肢表示";
 			comData.setResult(ResultConstant.LOGIC_ERROR);
@@ -303,7 +360,7 @@ public class Logic02020 extends ServerLogic {
 		// 設定値存在チェック
 		String appaintid = inputData.getAppaintid();
 		// appaintidが設定されている場合存在チェック実行
-		if (checkUtil.requiredCheck(appaintid)) {
+		if (CheckUtil.requiredCheck(appaintid)) {
 			
 			sqlin = new SQL1001In();
 			sqlout = new SQL1XXXCntOut();
@@ -359,7 +416,10 @@ public class Logic02020 extends ServerLogic {
 	 * ブランド情報取得SQL実行
 	 * @param comData
 	 */
-	protected void doSql_SQL0005(MdlCommonData comData) {
+	protected void doSql_SQL0005(
+			MdlLogic02020In inputData,
+			MdlLogic02020Out outputData,
+			MdlCommonData comData) {
 		
 		SQL0005_SelBrandData sql0005 = new SQL0005_SelBrandData();
 		SQL0005In sqlin = new SQL0005In();
@@ -394,7 +454,10 @@ public class Logic02020 extends ServerLogic {
 	 * 近似塗料情報取得SQL実行
 	 * @param comData
 	 */
-	protected void doSql_SQL0006(MdlCommonData comData) {
+	protected void doSql_SQL0006(
+			MdlLogic02020In inputData,
+			MdlLogic02020Out outputData,
+			MdlCommonData comData) {
 		
 		SQL0006_SelPaintData sql0006 = new SQL0006_SelPaintData();
 		SQL0006In sqlin = new SQL0006In();
@@ -430,7 +493,10 @@ public class Logic02020 extends ServerLogic {
 	 * 塗料一覧登録SQL実行
 	 * @param comData
 	 */
-	protected void doSql_SQL2001(MdlCommonData comData) {
+	protected void doSql_SQL2001(
+			MdlLogic02020In inputData,
+			MdlLogic02020Out outputData,
+			MdlCommonData comData) {
 		SQL2001_InsPaintList sql2001 = new SQL2001_InsPaintList();
 		SQL2001In sqlin = new SQL2001In();
 		SQL2001Out sqlout = new SQL2001Out();
@@ -468,12 +534,10 @@ public class Logic02020 extends ServerLogic {
 		}
 	}
 
-	@Override
 	protected void editSetOutputData(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData)
-			throws Exception {
+			MdlLogic02020In inputData,
+			MdlLogic02020Out outputData,
+			MdlCommonData comData) {
 
 		// ブランドID
 		outputData.setBrandid(inputData.getBrandid());
@@ -501,34 +565,19 @@ public class Logic02020 extends ServerLogic {
 		// 近似塗料ID
 		outputData.setAppaintid(inputData.getAppaintid());
 
-		// 処理パターンが"/register"
-		// もしくは、処理結果が"正常"以外の場合
-		if (ParamIdWeb.View02020.EXT_PATH.equals(inputData.getLogicPtn())
-				|| !ResultConstant.NORMAL.equals(comData.getResult())) {
-
-			// セッションスコープに出力データを設定
-			HttpSession session = request.getSession();
-			session.setAttribute(ParamIdWeb.View02020.OUTDATA, outputData);
-		} else {
-
-			// リクエストスコープに出力データを設定
-			request.setAttribute(ParamIdWeb.View02020.OUTDATA, outputData);
-		}
-	}
-
-	@Override
-	protected void exeErr(HttpServletRequest request, HttpServletResponse response, MdlCommonData comData,
-			Exception e) {
-
-		String msg = "塗料登録処理で想定外のエラーが発生";
-		comData.setResult(ResultConstant.LOGIC_ERROR);
-		comData.setErrorData(logger, Level.SEVERE, e, msg);
-
-		try {
-			dbconn.close();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+//		// 処理パターンが"/register"
+//		// もしくは、処理結果が"正常"以外の場合
+//		if (ParamIdWeb.View02020.EXT_PATH.equals(inputData.getLogicPtn())
+//				|| !ResultConstant.NORMAL.equals(comData.getResult())) {
+//
+//			// セッションスコープに出力データを設定
+//			HttpSession session = request.getSession();
+//			session.setAttribute(ParamIdWeb.View02020.OUTDATA, outputData);
+//		} else {
+//
+//			// リクエストスコープに出力データを設定
+//			request.setAttribute(ParamIdWeb.View02020.OUTDATA, outputData);
+//		}
 	}
 
 }

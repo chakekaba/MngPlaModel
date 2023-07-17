@@ -136,6 +136,7 @@ public class SQL0001_SelBrandList {
 			List<SQL0001Out> outData) {
 		
 		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, sqlId + ":開始");
 
 		try {
 			
@@ -154,6 +155,7 @@ public class SQL0001_SelBrandList {
 			close(comData);
 		}
 
+		logger.log(Level.INFO, sqlId + ":終了");
 	}
 	
 	

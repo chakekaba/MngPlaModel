@@ -6,13 +6,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
 import base.logic.DbConnection;
-import base.logic.ServerLogic;
 import base.model.MdlCommonData;
 import logic.sql.SQL0001_SelBrandList;
 import logic.sql.SQL0004_SelPaintPulldown;
@@ -23,13 +19,7 @@ import logic.sql.model.SQL0004Out;
 import logic.sv.model.MdlLogic02010In;
 import logic.sv.model.MdlLogic02010Out;
 
-public class Logic02010 extends ServerLogic {
-	
-	/** 入力データ **/
-	protected MdlLogic02010In inputData = new MdlLogic02010In();
-	
-	/** 出力データ **/
-	protected MdlLogic02010Out outputData = new MdlLogic02010Out();
+public class Logic02010 {
 	
 	/** データベース接続クラス **/
 	protected DbConnection dbconn = null;
@@ -39,68 +29,54 @@ public class Logic02010 extends ServerLogic {
 	
 	/** ロジックID **/
 	protected final String logicId = "Logic02010";
+	
+	/** コンストラクタ **/
+	public Logic02010() {
+	}
 
-	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response, MdlCommonData comData) {
+	/**
+	 * メイン実行処理
+	 * @param inputData
+	 * @param outputData
+	 * @param comData
+	 */
+	public void execute(
+			MdlLogic02010In inputData,
+			MdlLogic02010Out outputData,
+			MdlCommonData comData) {
 
 		logger.setLevel(Level.INFO);
 		logger.log(Level.INFO, logicId + ":開始");
 		
-		super.execute(request, response, comData);
+		try {
+			// DB接続
+			dbconn = new DbConnection();
+			dbconn.connect();
+
+			doSql_SQL0001(inputData, outputData, comData);
+			
+			doSql_SQL0004(inputData, outputData, comData);
+			
+			editSetOutputData(inputData, outputData, comData);
+			
+		} catch (Exception e) {
+			String msg = "塗料登録画面で想定外のエラーが発生";
+			comData.setResult(ResultConstant.LOGIC_ERROR);
+			comData.setErrorData(logger, Level.SEVERE, e, msg);
+		} finally {
+			
+			// DB切断
+			try {
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} catch (SQLException e) {
+				// 何も処理しない
+			}
+
+		}
 		
 		logger.log(Level.INFO, logicId + ":終了");
-	}
-
-	@Override
-	protected void exeNormal(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData
-		) throws Exception {
-		
-		logger.setLevel(Level.INFO);
-		
-		// DB接続
-		dbconn = new DbConnection();
-		dbconn.connect();
-
-		getInputData(request, response, comData);
-		
-		doSql_SQL0001(comData);
-		
-		doSql_SQL0004(comData);
-		
-		editSetOutputData(request, response, comData);
-		
-		dbconn.close();
-	}
-	
-	@Override
-	protected void getInputData(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData) throws Exception {
-		
-		// ブランドID
-		inputData.setBrandid(request.getParameter(ParamIdWeb.View02010.BRAND_ID));
-		
-		// カラーコード
-		inputData.setColorcode(request.getParameter(ParamIdWeb.View02010.COLOR_CODE));
-		
-		// カラー名
-		inputData.setColornm(request.getParameter(ParamIdWeb.View02010.COLOR_NAME));
-		
-		// 所持
-		inputData.setPosession(request.getParameter(ParamIdWeb.View02010.POSESSION));
-		
-		// 選択肢表示
-		inputData.setSelvisible(request.getParameter(ParamIdWeb.View02010.SEL_VISIBLE));
-		
-		// 近似塗料ID
-		inputData.setAppaintid(request.getParameter(ParamIdWeb.View02010.APPAINTID));
-		
-		// 処理パターン
-		inputData.setLogicPtn((String)request.getAttribute(ParamIdWeb.View02010.LOGIC_PTN));
 	}
 
 	/**
@@ -109,6 +85,8 @@ public class Logic02010 extends ServerLogic {
 	 * @throws Exception
 	 */
 	protected void doSql_SQL0001(
+			MdlLogic02010In inputData,
+			MdlLogic02010Out outputData,
 			MdlCommonData comData) {
 		
 		SQL0001_SelBrandList sql0001 = new SQL0001_SelBrandList();
@@ -139,6 +117,8 @@ public class Logic02010 extends ServerLogic {
 	 * @throws Exception
 	 */
 	protected void doSql_SQL0004(
+			MdlLogic02010In inputData,
+			MdlLogic02010Out outputData,
 			MdlCommonData comData) {
 		
 		SQL0004_SelPaintPulldown sql0004 = new SQL0004_SelPaintPulldown();
@@ -162,11 +142,10 @@ public class Logic02010 extends ServerLogic {
 		outputData.setAppaintList(sqlout);
 	}
 	
-	@Override
 	protected void editSetOutputData(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData) throws Exception {
+			MdlLogic02010In inputData,
+			MdlLogic02010Out outputData,
+			MdlCommonData comData) {
 		
 		// 処理パターンが'POST'（登録差し戻し）の場合
 		if (ParamIdWeb.View02010.POST.equals(inputData.getLogicPtn())) {
@@ -190,22 +169,6 @@ public class Logic02010 extends ServerLogic {
 			outputData.setAppaintid(inputData.getAppaintid());
 		}
 		
-		request.setAttribute(ParamIdWeb.View02010.OUTDATA, outputData);
 	}
 	
-	/**
-	 * 想定外のエラー発生時の処理
-	 */
-	@Override
-	protected void exeErr(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			MdlCommonData comData,
-			Exception e
-		) {
-		String msg = "塗料登録画面で想定外のエラーが発生";
-		comData.setResult(ResultConstant.LOGIC_ERROR);
-		comData.setErrorData(logger, Level.SEVERE, e, msg);
-
-	}
 }

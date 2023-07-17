@@ -26,12 +26,40 @@ public class MdlLogic02010In extends JavaBeansModel {
 	private String logicPtn;
 
 	/**
-	 * コンストラクタ
+	 * コンストラクタ（フィールド初期化）
 	 */
 	public MdlLogic02010In() {
 		this.init();
 	}
 	
+	/**
+	 * コンストラクタ（フィールド設定）
+	 * @param brandid
+	 * @param colorcode
+	 * @param colornm
+	 * @param posession
+	 * @param selvisible
+	 * @param appaintid
+	 * @param logicPtn
+	 */
+	public MdlLogic02010In(
+			String brandid,
+			String colorcode,
+			String colornm,
+			String posession,
+			String selvisible,
+			String appaintid,
+			String logicPtn) {
+		super();
+		this.brandid = brandid;
+		this.colorcode = colorcode;
+		this.colornm = colornm;
+		this.posession = posession;
+		this.selvisible = selvisible;
+		this.appaintid = appaintid;
+		this.logicPtn = logicPtn;
+	}
+
 	/**
 	 * フィールド初期化処理
 	 */

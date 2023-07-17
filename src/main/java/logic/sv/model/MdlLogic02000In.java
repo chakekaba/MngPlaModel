@@ -13,14 +13,40 @@ public class MdlLogic02000In extends JavaBeansModel {
 	/** プラモデルID **/
 	private String plmdlid;
 	
-	/** 検索実行フラグ(0:false, 1:true) **/
-	private String searchExeFlg;
+	/** 検索実行フラグ **/
+	private boolean searchExeFlg;
 	
 	
+	/**
+	 * コンストラクタ（フィールド初期化）
+	 */
 	public MdlLogic02000In(){
 		this.init();
 	}
 	
+	
+	
+	/**
+	 * コンストラクタ（フィールド設定）
+	 * @param colornm
+	 * @param brandid
+	 * @param plmdlid
+	 * @param searchExeFlg
+	 */
+	public MdlLogic02000In(
+			String colornm,
+			String brandid,
+			String plmdlid,
+			boolean searchExeFlg) {
+		super();
+		this.colornm = colornm;
+		this.brandid = brandid;
+		this.plmdlid = plmdlid;
+		this.searchExeFlg = searchExeFlg;
+	}
+
+
+
 	/**
 	 * フィールド初期化処理
 	 */
@@ -28,7 +54,7 @@ public class MdlLogic02000In extends JavaBeansModel {
 		colornm = null;
 		brandid = null;
 		plmdlid = null;
-		searchExeFlg = "0";
+		searchExeFlg = false; // デフォルトはfalse
 	}
 
 	/**
@@ -76,14 +102,14 @@ public class MdlLogic02000In extends JavaBeansModel {
 	/**
 	 * @return searchExeFlg
 	 */
-	public String getSearchExeFlg() {
+	public boolean getSearchExeFlg() {
 		return searchExeFlg;
 	}
 
 	/**
 	 * @param searchExeFlg セットする searchExeFlg
 	 */
-	public void setSearchExeFlg(String searchExeFlg) {
+	public void setSearchExeFlg(boolean searchExeFlg) {
 		this.searchExeFlg = searchExeFlg;
 	}
 }

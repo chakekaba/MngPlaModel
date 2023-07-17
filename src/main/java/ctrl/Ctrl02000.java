@@ -1,14 +1,8 @@
 package ctrl;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import base.constant.ParamIdWeb;
 import base.constant.ResultConstant;
@@ -16,7 +10,16 @@ import base.constant.StringEncode;
 import base.logic.URILogic;
 import base.logic.model.URILogicModel;
 import base.model.MdlCommonData;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import logic.sv.Logic02000;
+import logic.sv.model.MdlLogic02000In;
+import logic.sv.model.MdlLogic02000Out;
 
 /**
  * Servlet implementation class Ctrl02000
@@ -24,7 +27,10 @@ import logic.sv.Logic02000;
 @WebServlet("/View02000")
 public class Ctrl02000 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
+	/** ロガーインスタンス **/
+	Logger logger = Logger.getLogger(Ctrl02020.class.getName());
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -37,6 +43,13 @@ public class Ctrl02000 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// コントローラID
+		final String ctrlId = "Ctrl02000/get";
+		
+		// ロガー開始
+		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, ctrlId + ":開始");
 
 		// 文字エンコーディング設定:UTF-8
 		request.setCharacterEncoding(StringEncode.UTF8);
@@ -55,6 +68,7 @@ public class Ctrl02000 extends HttpServlet {
 			
 			// ログイン画面に遷移
 			response.sendRedirect(ParamIdWeb.ViewLogin.FORM_PATH);
+			logger.log(Level.INFO, String.format("%s:終了_redirect '%s'", ctrlId, ParamIdWeb.ViewLogin.FORM_PATH));
 			
 			return;
 		}
@@ -65,6 +79,7 @@ public class Ctrl02000 extends HttpServlet {
 			dispatcher = request.getRequestDispatcher(ParamIdWeb.View00000.PAGE_SRC);
 			
 			dispatcher.forward(request, response);
+			logger.log(Level.INFO, ctrlId + ":終了_エラー時中断");
 
 			return;
 		}
@@ -75,9 +90,28 @@ public class Ctrl02000 extends HttpServlet {
 		
 		uriLogic.getReferrerViewData(request, uriLogicMdl);
 		
-		// サーバ処理（仮）
+		// サーバ処理
 		Logic02000 logic02000 = new Logic02000();
-		logic02000.execute(request, response, comData);
+		MdlLogic02000In inputData = new MdlLogic02000In();
+		MdlLogic02000Out outputData = new MdlLogic02000Out();
+		
+		// 塗料名
+		inputData.setColornm(request.getParameter(ParamIdWeb.View02000.COLOR_NM));
+		
+		// ブランドID
+		inputData.setBrandid(request.getParameter(ParamIdWeb.View02000.BRAND_ID));
+		
+		// プラモデルID
+		inputData.setPlmdlid(request.getParameter(ParamIdWeb.View02000.PLMDL_ID));
+		
+		// 検索実行フラグ
+		inputData.setSearchExeFlg(false); // 検索実行せず
+
+		// ロジック処理実行
+		logic02000.execute(inputData, outputData, comData);
+		
+		// 出力データをリクエストスコープに設定
+		request.setAttribute(ParamIdWeb.View02000.OUTDATA, outputData);
 		
 		// 遷移先画面判定
 		if (ResultConstant.NORMAL.equals(comData.getResult())) {
@@ -91,12 +125,22 @@ public class Ctrl02000 extends HttpServlet {
 			// 遷移元画面用servletにリダイレクト遷移で戻る
 			response.sendRedirect(uriLogicMdl.getFullURI());
 		}
+		
+		logger.log(Level.INFO, ctrlId + ":終了");
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// コントローラID
+		final String ctrlId = "Ctrl02000/post";
+		
+		// ロガー開始
+		logger.setLevel(Level.INFO);
+		logger.log(Level.INFO, ctrlId + ":開始");
 
 		// 文字エンコーディング設定:UTF-8
 		request.setCharacterEncoding(StringEncode.UTF8);
@@ -115,6 +159,7 @@ public class Ctrl02000 extends HttpServlet {
 			
 			// ログイン画面に遷移
 			response.sendRedirect(ParamIdWeb.ViewLogin.FORM_PATH);
+			logger.log(Level.INFO, String.format("%s:終了_redirect '%s'", ctrlId, ParamIdWeb.ViewLogin.FORM_PATH));
 			
 			return;
 		}
@@ -128,15 +173,29 @@ public class Ctrl02000 extends HttpServlet {
 		
 		String viewIdFr = uriLogicMdl.getServletPath();
 
-		// 以下編集中 ------------------
-		// サーバ処理（仮）
+		// サーバ処理
 		Logic02000 logic02000 = new Logic02000();
+		MdlLogic02000In inputData = new MdlLogic02000In();
+		MdlLogic02000Out outputData = new MdlLogic02000Out();
 		
-		logic02000.execute(request, response, comData);
+		// 塗料名
+		inputData.setColornm(request.getParameter(ParamIdWeb.View02000.COLOR_NM));
 		
-		// 共通データ保持クラスをセッションスコープに設定
-		session.setAttribute(ParamIdWeb.COM_DATA, comData);
+		// ブランドID
+		inputData.setBrandid(request.getParameter(ParamIdWeb.View02000.BRAND_ID));
+		
+		// プラモデルID
+		inputData.setPlmdlid(request.getParameter(ParamIdWeb.View02000.PLMDL_ID));
+		
+		// 検索実行フラグ
+		inputData.setSearchExeFlg(true); // 検索実行
 
+		// ロジック処理実行
+		logic02000.execute(inputData, outputData, comData);
+		
+		// 出力データをリクエストスコープに設定
+		request.setAttribute(ParamIdWeb.View02000.OUTDATA, outputData);
+		
 		if (ResultConstant.NORMAL.equals(comData.getResult())) {
 			
 			// 塗料一覧画面へのフォワード遷移実行
@@ -149,6 +208,8 @@ public class Ctrl02000 extends HttpServlet {
 			// 遷移元画面用servletにリダイレクト遷移で戻る
 			response.sendRedirect(uriLogicMdl.getFullURI());
 		}
+		
+		logger.log(Level.INFO, ctrlId + ":終了");
 
 	}
 }
