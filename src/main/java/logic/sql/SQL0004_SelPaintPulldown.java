@@ -26,25 +26,27 @@ public class SQL0004_SelPaintPulldown {
 
 	/** SQL文**/
 	protected static final String sql = 
-			"select\n"
-			+ "    paintview.paintid,\n"
-			+ "    coalesce(brand.brandnm || '  ', '') ||\n"
-			+ "    coalesce(ptype.producttypenm || '  ', '') ||\n"
-			+ "    coalesce(paintview.colorcode || '  ', '') ||\n"
-			+ "    coalesce(paintview.colornm, '')\n"
-			+ "    as paintdata\n"
-			+ "from\n"
-			+ "    paintview\n"
-			+ "left join mst0000_brand brand on\n"
-			+ "    brand.brandid = paintview.brandid\n"
-			+ "left join mst0001_company company on\n"
-			+ "    company.compid = brand.compid\n"
-			+ "left join mst0002_producttype ptype on\n"
-			+ "    ptype.producttypeid = brand.producttypeid\n"
-			+ "where\n"
-			+ "    paintview.selvisible = '1'\n"
-			+ "order by \n"
-			+ "    paintview.paintid";
+			"select\r\n"
+			+ "    paintview.paintid,\r\n"
+			+ "    coalesce(brand.brandnm || '  ', '') ||\r\n"
+			+ "    coalesce(ptype.producttypenm || '  ', '') ||\r\n"
+			+ "    coalesce(paintview.colorcode || '  ', '') ||\r\n"
+			+ "    coalesce(paintview.colornm, '')\r\n"
+			+ "    as paintdata\r\n"
+			+ "from\r\n"
+			+ "    paintview\r\n"
+			+ "left join mst0000_brand brand on\r\n"
+			+ "    brand.brandid = paintview.brandid\r\n"
+			+ "left join mst0001_company company on\r\n"
+			+ "    company.compid = brand.compid\r\n"
+			+ "left join mst0002_producttype ptype on\r\n"
+			+ "    ptype.producttypeid = brand.producttypeid\r\n"
+			+ "where\r\n"
+			+ "    paintview.selvisible = '1'\r\n"
+			+ "order by \r\n"
+			+ "    brand.brandnm,\r\n"
+			+ "    paintview.ccode_str,\r\n"
+			+ "    paintview.ccode_num";
 	
 	/** SQLid **/
 	protected static final String sqlId = "SQL0004";

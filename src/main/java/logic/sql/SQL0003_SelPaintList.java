@@ -28,25 +28,28 @@ public class SQL0003_SelPaintList {
 	/** SQL文**/
 	protected static final String sql = 
 			"select\r\n"
-			+ "  brand.brandnm,\r\n"
-			+ "  paint.colorcode,\r\n"
-			+ "  paint.colornm,\r\n"
-			+ "  case paint.posession\r\n"
-			+ "    when '0' then '未所持'\r\n"
-			+ "    else '所持'\r\n"
-			+ "  end as posession,"
-			+ "  COALESCE(appaint.colorcode, ' '),\r\n"
-			+ "  COALESCE(appaint.colornm, ' ')\r\n"
+			+ "    brand.brandnm,\r\n"
+			+ "    paint.colorcode,\r\n"
+			+ "    paint.colornm,\r\n"
+			+ "    case paint.posession\r\n"
+			+ "        when '0' then '未所持'\r\n"
+			+ "        else '所持'\r\n"
+			+ "    end as posession,\r\n"
+			+ "    COALESCE(appaint.colorcode, ' '),\r\n"
+			+ "    COALESCE(appaint.colornm, ' ')\r\n"
 			+ "from paintview paint\r\n"
 			+ "left join mst0000_brand brand\r\n"
-			+ "  on brand.brandid = paint.brandid\r\n"
+			+ "    on brand.brandid = paint.brandid\r\n"
 			+ "left join paintview appaint\r\n"
-			+ "  on appaint.paintid = paint.appaintid\r\n"
+			+ "    on appaint.paintid = paint.appaintid\r\n"
 			+ "where 1 = 1\r\n"
-			+ "  and paint.colornm like ?\r\n"
-			+ "  and brand.brandid like ?\r\n"
+			+ "    and paint.colornm like ?\r\n"
+			+ "    and brand.brandid like ?\r\n"
 //			+ "  and \r\n"
-			+ "order by brand.brandnm,paint.colorcode";
+			+ "order by\r\n"
+			+ "    brand.brandnm,\r\n"
+			+ "    paint.ccode_str,\r\n"
+			+ "    paint.ccode_num";
 	
 	/** SQLid **/
 	protected static final String sqlId = "SQL0003";
